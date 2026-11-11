@@ -1,0 +1,29 @@
+# Python / Streamlit caches and artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.env
+models/
+*.joblib
+
+# Unrelated local-mesh-editor Next.js files in workspace
+node_modules/
+.next/
+app/
+components/
+public/
+package.json
+package-lock.json
+next.config.mjs
+next-env.d.ts
+postcss.config.mjs
+signaling-server.mjs
+tailwind.config.ts
+tsconfig.json
+tsconfig.tsbuildinfo
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
