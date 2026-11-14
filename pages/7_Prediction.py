@@ -3,8 +3,11 @@ pages/7_Prediction.py - Student Performance Prediction & Academic Guidance
 AI Student Performance & Academic Guidance System
 """
 
+import os
+import pandas as pd
 import streamlit as st
 from utils import (
+    DEFAULT_DATASET_PATH,
     DEFAULT_MODEL_PATH,
     apply_custom_css,
     generate_academic_guidance,
@@ -40,7 +43,7 @@ render_header(
     title="Prediction and Academic Guidance",
     subtitle="Enter Study hrs, Attendance, Previous marks, and Assignment scores to predict Final performance and generate an action plan.",
     badge_text="Module 07",
-    badge_variant="teal",
+    badge_variant="emerald",
 )
 
 # ---------------------------------------------------------
@@ -75,8 +78,12 @@ if model is None or not model_features:
             if st.button("Train Baseline Linear Regression", type="primary", width="stretch"):
                 active_df, _ = get_active_df()
                 if active_df is None:
-                    active_df = generate_sample_student_dataset(n_samples=200, inject_imperfections=False)
-                    set_session_dataset(active_df, "sample_student_data_200.csv", mark_cleaned=True)
+                    if os.path.exists(DEFAULT_DATASET_PATH):
+                        active_df = pd.read_csv(DEFAULT_DATASET_PATH)
+                        set_session_dataset(active_df, os.path.basename(DEFAULT_DATASET_PATH), mark_cleaned=True)
+                    else:
+                        active_df = generate_sample_student_dataset(n_samples=200, inject_imperfections=False)
+                        set_session_dataset(active_df, "sample_student_data_200.csv", mark_cleaned=True)
 
                 base_feats = [
                     c

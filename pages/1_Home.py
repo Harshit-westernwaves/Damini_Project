@@ -3,8 +3,11 @@ pages/1_Home.py - Main Dashboard Page
 AI Student Performance & Academic Guidance System
 """
 
+import os
+import pandas as pd
 import streamlit as st
 from utils import (
+    DEFAULT_DATASET_PATH,
     apply_custom_css,
     compute_eda_questions,
     generate_sample_student_dataset,
@@ -34,7 +37,7 @@ render_header(
     title="Main Dashboard",
     subtitle="Central navigation interface for dataset processing, analysis, modeling, and prediction.",
     badge_text="Module 01",
-    badge_variant="teal",
+    badge_variant="indigo",
 )
 
 # ---------------------------------------------------------
@@ -48,9 +51,13 @@ if active_df is None:
         st.caption("Start by uploading a CSV file or generating the standard 6-column sample dataset.")
         c_b1, c_b2, _ = st.columns([1.4, 1.4, 2.2])
         with c_b1:
-            if st.button("Generate Sample Dataset", type="primary", width="stretch"):
-                sample_df = generate_sample_student_dataset(n_samples=200, inject_imperfections=True)
-                set_session_dataset(sample_df, "sample_student_data_200.csv", mark_cleaned=False)
+            if st.button("Load Default Cohort", type="primary", width="stretch"):
+                if os.path.exists(DEFAULT_DATASET_PATH):
+                    sample_df = pd.read_csv(DEFAULT_DATASET_PATH)
+                    set_session_dataset(sample_df, os.path.basename(DEFAULT_DATASET_PATH), mark_cleaned=True)
+                else:
+                    sample_df = generate_sample_student_dataset(n_samples=200, inject_imperfections=False)
+                    set_session_dataset(sample_df, "sample_student_data_200.csv", mark_cleaned=True)
                 st.rerun()
         with c_b2:
             if st.button("Open Dataset Uploading", width="stretch"):

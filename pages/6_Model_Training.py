@@ -3,10 +3,12 @@ pages/6_Model_Training.py - Model Training, Evaluation & Persistence
 AI Student Performance & Academic Guidance System
 """
 
+import os
 import matplotlib.pyplot as plt
 import pandas as pd
 import streamlit as st
 from utils import (
+    DEFAULT_DATASET_PATH,
     DEFAULT_MODEL_PATH,
     ML_APPROACHES,
     apply_custom_css,
@@ -42,7 +44,7 @@ render_header(
     title="Model Training",
     subtitle="Configure features and target, split train/test sets, fit Linear or Logistic Regression, evaluate metrics, and save via Joblib.",
     badge_text="Module 06",
-    badge_variant="teal",
+    badge_variant="indigo",
 )
 
 # ---------------------------------------------------------
@@ -67,12 +69,16 @@ df, is_cleaned = get_active_df()
 if df is None:
     with st.container(border=True):
         st.markdown("**No active dataset loaded in session state**")
-        st.caption("Upload or generate a student dataset before training a predictive model.")
-        c1, c2, _ = st.columns([1.4, 1.4, 2.5])
+        st.caption("Upload a dataset or load the cleaned balanced cohort before training a predictive model.")
+        c1, c2, _ = st.columns([1.5, 1.4, 2.4])
         with c1:
-            if st.button("Generate Sample Dataset", type="primary", width="stretch"):
-                sample_df = generate_sample_student_dataset(n_samples=200, inject_imperfections=False)
-                set_session_dataset(sample_df, "sample_student_data_200.csv", mark_cleaned=True)
+            if st.button("Load Cleaned Cohort", type="primary", width="stretch"):
+                if os.path.exists(DEFAULT_DATASET_PATH):
+                    sample_df = pd.read_csv(DEFAULT_DATASET_PATH)
+                    set_session_dataset(sample_df, os.path.basename(DEFAULT_DATASET_PATH), mark_cleaned=True)
+                else:
+                    sample_df = generate_sample_student_dataset(n_samples=200, inject_imperfections=False)
+                    set_session_dataset(sample_df, "sample_student_data_200.csv", mark_cleaned=True)
                 st.rerun()
         with c2:
             if st.button("Open Upload Dataset", width="stretch"):

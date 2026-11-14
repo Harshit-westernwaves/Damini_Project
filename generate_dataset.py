@@ -1,6 +1,16 @@
 """
-generate_dataset.py - Standalone Synthetic Dataset Generator for B.Tech CSE Cohorts
+generate_dataset.py - Multi-Cohort Synthetic Dataset Generator
 AI Student Performance & Academic Guidance System
+
+Generates four distinct synthetic student performance datasets inside the 'datasets/' directory,
+all adhering to the canonical 6-column specification:
+['Student ID', 'Study hrs', 'Attendance', 'Previous marks', 'Assignment scores', 'Final performance']
+
+Target Datasets:
+1. datasets/1_raw_dirty_student_data.csv (500 rows, 5% missing numerical/categorical values, 15 duplicate rows)
+2. datasets/2_cleaned_balanced_cohort.csv (500 clean rows, zero nulls, realistic distributions)
+3. datasets/3_high_risk_cohort_data.csv (300 rows, skewed low attendance & study hours for intervention alerts)
+4. datasets/4_large_university_batch.csv (1,200 rows, large-scale batch for model scalability & metrics)
 """
 
 import os
@@ -8,191 +18,309 @@ import argparse
 import numpy as np
 import pandas as pd
 
-def generate_btech_cse_dataset(
-    n_rows: int = 600,
-    missing_pct: float = 0.04,
-    n_duplicates: int = 10,
-    n_outliers: int = 8,
-    random_seed: int = 42,
-    output_path: str = "btech_cse_student_data.csv",
-):
+CANONICAL_COLUMNS = [
+    "Student ID",
+    "Study hrs",
+    "Attendance",
+    "Previous marks",
+    "Assignment scores",
+    "Final performance",
+]
+
+
+def generate_raw_dirty_dataset(
+    n_total_rows: int = 500,
+    n_duplicates: int = 15,
+    missing_pct: float = 0.05,
+    seed: int = 42,
+) -> pd.DataFrame:
     """
-    Generates a calibrated B.Tech Computer Science & Engineering student performance dataset
-    with realistic correlations, missing values, duplicate records, and statistical outliers
-    for live demonstration in 3_Data_Cleaning.py.
+    Generates 500 rows containing 5% missing numerical & categorical values and 15 duplicate rows.
+    Designed specifically to demonstrate live cleaning in 3_Data_Cleaning.py.
     """
-    np.random.seed(random_seed)
+    rng = np.random.default_rng(seed)
+    n_base = n_total_rows - n_duplicates  # 485 base unique rows
 
-    print(f"[*] Generating {n_rows} base B.Tech CSE student records (Seed: {random_seed})...")
+    student_ids = [f"STU{str(i).zfill(3)}" for i in range(1, n_base + 1)]
+    study_hrs = np.clip(np.round(rng.normal(loc=4.6, scale=1.9, size=n_base), 1), 0.5, 10.0)
+    attendance = np.clip(np.round(rng.beta(a=5.0, b=2.0, size=n_base) * 58 + 42, 1), 40.0, 99.5)
+    previous_marks = np.clip(np.round(rng.normal(loc=68.5, scale=13.0, size=n_base), 1), 30.0, 98.0)
 
-    # 1. Student Identifiers (CSE2023001 .. CSE2023600)
-    student_ids = [f"CSE2023{str(i).zfill(3)}" for i in range(1, n_rows + 1)]
-
-    # 2. Previous SGPA (Mean ~7.35, Normal distribution, bounded 4.2 to 9.9)
-    previous_sgpa = np.clip(np.random.normal(loc=7.35, scale=1.1, size=n_rows), 4.2, 9.9)
-
-    # 3. Attendance Percentage (Beta distribution skewed towards 75-90%)
-    attendance = np.clip(np.random.beta(a=6, b=2, size=n_rows) * 55 + 45, 50.0, 99.5)
-
-    # 4. Mid-Semester Test (MST) Marks (out of 50, correlated with SGPA + noise)
-    mst_base = (previous_sgpa / 10.0) * 44 + np.random.normal(0, 3.2, size=n_rows)
-    mst_marks = np.clip(mst_base, 10.0, 50.0)
-
-    # 5. Practical Lab Score (out of 100, correlated with Attendance + SGPA)
-    lab_base = (previous_sgpa / 10.0) * 82 + (attendance / 100.0) * 16 + np.random.normal(0, 3.8, size=n_rows)
-    lab_score = np.clip(lab_base, 42.0, 100.0)
-
-    # 6. Study Hours Per Day (General Coursework: 1.0 to 9.5 hrs/day, Gamma distribution)
-    study_hours = np.clip(np.random.gamma(shape=3.5, scale=1.2, size=n_rows), 1.0, 9.5)
-
-    # 7. Coding Practice Hours Per Day (DSA & Problem Solving: 0.5 to 8.0 hrs/day, Gamma distribution)
-    coding_hours = np.clip(np.random.gamma(shape=2.8, scale=1.2, size=n_rows), 0.5, 8.0)
-
-    # 8. Backlogs (Discrete count: 0 to 4, skewed towards 0)
-    backlog_probs = [0.72, 0.16, 0.08, 0.03, 0.01]
-    backlogs = np.random.choice([0, 1, 2, 3, 4], size=n_rows, p=backlog_probs)
-
-    # 9. Extracurricular Engagement Rating (1 to 10 scale)
-    extracurricular = np.random.randint(1, 11, size=n_rows)
-
-    # 10. Realistic Target: Final CGPA
-    # Realistic weights: 35% Previous SGPA, 22% MST, 18% Coding, 15% Attendance, 10% Lab, -0.40 per Backlog
-    mst_norm = (mst_marks / 50.0) * 10.0
-    lab_norm = (lab_score / 100.0) * 10.0
-    att_norm = (attendance / 100.0) * 10.0
-    coding_norm = np.clip((coding_hours / 4.5) * 10.0, 2.0, 10.0)
-
-    cgpa_raw = (
-        0.35 * previous_sgpa +
-        0.22 * mst_norm +
-        0.18 * coding_norm +
-        0.15 * att_norm +
-        0.10 * lab_norm -
-        0.40 * backlogs +
-        np.random.normal(0, 0.22, size=n_rows)
+    assignment_raw = (
+        0.42 * previous_marks
+        + 0.26 * attendance
+        + 2.5 * study_hrs
+        + rng.normal(loc=5.0, scale=6.0, size=n_base)
     )
-    final_cgpa = np.clip(np.round(cgpa_raw, 2), 4.10, 9.95)
+    assignment_scores = np.clip(np.round(assignment_raw, 1), 32.0, 100.0)
 
-    # 11. Performance Category Tier Classification
-    def categorize_cgpa(cgpa):
-        if cgpa >= 8.50:
-            return "Outstanding"
-        elif cgpa >= 7.00:
-            return "Good"
-        elif cgpa >= 5.50:
-            return "Average"
-        else:
-            return "At-Risk"
+    final_raw = (
+        0.36 * previous_marks
+        + 0.28 * assignment_scores
+        + 0.18 * attendance
+        + 2.3 * study_hrs
+        + rng.normal(loc=0.0, scale=3.5, size=n_base)
+    )
+    final_performance = np.clip(np.round(final_raw, 1), 28.0, 99.5)
 
-    performance_categories = [categorize_cgpa(c) for c in final_cgpa]
+    base_df = pd.DataFrame(
+        {
+            "Student ID": student_ids,
+            "Study hrs": study_hrs,
+            "Attendance": attendance,
+            "Previous marks": previous_marks,
+            "Assignment scores": assignment_scores,
+            "Final performance": final_performance,
+        }
+    )
 
-    # Assemble base DataFrame
-    df = pd.DataFrame({
-        "Student_ID": student_ids,
-        "Attendance_Percentage": np.round(attendance, 1),
-        "MST_Marks": np.round(mst_marks, 1),
-        "Lab_Score": np.round(lab_score, 1),
-        "Study_Hours_Per_Day": np.round(study_hours, 1),
-        "Coding_Practice_Hours": np.round(coding_hours, 1),
-        "Previous_SGPA": np.round(previous_sgpa, 2),
-        "Backlogs": backlogs,
-        "Extracurricular_Score": extracurricular,
-        "Final_CGPA": final_cgpa,
-        "Performance_Category": performance_categories,
-    })
+    # Pick exactly 15 rows to duplicate to reach n_total_rows (500)
+    dup_candidate_slice = np.arange(n_base - n_duplicates, n_base)
+    dup_df = base_df.iloc[dup_candidate_slice].copy()
+    df = pd.concat([base_df, dup_df], ignore_index=True)
 
-    print(f"[*] Base cohort created: {len(df)} rows across {len(df.columns)} columns.")
+    # Rows 0 to (n_base - n_duplicates) are candidates for null injection
+    # This guarantees the 15 duplicate pairs remain identical while hitting exactly 150 missing cells (5.0%)
+    candidate_rows = np.arange(0, n_base - n_duplicates)
 
-    # -------------------------------------------------------------
-    # Ingestion Anomaly 1: 4% Random Missing Values (NaN)
-    # -------------------------------------------------------------
-    # Apply across feature columns (excluding Student_ID, Final_CGPA, Performance_Category)
-    feature_cols = [
-        "Attendance_Percentage",
-        "MST_Marks",
-        "Lab_Score",
-        "Study_Hours_Per_Day",
-        "Coding_Practice_Hours",
-        "Previous_SGPA",
-        "Extracurricular_Score",
-    ]
+    # 15 categorical missing values in "Student ID"
+    cat_null_count = 15
+    cat_null_idx = rng.choice(candidate_rows, size=cat_null_count, replace=False)
+    df.loc[cat_null_idx, "Student ID"] = np.nan
 
-    total_feature_cells = n_rows * len(feature_cols)
-    n_nans_to_inject = int(total_feature_cells * missing_pct)
-    print(f"[*] Injecting ~{missing_pct*100:.1f}% missing values ({n_nans_to_inject} NaN cells)...")
-
-    for _ in range(n_nans_to_inject):
-        row_idx = np.random.randint(0, n_rows)
-        col_name = np.random.choice(feature_cols)
-        df.loc[row_idx, col_name] = np.nan
-
-    actual_nans = int(df.isna().sum().sum())
-    print(f"[+] Total missing cells injected: {actual_nans} ({actual_nans / (n_rows * len(df.columns)) * 100:.2f}% of all cells)")
-
-    # -------------------------------------------------------------
-    # Ingestion Anomaly 2: 10 Duplicate Rows
-    # -------------------------------------------------------------
-    print(f"[*] Injecting {n_duplicates} duplicate records...")
-    dup_row_indices = np.random.choice(n_rows, size=n_duplicates, replace=False)
-    duplicates_df = df.iloc[dup_row_indices].copy()
-    df = pd.concat([df, duplicates_df], ignore_index=True)
-    print(f"[+] Appended {n_duplicates} duplicate rows. New total rows: {len(df)}")
-
-    # -------------------------------------------------------------
-    # Ingestion Anomaly 3: 8 Extreme Statistical Outliers (for IQR)
-    # -------------------------------------------------------------
-    print(f"[*] Injecting {n_outliers} extreme outliers...")
-    outlier_indices = np.random.choice(n_rows, size=n_outliers, replace=False)
-
-    # Inject physically impossible / extreme student metrics
-    df.loc[outlier_indices[0], "Study_Hours_Per_Day"] = 23.5   # 23.5 hours study/day
-    df.loc[outlier_indices[1], "Study_Hours_Per_Day"] = 21.0   # 21.0 hours study/day
-    df.loc[outlier_indices[2], "Coding_Practice_Hours"] = 22.0 # 22.0 hours coding/day
-    df.loc[outlier_indices[3], "Coding_Practice_Hours"] = 19.5 # 19.5 hours coding/day
-    df.loc[outlier_indices[4], "MST_Marks"] = 88.0             # 88/50 (out of bounds)
-    df.loc[outlier_indices[5], "MST_Marks"] = 92.5             # 92.5/50 (out of bounds)
-    df.loc[outlier_indices[6], "Attendance_Percentage"] = 145.0 # 145% attendance
-    df.loc[outlier_indices[7], "Attendance_Percentage"] = 13.0  # 13% extreme lower outlier
-
-    print(f"[+] Injected 8 extreme outliers into Study_Hours_Per_Day, Coding_Practice_Hours, MST_Marks, Attendance_Percentage.")
-
-    # -------------------------------------------------------------
-    # Save CSV
-    # -------------------------------------------------------------
-    df.to_csv(output_path, index=False)
-    print(f"\n[OK] Successfully generated and saved dataset to: {os.path.abspath(output_path)}")
-
-    # Print Quality Audit Summary
-    print("\n" + "=" * 65)
-    print("           B.TECH CSE DATASET QUALITY AUDIT SUMMARY           ")
-    print("=" * 65)
-    print(f"Total Rows In File       : {len(df)} (600 base + 10 duplicates = {len(df)})")
-    print(f"Total Columns            : {len(df.columns)}")
-    print(f"Duplicate Rows Count     : {df.duplicated().sum()}")
-    print(f"Total Missing Values     : {df.isna().sum().sum()}")
-    print("\nMissing Values Breakdown by Attribute:")
-    nan_summary = df.isna().sum()
-    print(nan_summary[nan_summary > 0].to_string())
-    print("\nPerformance Category Breakdown:")
-    print(df["Performance_Category"].value_counts().to_string())
-    print(f"\nMean Final CGPA          : {df['Final_CGPA'].mean():.2f}")
-    print(f"Median Final CGPA        : {df['Final_CGPA'].median():.2f}")
-    print("=" * 65)
+    # 135 numerical missing values across remaining 5 columns (27 per column)
+    num_cols = ["Study hrs", "Attendance", "Previous marks", "Assignment scores", "Final performance"]
+    for col in num_cols:
+        col_null_idx = rng.choice(candidate_rows, size=27, replace=False)
+        df.loc[col_null_idx, col] = np.nan
 
     return df
 
+
+def generate_cleaned_balanced_dataset(
+    n_rows: int = 500,
+    seed: int = 101,
+) -> pd.DataFrame:
+    """
+    Generates 500 clean rows with zero nulls, zero duplicates, and realistic distributions
+    for immediate use in 4_EDA.py, 5_Data_Visualization.py, and 6_Model_Training.py.
+    """
+    rng = np.random.default_rng(seed)
+
+    student_ids = [f"STU{str(i).zfill(3)}" for i in range(1, n_rows + 1)]
+    study_hrs = np.clip(np.round(rng.normal(loc=4.9, scale=1.7, size=n_rows), 1), 1.0, 9.8)
+    attendance = np.clip(np.round(rng.beta(a=5.5, b=1.9, size=n_rows) * 55 + 45, 1), 48.0, 99.5)
+    previous_marks = np.clip(np.round(rng.normal(loc=71.5, scale=11.5, size=n_rows), 1), 38.0, 98.0)
+
+    assignment_raw = (
+        0.44 * previous_marks
+        + 0.25 * attendance
+        + 2.4 * study_hrs
+        + rng.normal(loc=5.5, scale=5.0, size=n_rows)
+    )
+    assignment_scores = np.clip(np.round(assignment_raw, 1), 40.0, 100.0)
+
+    final_raw = (
+        0.38 * previous_marks
+        + 0.28 * assignment_scores
+        + 0.18 * attendance
+        + 2.2 * study_hrs
+        + rng.normal(loc=0.0, scale=3.0, size=n_rows)
+    )
+    final_performance = np.clip(np.round(final_raw, 1), 35.0, 99.5)
+
+    return pd.DataFrame(
+        {
+            "Student ID": student_ids,
+            "Study hrs": study_hrs,
+            "Attendance": attendance,
+            "Previous marks": previous_marks,
+            "Assignment scores": assignment_scores,
+            "Final performance": final_performance,
+        }
+    )
+
+
+def generate_high_risk_dataset(
+    n_rows: int = 300,
+    seed: int = 202,
+) -> pd.DataFrame:
+    """
+    Generates 300 rows skewed toward low attendance (< 75%) and low study hours (< 3.0 hrs/day)
+    specifically designed to test intervention alerts in 7_Prediction.py and 8_AI_Chatbot.py.
+    """
+    rng = np.random.default_rng(seed)
+
+    student_ids = [f"RISK{str(i).zfill(3)}" for i in range(1, n_rows + 1)]
+    # Study hours skewed low: mean ~1.8 hrs/day, bounded [0.5, 3.2]
+    study_hrs = np.clip(np.round(rng.normal(loc=1.8, scale=0.6, size=n_rows), 1), 0.5, 3.2)
+
+    # Attendance skewed low: beta centered around 48%, range [25.0, 71.0] (all below 75% gate)
+    attendance = np.clip(np.round(rng.beta(a=2.5, b=2.8, size=n_rows) * 44 + 26, 1), 25.0, 71.0)
+
+    # Previous marks lower: mean ~46.0
+    previous_marks = np.clip(np.round(rng.normal(loc=46.0, scale=8.5, size=n_rows), 1), 25.0, 66.0)
+
+    assignment_raw = (
+        0.40 * previous_marks
+        + 0.22 * attendance
+        + 2.0 * study_hrs
+        + rng.normal(loc=3.0, scale=4.5, size=n_rows)
+    )
+    assignment_scores = np.clip(np.round(assignment_raw, 1), 22.0, 68.0)
+
+    final_raw = (
+        0.35 * previous_marks
+        + 0.28 * assignment_scores
+        + 0.18 * attendance
+        + 2.0 * study_hrs
+        + rng.normal(loc=-1.0, scale=3.0, size=n_rows)
+    )
+    final_performance = np.clip(np.round(final_raw, 1), 20.0, 65.0)
+
+    return pd.DataFrame(
+        {
+            "Student ID": student_ids,
+            "Study hrs": study_hrs,
+            "Attendance": attendance,
+            "Previous marks": previous_marks,
+            "Assignment scores": assignment_scores,
+            "Final performance": final_performance,
+        }
+    )
+
+
+def generate_large_university_batch(
+    n_rows: int = 1200,
+    seed: int = 303,
+) -> pd.DataFrame:
+    """
+    Generates 1,200 rows for testing model scalability, cross-validation, and regression/classification metrics.
+    """
+    rng = np.random.default_rng(seed)
+
+    student_ids = [f"UNI{str(i).zfill(4)}" for i in range(1, n_rows + 1)]
+
+    # Multi-cohort mixture for university-scale diversity
+    # 20% high performers, 60% average, 20% struggling
+    cohort_types = rng.choice(["high", "mid", "low"], size=n_rows, p=[0.20, 0.60, 0.20])
+
+    study_hrs = np.zeros(n_rows)
+    attendance = np.zeros(n_rows)
+    previous_marks = np.zeros(n_rows)
+
+    for i, c_type in enumerate(cohort_types):
+        if c_type == "high":
+            study_hrs[i] = rng.normal(loc=6.8, scale=1.2)
+            attendance[i] = rng.beta(a=7.0, b=1.5) * 20 + 80
+            previous_marks[i] = rng.normal(loc=84.0, scale=6.5)
+        elif c_type == "mid":
+            study_hrs[i] = rng.normal(loc=4.6, scale=1.3)
+            attendance[i] = rng.beta(a=5.0, b=2.0) * 40 + 58
+            previous_marks[i] = rng.normal(loc=71.0, scale=8.0)
+        else:  # low
+            study_hrs[i] = rng.normal(loc=2.2, scale=0.8)
+            attendance[i] = rng.beta(a=3.0, b=2.5) * 35 + 40
+            previous_marks[i] = rng.normal(loc=52.0, scale=9.0)
+
+    study_hrs = np.clip(np.round(study_hrs, 1), 0.5, 11.5)
+    attendance = np.clip(np.round(attendance, 1), 38.0, 100.0)
+    previous_marks = np.clip(np.round(previous_marks, 1), 30.0, 99.0)
+
+    assignment_raw = (
+        0.44 * previous_marks
+        + 0.25 * attendance
+        + 2.4 * study_hrs
+        + rng.normal(loc=5.0, scale=5.2, size=n_rows)
+    )
+    assignment_scores = np.clip(np.round(assignment_raw, 1), 30.0, 100.0)
+
+    final_raw = (
+        0.38 * previous_marks
+        + 0.28 * assignment_scores
+        + 0.18 * attendance
+        + 2.2 * study_hrs
+        + rng.normal(loc=0.0, scale=3.0, size=n_rows)
+    )
+    final_performance = np.clip(np.round(final_raw, 1), 28.0, 99.5)
+
+    return pd.DataFrame(
+        {
+            "Student ID": student_ids,
+            "Study hrs": study_hrs,
+            "Attendance": attendance,
+            "Previous marks": previous_marks,
+            "Assignment scores": assignment_scores,
+            "Final performance": final_performance,
+        }
+    )
+
+
+def generate_all_datasets(output_dir: str = "datasets", seed_base: int = 42) -> dict[str, pd.DataFrame]:
+    """
+    Generates and saves all 4 required CSV datasets inside output_dir.
+    """
+    os.makedirs(output_dir, exist_ok=True)
+    generated = {}
+
+    specs = [
+        (
+            "1_raw_dirty_student_data.csv",
+            lambda: generate_raw_dirty_dataset(n_total_rows=500, n_duplicates=15, missing_pct=0.05, seed=seed_base),
+            "500 rows with 5% missing numerical/categorical values & 15 duplicate rows (Data Cleaning demo)",
+        ),
+        (
+            "2_cleaned_balanced_cohort.csv",
+            lambda: generate_cleaned_balanced_dataset(n_rows=500, seed=seed_base + 1),
+            "500 clean rows, zero nulls, realistic distributions (EDA, Viz & ML training)",
+        ),
+        (
+            "3_high_risk_cohort_data.csv",
+            lambda: generate_high_risk_dataset(n_rows=300, seed=seed_base + 2),
+            "300 rows skewed toward low attendance (< 75%) and low study hours (Intervention alerts)",
+        ),
+        (
+            "4_large_university_batch.csv",
+            lambda: generate_large_university_batch(n_rows=1200, seed=seed_base + 3),
+            "1,200 rows diverse university cohort (Scalability & ML benchmarking)",
+        ),
+    ]
+
+    print("\n" + "=" * 75)
+    print("       AI STUDENT PERFORMANCE PLATFORM - DATASET GENERATION SUITE        ")
+    print("=" * 75)
+
+    for filename, generator_fn, desc in specs:
+        df = generator_fn()
+        path = os.path.join(output_dir, filename)
+        df.to_csv(path, index=False)
+        generated[filename] = df
+
+        null_total = int(df.isna().sum().sum())
+        dup_total = int(df.duplicated().sum())
+
+        print(f"\n[+] Generated: {filename}")
+        print(f"    Target Path      : {os.path.abspath(path)}")
+        print(f"    Description      : {desc}")
+        print(f"    Rows x Cols      : {len(df)} rows x {len(df.columns)} columns")
+        print(f"    Columns          : {list(df.columns)}")
+        print(f"    Missing Values   : {null_total} cells ({null_total / (len(df) * len(df.columns)) * 100:.2f}%)")
+        print(f"    Duplicate Rows   : {dup_total}")
+        print(f"    Study hrs Mean   : {df['Study hrs'].dropna().mean():.2f}")
+        print(f"    Attendance Mean  : {df['Attendance'].dropna().mean():.2f}%")
+        print(f"    Final Perf Mean  : {df['Final performance'].dropna().mean():.2f}")
+
+    print("\n" + "=" * 75)
+    print(f"[OK] All 4 datasets successfully generated and verified in: {os.path.abspath(output_dir)}")
+    print("=" * 75 + "\n")
+
+    return generated
+
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Generate synthetic B.Tech CSE dataset with imperfections.")
-    parser.add_argument("--rows", type=int, default=600, help="Number of base student records (default: 600)")
-    parser.add_argument("--output", type=str, default="btech_cse_student_data.csv", help="Output CSV filename")
-    parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
+    parser = argparse.ArgumentParser(description="Generate synthetic student datasets for the AI Student Performance platform.")
+    parser.add_argument("--output-dir", type=str, default="datasets", help="Directory to save CSV datasets")
+    parser.add_argument("--seed", type=int, default=42, help="Base random seed for generation")
     args = parser.parse_args()
 
-    generate_btech_cse_dataset(
-        n_rows=args.rows,
-        missing_pct=0.04,
-        n_duplicates=10,
-        n_outliers=8,
-        random_seed=args.seed,
-        output_path=args.output,
-    )
+    generate_all_datasets(output_dir=args.output_dir, seed_base=args.seed)

@@ -3,14 +3,18 @@ pages/2_Upload_Dataset.py - Dataset Uploading and Sample Dataset Generation
 AI Student Performance & Academic Guidance System
 """
 
+import os
 import pandas as pd
 import streamlit as st
 from utils import (
     CANONICAL_COLUMNS,
+    DATASETS_DIR,
     apply_custom_css,
     generate_sample_student_dataset,
     get_dataset_info,
     init_session_state,
+    list_available_datasets,
+    load_dataset_from_dir,
     render_footer,
     render_header,
     render_sidebar_status,
@@ -35,7 +39,7 @@ render_header(
     title="Upload Dataset",
     subtitle="Upload a student performance CSV file or generate a sample dataset with standard schema columns.",
     badge_text="Module 02",
-    badge_variant="teal",
+    badge_variant="indigo",
 )
 
 # ---------------------------------------------------------
@@ -44,15 +48,59 @@ render_header(
 with st.container(border=True):
     st.markdown("**Ingestion Pipeline**")
     st.caption(
-        "Flow: User selects CSV -> Streamlit receives file -> Pandas reads into DataFrame -> "
-        "Store in session state -> Display preview"
+        "Choose an option: Load a pre-generated dataset from datasets/, upload your own CSV file, "
+        "or generate a synthetic dataset with configurable parameters."
     )
 
-col_up, col_gen = st.columns([1.6, 1.2])
+# 1. Pre-Loaded Datasets from datasets/ Folder
+available_csvs = list_available_datasets(DATASETS_DIR)
+
+DATASET_DESCRIPTIONS = {
+    "1_raw_dirty_student_data.csv": "500 rows with 5% missing values & 15 duplicate rows (Designed for 3_Data_Cleaning.py demo)",
+    "2_cleaned_balanced_cohort.csv": "500 clean rows, zero nulls, realistic distributions (Ideal for 4_EDA, 5_Visualization, 6_Modeling)",
+    "3_high_risk_cohort_data.csv": "300 rows skewed low in attendance (< 75%) and study hours (Tests intervention alerts)",
+    "4_large_university_batch.csv": "1,200 diverse student records for scalability and ML benchmarking",
+    "btech_cse_student_data.csv": "Historical B.Tech CSE cohort records",
+}
+
+with st.container(border=True):
+    st.markdown("#### 1. Load Pre-Generated Dataset from `datasets/`")
+    st.caption("Select any ready-to-use CSV cohort directly from the dedicated datasets folder.")
+
+    if available_csvs:
+        c_sel, c_btn = st.columns([2.5, 1.0])
+        with c_sel:
+            selected_csv = st.selectbox(
+                "Select Pre-Loaded CSV File",
+                options=available_csvs,
+                index=1 if "2_cleaned_balanced_cohort.csv" in available_csvs else 0,
+                key="datasets_folder_select",
+            )
+            desc_text = DATASET_DESCRIPTIONS.get(
+                selected_csv, f"Custom dataset file located in {DATASETS_DIR}/"
+            )
+            st.caption(f"**Cohort Profile:** {desc_text}")
+        with c_btn:
+            st.markdown("<div style='height: 1.7rem;'></div>", unsafe_allow_html=True)
+            if st.button("Load Selected Dataset", type="primary", width="stretch", key="btn_load_preloaded"):
+                try:
+                    loaded_df = load_dataset_from_dir(selected_csv, DATASETS_DIR)
+                    is_clean = (int(loaded_df.isna().sum().sum()) == 0) and (int(loaded_df.duplicated().sum()) == 0)
+                    set_session_dataset(loaded_df, selected_csv, mark_cleaned=is_clean)
+                    st.success(f"Successfully loaded '{selected_csv}' ({len(loaded_df):,} rows) into active session.")
+                    st.rerun()
+                except Exception as exc:
+                    st.error(f"Failed to load '{selected_csv}': {str(exc)}")
+    else:
+        st.warning(f"No CSV files found in '{DATASETS_DIR}/' directory.")
+
+st.markdown("<div style='height: 0.5rem;'></div>", unsafe_allow_html=True)
+
+col_up, col_gen = st.columns([1.5, 1.3])
 
 with col_up:
     with st.container(border=True):
-        st.markdown("#### 1. Upload CSV File")
+        st.markdown("#### 2. Upload CSV File from Disk")
         st.caption(
             "Expected schema: " + ", ".join(CANONICAL_COLUMNS)
         )
@@ -78,13 +126,13 @@ with col_up:
 
 with col_gen:
     with st.container(border=True):
-        st.markdown("#### 2. One-Click Sample Dataset")
+        st.markdown("#### 3. One-Click Sample Dataset")
         st.caption(
             "Generates a realistic cohort using exact columns: Student ID, Study hrs, Attendance, "
             "Previous marks, Assignment scores, and Final performance (with sample nulls and duplicates for cleaning)."
         )
         sample_rows = st.number_input("Sample Size (Rows)", min_value=50, max_value=1000, value=200, step=50)
-        if st.button("Generate Sample Dataset", type="primary", width="stretch"):
+        if st.button("Generate Sample Dataset", width="stretch", key="btn_gen_sample"):
             sample_df = generate_sample_student_dataset(
                 n_samples=int(sample_rows),
                 inject_imperfections=True,

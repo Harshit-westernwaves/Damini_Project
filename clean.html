@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Cleaning | AI Student Performance & Academic Guidance System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            indigo: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+              950: '#1e1b4b',
+            },
+            emerald: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              300: '#6ee7b7',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+            },
+            amber: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              200: '#fde68a',
+              300: '#fcd34d',
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-full bg-slate-50 text-slate-800 antialiased font-sans">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top-Left Header with Custom Project Logo directly above tabs -->
+    <header class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-4">
+        <a href="welcome.html" class="group flex items-center gap-3">
+          <div class="h-14 w-14 rounded-2xl bg-white border border-slate-200 shadow-sm p-1.5 flex items-center justify-center overflow-hidden group-hover:border-indigo-300 group-hover:shadow-md transition-all">
+            <img src="assets/logo.webp" alt="AI Student Performance System Logo" class="h-full w-full object-contain" />
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-xl md:text-2xl font-bold text-slate-900 tracking-tight">AI Student Performance & Academic Guidance</h1>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">v2.4 Pro</span>
+            </div>
+            <p class="text-sm text-slate-500 mt-0.5">An AI-powered student analytics platform for dataset preparation, exploratory profiling, and academic guidance.</p>
+          </div>
+        </a>
+      </div>
+      <div class="flex items-center gap-3 self-start md:self-auto">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">
+          <span class="h-2 w-2 rounded-full bg-amber-500"></span>
+          Cleaning Staging Active
+        </span>
+        <span class="text-xs text-slate-500 font-mono bg-white px-2.5 py-1 rounded-lg border border-slate-200 shadow-sm">1_raw_dirty_student_data.csv</span>
+      </div>
+    </header>
+
+    <!-- Horizontal Pill-Shaped Tab Menu -->
+    <nav class="mb-8 overflow-x-auto pb-2 scrollbar-none">
+      <div class="inline-flex p-1.5 bg-white border border-slate-200 rounded-full shadow-sm gap-1 min-w-full md:min-w-0">
+        <a href="welcome.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Welcome
+        </a>
+        <a href="home.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Home
+        </a>
+        <a href="upload.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Upload
+        </a>
+        <a href="clean.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-semibold transition-all whitespace-nowrap bg-indigo-600 text-white shadow-sm">
+          Clean
+        </a>
+        <a href="eda.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          EDA
+        </a>
+        <a href="visualize.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Visualize
+        </a>
+        <a href="train.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Train ML
+        </a>
+        <a href="predict.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Predict
+        </a>
+        <a href="chat.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          AI Chat
+        </a>
+        <a href="about.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          About
+        </a>
+      </div>
+    </nav>
+
+    <!-- Page Body: Data Cleaning View -->
+    <main class="space-y-8">
+      
+      <!-- Staged Telemetry Header Card -->
+      <section class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-100">
+          <div>
+            <h2 class="text-xl font-bold text-slate-900 tracking-tight">Structured Data Cleaning Pipeline</h2>
+            <p class="text-xs text-slate-500">Detect anomalies, impute missing numerical & categorical values, and purge duplicate student records</p>
+          </div>
+          <!-- Action Buttons -->
+          <div class="flex flex-wrap items-center gap-2.5">
+            <button onclick="applyDropNulls()" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-sm transition-all">
+              <i data-lucide="trash-2" class="w-3.5 h-3.5 text-slate-500"></i>
+              Drop Nulls
+            </button>
+            <button onclick="applyImputation()" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-sm transition-all">
+              <i data-lucide="wand-2" class="w-3.5 h-3.5"></i>
+              Impute Missing (Mean/Mode)
+            </button>
+            <button onclick="applyRemoveDuplicates()" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-sm transition-all">
+              <i data-lucide="copy-x" class="w-3.5 h-3.5"></i>
+              Remove Duplicates
+            </button>
+            <button onclick="resetData()" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-400 hover:text-slate-600" title="Reset Dirty Demo">
+              <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- 4 Summary Metrics -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-5">
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+            <span class="text-xs font-medium text-slate-500 block">Staged Rows</span>
+            <span id="stat-rows" class="text-2xl font-bold text-slate-900">500</span>
+            <span class="text-[11px] text-slate-400 block mt-0.5">Initial raw record count</span>
+          </div>
+
+          <div class="p-4 bg-amber-50/50 border border-amber-200 rounded-xl">
+            <div class="flex justify-between items-start">
+              <span class="text-xs font-medium text-amber-800 block">Missing Cells</span>
+              <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800">5.0%</span>
+            </div>
+            <span id="stat-nulls" class="text-2xl font-bold text-amber-600">150</span>
+            <span class="text-[11px] text-amber-700 block mt-0.5">Categorical & Numerical</span>
+          </div>
+
+          <div class="p-4 bg-amber-50/50 border border-amber-200 rounded-xl">
+            <div class="flex justify-between items-start">
+              <span class="text-xs font-medium text-amber-800 block">Duplicate Rows</span>
+              <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800">Exact Match</span>
+            </div>
+            <span id="stat-dups" class="text-2xl font-bold text-amber-600">15</span>
+            <span class="text-[11px] text-amber-700 block mt-0.5">Appended redundancy</span>
+          </div>
+
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+            <span class="text-xs font-medium text-slate-500 block">Cleaned Status</span>
+            <span id="stat-status" class="text-base font-bold text-amber-600 flex items-center gap-1 mt-1">
+              <i data-lucide="alert-circle" class="w-4 h-4 text-amber-500"></i> Action Needed
+            </span>
+            <span class="text-[11px] text-slate-400 block mt-0.5">Stage 3_Data_Cleaning</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Amber Warning Badges for Columns with High Missing Values -->
+      <section class="space-y-3">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-bold text-slate-900 tracking-tight">Column-by-Column Missing Value Audit</h3>
+          <span class="text-xs text-slate-500">Hover for recommended imputation strategy</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
+          <!-- Col 1 -->
+          <div class="p-3 bg-white border border-slate-200 rounded-xl shadow-sm space-y-1.5">
+            <span class="text-xs font-mono font-bold text-slate-900 block truncate">Student ID</span>
+            <div id="badge-col-0" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+              <i data-lucide="alert-triangle" class="w-3 h-3 text-amber-500"></i>
+              15 Nulls (3.0%)
+            </div>
+            <p class="text-[10px] text-slate-500">Strategy: Mode (Categorical)</p>
+          </div>
+
+          <!-- Col 2 -->
+          <div class="p-3 bg-white border border-slate-200 rounded-xl shadow-sm space-y-1.5">
+            <span class="text-xs font-mono font-bold text-slate-900 block truncate">Study hrs</span>
+            <div id="badge-col-1" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+              <i data-lucide="alert-triangle" class="w-3 h-3 text-amber-500"></i>
+              27 Nulls (5.4%)
+            </div>
+            <p class="text-[10px] text-slate-500">Strategy: Mean (4.6 hrs)</p>
+          </div>
+
+          <!-- Col 3 -->
+          <div class="p-3 bg-white border border-slate-200 rounded-xl shadow-sm space-y-1.5">
+            <span class="text-xs font-mono font-bold text-slate-900 block truncate">Attendance</span>
+            <div id="badge-col-2" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+              <i data-lucide="alert-triangle" class="w-3 h-3 text-amber-500"></i>
+              27 Nulls (5.4%)
+            </div>
+            <p class="text-[10px] text-slate-500">Strategy: Mean (82.7%)</p>
+          </div>
+
+          <!-- Col 4 -->
+          <div class="p-3 bg-white border border-slate-200 rounded-xl shadow-sm space-y-1.5">
+            <span class="text-xs font-mono font-bold text-slate-900 block truncate">Previous marks</span>
+            <div id="badge-col-3" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+              <i data-lucide="alert-triangle" class="w-3 h-3 text-amber-500"></i>
+              27 Nulls (5.4%)
+            </div>
+            <p class="text-[10px] text-slate-500">Strategy: Mean (68.5)</p>
+          </div>
+
+          <!-- Col 5 -->
+          <div class="p-3 bg-white border border-slate-200 rounded-xl shadow-sm space-y-1.5">
+            <span class="text-xs font-mono font-bold text-slate-900 block truncate">Assignment scores</span>
+            <div id="badge-col-4" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+              <i data-lucide="alert-triangle" class="w-3 h-3 text-amber-500"></i>
+              27 Nulls (5.4%)
+            </div>
+            <p class="text-[10px] text-slate-500">Strategy: Mean (69.2)</p>
+          </div>
+
+          <!-- Col 6 -->
+          <div class="p-3 bg-white border border-slate-200 rounded-xl shadow-sm space-y-1.5">
+            <span class="text-xs font-mono font-bold text-slate-900 block truncate">Final performance</span>
+            <div id="badge-col-5" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+              <i data-lucide="alert-triangle" class="w-3 h-3 text-amber-500"></i>
+              27 Nulls (5.4%)
+            </div>
+            <p class="text-[10px] text-slate-500">Strategy: Mean (69.5)</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive Data Table View with Column Headers -->
+      <section class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden space-y-0">
+        <div class="p-5 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <h3 class="text-base font-bold text-slate-900 tracking-tight">Interactive Staged Data Table</h3>
+            <span id="table-row-counter" class="text-xs font-medium text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-full">Showing 10 of 500 records</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs text-slate-400">Click column header to sort</span>
+            <a href="eda.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-semibold transition-colors">
+              Proceed to EDA &rarr;
+            </a>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs font-mono">
+            <thead>
+              <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-sans uppercase font-semibold">
+                <th onclick="sortTable(0)" class="py-3.5 px-4 cursor-pointer hover:text-indigo-600 transition-colors">
+                  <div class="flex items-center gap-1">Student ID <i data-lucide="arrow-up-down" class="w-3 h-3 text-slate-400"></i></div>
+                </th>
+                <th onclick="sortTable(1)" class="py-3.5 px-4 cursor-pointer hover:text-indigo-600 transition-colors">
+                  <div class="flex items-center gap-1">Study hrs <i data-lucide="arrow-up-down" class="w-3 h-3 text-slate-400"></i></div>
+                </th>
+                <th onclick="sortTable(2)" class="py-3.5 px-4 cursor-pointer hover:text-indigo-600 transition-colors">
+                  <div class="flex items-center gap-1">Attendance <i data-lucide="arrow-up-down" class="w-3 h-3 text-slate-400"></i></div>
+                </th>
+                <th onclick="sortTable(3)" class="py-3.5 px-4 cursor-pointer hover:text-indigo-600 transition-colors">
+                  <div class="flex items-center gap-1">Previous marks <i data-lucide="arrow-up-down" class="w-3 h-3 text-slate-400"></i></div>
+                </th>
+                <th onclick="sortTable(4)" class="py-3.5 px-4 cursor-pointer hover:text-indigo-600 transition-colors">
+                  <div class="flex items-center gap-1">Assignment scores <i data-lucide="arrow-up-down" class="w-3 h-3 text-slate-400"></i></div>
+                </th>
+                <th onclick="sortTable(5)" class="py-3.5 px-4 cursor-pointer hover:text-indigo-600 transition-colors">
+                  <div class="flex items-center gap-1">Final performance <i data-lucide="arrow-up-down" class="w-3 h-3 text-slate-400"></i></div>
+                </th>
+                <th class="py-3.5 px-4 text-right font-sans">Status</th>
+              </tr>
+            </thead>
+            <tbody id="clean-tbody" class="divide-y divide-slate-100 text-slate-700">
+              <!-- Row 1: Missing categorical ID -->
+              <tr class="hover:bg-amber-50/30 transition-colors">
+                <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold text-[10px]">NaN</span></td>
+                <td class="py-3 px-4">4.2</td>
+                <td class="py-3 px-4">84.2%</td>
+                <td class="py-3 px-4">68.0</td>
+                <td class="py-3 px-4">71.0</td>
+                <td class="py-3 px-4">69.5</td>
+                <td class="py-3 px-4 text-right"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-100 text-amber-800">Null ID</span></td>
+              </tr>
+              <!-- Row 2: Missing Study hrs -->
+              <tr class="hover:bg-amber-50/30 transition-colors">
+                <td class="py-3 px-4 font-bold text-slate-900">STU002</td>
+                <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold text-[10px]">NaN</span></td>
+                <td class="py-3 px-4">91.0%</td>
+                <td class="py-3 px-4">74.5</td>
+                <td class="py-3 px-4">78.0</td>
+                <td class="py-3 px-4">76.2</td>
+                <td class="py-3 px-4 text-right"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-100 text-amber-800">Null Hours</span></td>
+              </tr>
+              <!-- Row 3: Missing Attendance -->
+              <tr class="hover:bg-amber-50/30 transition-colors">
+                <td class="py-3 px-4 font-bold text-slate-900">STU003</td>
+                <td class="py-3 px-4">3.5</td>
+                <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold text-[10px]">NaN</span></td>
+                <td class="py-3 px-4">62.0</td>
+                <td class="py-3 px-4">65.0</td>
+                <td class="py-3 px-4">63.8</td>
+                <td class="py-3 px-4 text-right"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-100 text-amber-800">Null Att</span></td>
+              </tr>
+              <!-- Row 4: Clean -->
+              <tr class="hover:bg-slate-50/60 transition-colors">
+                <td class="py-3 px-4 font-bold text-slate-900">STU004</td>
+                <td class="py-3 px-4">5.8</td>
+                <td class="py-3 px-4">88.5%</td>
+                <td class="py-3 px-4">78.0</td>
+                <td class="py-3 px-4">81.5</td>
+                <td class="py-3 px-4">80.2</td>
+                <td class="py-3 px-4 text-right"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 text-emerald-800">Clean</span></td>
+              </tr>
+              <!-- Row 5: Missing Previous Marks -->
+              <tr class="hover:bg-amber-50/30 transition-colors">
+                <td class="py-3 px-4 font-bold text-slate-900">STU005</td>
+                <td class="py-3 px-4">4.9</td>
+                <td class="py-3 px-4">86.0%</td>
+                <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold text-[10px]">NaN</span></td>
+                <td class="py-3 px-4">74.0</td>
+                <td class="py-3 px-4">72.5</td>
+                <td class="py-3 px-4 text-right"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-100 text-amber-800">Null Marks</span></td>
+              </tr>
+              <!-- Row 6: Duplicate Record -->
+              <tr class="hover:bg-amber-50/30 transition-colors">
+                <td class="py-3 px-4 font-bold text-slate-900">STU485</td>
+                <td class="py-3 px-4">5.1</td>
+                <td class="py-3 px-4">85.0%</td>
+                <td class="py-3 px-4">71.0</td>
+                <td class="py-3 px-4">75.0</td>
+                <td class="py-3 px-4">74.0</td>
+                <td class="py-3 px-4 text-right"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-purple-100 text-purple-800">Duplicate</span></td>
+              </tr>
+              <!-- Row 7: Duplicate Record Copy -->
+              <tr class="hover:bg-amber-50/30 transition-colors">
+                <td class="py-3 px-4 font-bold text-slate-900">STU485</td>
+                <td class="py-3 px-4">5.1</td>
+                <td class="py-3 px-4">85.0%</td>
+                <td class="py-3 px-4">71.0</td>
+                <td class="py-3 px-4">75.0</td>
+                <td class="py-3 px-4">74.0</td>
+                <td class="py-3 px-4 text-right"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-purple-100 text-purple-800">Duplicate</span></td>
+              </tr>
+              <!-- Row 8: Clean -->
+              <tr class="hover:bg-slate-50/60 transition-colors">
+                <td class="py-3 px-4 font-bold text-slate-900">STU008</td>
+                <td class="py-3 px-4">6.2</td>
+                <td class="py-3 px-4">95.0%</td>
+                <td class="py-3 px-4">88.0</td>
+                <td class="py-3 px-4">91.0</td>
+                <td class="py-3 px-4 font-bold text-emerald-600">89.4</td>
+                <td class="py-3 px-4 text-right"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 text-emerald-800">Clean</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Cleaning Audit Log -->
+      <section class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-3">
+        <h3 class="text-sm font-bold text-slate-900 tracking-tight">Active Transformation Log</h3>
+        <div id="cleaning-log" class="bg-slate-900 text-slate-100 font-mono text-xs rounded-xl p-4 space-y-1.5 max-h-40 overflow-y-auto">
+          <p class="text-slate-400">[STAGE] Initialized with 1_raw_dirty_student_data.csv (500 rows, 15 duplicates, 150 missing cells).</p>
+          <p class="text-amber-400">[AUDIT] Injected 5.0% null rate across Student ID, Study hrs, Attendance, Prev marks, Assignments, Final perf.</p>
+          <p class="text-slate-400">[READY] Waiting for user action: Drop Nulls, Impute Missing, or Remove Duplicates.</p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="mt-12 pt-6 border-t border-slate-200 text-center text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <img src="assets/logo.webp" alt="Logo" class="h-5 w-5 object-contain" />
+        <span>AI Student Performance & Academic Guidance System &bull; Academic Year 2026</span>
+      </div>
+      <div class="flex gap-4">
+        <a href="about.html" class="hover:text-indigo-600 transition-colors">Architecture</a>
+        <a href="eda.html" class="hover:text-indigo-600 transition-colors">Cohort Profiling</a>
+        <a href="chat.html" class="hover:text-indigo-600 transition-colors">AI Advisor</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // Data Cleaning State
+    let currentRows = 500;
+    let currentNulls = 150;
+    let currentDups = 15;
+
+    function logMessage(msg, colorClass = 'text-emerald-400') {
+      const log = document.getElementById('cleaning-log');
+      const p = document.createElement('p');
+      p.className = colorClass;
+      p.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+      log.appendChild(p);
+      log.scrollTop = log.scrollHeight;
+    }
+
+    function applyDropNulls() {
+      currentRows -= 135;
+      currentNulls = 0;
+      updateUI();
+      logMessage(`Drop Nulls executed: Dropped 135 rows containing missing cells. Remaining rows: ${currentRows}.`, 'text-indigo-400');
+    }
+
+    function applyImputation() {
+      currentNulls = 0;
+      updateUI();
+      // Clear column badges to Emerald
+      for (let i = 0; i < 6; i++) {
+        const badge = document.getElementById(`badge-col-${i}`);
+        if (badge) {
+          badge.className = 'inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200';
+          badge.innerHTML = `<i data-lucide="check" class="w-3 h-3 text-emerald-600"></i> Imputed (0 Nulls)`;
+        }
+      }
+      lucide.createIcons();
+      logMessage(`Imputation complete: Imputed 15 categorical cells with Mode and 135 numerical cells with Mean.`, 'text-emerald-400');
+    }
+
+    function applyRemoveDuplicates() {
+      currentRows -= currentDups;
+      currentDups = 0;
+      updateUI();
+      logMessage(`Remove Duplicates complete: Purged 15 exact duplicate records. Remaining rows: ${currentRows}.`, 'text-emerald-400');
+    }
+
+    function resetData() {
+      currentRows = 500;
+      currentNulls = 150;
+      currentDups = 15;
+      updateUI();
+      location.reload();
+    }
+
+    function updateUI() {
+      document.getElementById('stat-rows').textContent = currentRows;
+      document.getElementById('stat-nulls').textContent = currentNulls;
+      document.getElementById('stat-dups').textContent = currentDups;
+      document.getElementById('table-row-counter').textContent = `Showing active records (${currentRows} total rows)`;
+
+      const statusEl = document.getElementById('stat-status');
+      if (currentNulls === 0 && currentDups === 0) {
+        statusEl.className = 'text-base font-bold text-emerald-600 flex items-center gap-1 mt-1';
+        statusEl.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 text-emerald-500"></i> Clean & Verified`;
+      }
+      lucide.createIcons();
+    }
+
+    function sortTable(colIdx) {
+      logMessage(`Sorting table by column ${colIdx + 1}...`, 'text-slate-300');
+    }
+  </script>
+</body>
+</html>
+

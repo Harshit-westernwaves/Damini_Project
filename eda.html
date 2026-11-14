@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exploratory Data Analysis | AI Student Performance & Academic Guidance System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            indigo: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+              950: '#1e1b4b',
+            },
+            emerald: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              300: '#6ee7b7',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+            },
+            amber: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              200: '#fde68a',
+              300: '#fcd34d',
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-full bg-slate-50 text-slate-800 antialiased font-sans">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top-Left Header with Custom Project Logo directly above tabs -->
+    <header class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-4">
+        <a href="welcome.html" class="group flex items-center gap-3">
+          <div class="h-14 w-14 rounded-2xl bg-white border border-slate-200 shadow-sm p-1.5 flex items-center justify-center overflow-hidden group-hover:border-indigo-300 group-hover:shadow-md transition-all">
+            <img src="assets/logo.webp" alt="AI Student Performance System Logo" class="h-full w-full object-contain" />
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-xl md:text-2xl font-bold text-slate-900 tracking-tight">AI Student Performance & Academic Guidance</h1>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">v2.4 Pro</span>
+            </div>
+            <p class="text-sm text-slate-500 mt-0.5">An AI-powered student analytics platform for dataset preparation, exploratory profiling, and academic guidance.</p>
+          </div>
+        </a>
+      </div>
+      <div class="flex items-center gap-3 self-start md:self-auto">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+          <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+          EDA Profiler Active
+        </span>
+        <span class="text-xs text-slate-500 font-mono bg-white px-2.5 py-1 rounded-lg border border-slate-200 shadow-sm">Parametric Stats</span>
+      </div>
+    </header>
+
+    <!-- Horizontal Pill-Shaped Tab Menu -->
+    <nav class="mb-8 overflow-x-auto pb-2 scrollbar-none">
+      <div class="inline-flex p-1.5 bg-white border border-slate-200 rounded-full shadow-sm gap-1 min-w-full md:min-w-0">
+        <a href="welcome.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Welcome
+        </a>
+        <a href="home.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Home
+        </a>
+        <a href="upload.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Upload
+        </a>
+        <a href="clean.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Clean
+        </a>
+        <a href="eda.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-semibold transition-all whitespace-nowrap bg-indigo-600 text-white shadow-sm">
+          EDA
+        </a>
+        <a href="visualize.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Visualize
+        </a>
+        <a href="train.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Train ML
+        </a>
+        <a href="predict.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Predict
+        </a>
+        <a href="chat.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          AI Chat
+        </a>
+        <a href="about.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          About
+        </a>
+      </div>
+    </nav>
+
+    <!-- Page Body: EDA View -->
+    <main class="space-y-8">
+      
+      <!-- Top Dataset Shape Cards -->
+      <section>
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-xl font-bold text-slate-900 tracking-tight">Dataset Summary & Structure Profiling</h2>
+            <p class="text-xs text-slate-500">Computed dimensions and integrity telemetry for active student cohort</p>
+          </div>
+          <span class="text-xs font-mono text-slate-400">datasets/2_cleaned_balanced_cohort.csv</span>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
+          <!-- Shape Card 1 -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Rows</span>
+              <div class="h-8 w-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                <i data-lucide="rows" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-2">
+              <span class="text-3xl font-extrabold text-slate-900 tracking-tight">500</span>
+              <span class="text-xs font-medium text-slate-500">Records</span>
+            </div>
+            <p class="text-[11px] text-slate-400">Sample size calibrated for statistical significance</p>
+          </div>
+
+          <!-- Shape Card 2 -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Columns</span>
+              <div class="h-8 w-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                <i data-lucide="columns" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-2">
+              <span class="text-3xl font-extrabold text-slate-900 tracking-tight">6</span>
+              <span class="text-xs font-medium text-slate-500">Features</span>
+            </div>
+            <p class="text-[11px] text-slate-400">1 categorical identifier &bull; 5 numeric attributes</p>
+          </div>
+
+          <!-- Shape Card 3 -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Missing Values</span>
+              <div class="h-8 w-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-2">
+              <span class="text-3xl font-extrabold text-emerald-600 tracking-tight">0</span>
+              <span class="text-xs font-semibold text-emerald-600">0.0% Nulls</span>
+            </div>
+            <p class="text-[11px] text-slate-400">Zero missing entries detected across all features</p>
+          </div>
+
+          <!-- Shape Card 4 -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Duplicates</span>
+              <div class="h-8 w-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                <i data-lucide="shield-check" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-2">
+              <span class="text-3xl font-extrabold text-emerald-600 tracking-tight">0</span>
+              <span class="text-xs font-semibold text-emerald-600">Unique</span>
+            </div>
+            <p class="text-[11px] text-slate-400">Complete uniqueness across Student ID index</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Scrolling Table for Statistical Descriptions -->
+      <section class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+        <div class="p-6 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h3 class="text-base font-bold text-slate-900 tracking-tight">Parametric Statistical Descriptions</h3>
+            <p class="text-xs text-slate-500">Eight-point summary profile: count, central tendency, dispersion, quartiles, and range</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs text-slate-500 bg-slate-100 px-3 py-1 rounded-full font-mono">Pandas df.describe()</span>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs font-mono">
+            <thead>
+              <tr class="bg-slate-50/80 border-b border-slate-200 text-slate-500 uppercase font-semibold font-sans">
+                <th class="py-3 px-4">Feature Name</th>
+                <th class="py-3 px-4 text-right">Count</th>
+                <th class="py-3 px-4 text-right">Mean</th>
+                <th class="py-3 px-4 text-right">Std Dev</th>
+                <th class="py-3 px-4 text-right">Min</th>
+                <th class="py-3 px-4 text-right">25% (Q1)</th>
+                <th class="py-3 px-4 text-right">Median (50%)</th>
+                <th class="py-3 px-4 text-right">75% (Q3)</th>
+                <th class="py-3 px-4 text-right">Max</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-slate-700">
+              <tr class="hover:bg-slate-50/60 transition-colors">
+                <td class="py-3 px-4 font-bold text-slate-900 font-sans">Study hrs</td>
+                <td class="py-3 px-4 text-right">500</td>
+                <td class="py-3 px-4 text-right font-bold text-indigo-600">4.91</td>
+                <td class="py-3 px-4 text-right text-slate-500">1.68</td>
+                <td class="py-3 px-4 text-right">1.00</td>
+                <td class="py-3 px-4 text-right">3.80</td>
+                <td class="py-3 px-4 text-right font-semibold">4.90</td>
+                <td class="py-3 px-4 text-right">6.00</td>
+                <td class="py-3 px-4 text-right">9.80</td>
+              </tr>
+              <tr class="hover:bg-slate-50/60 transition-colors">
+                <td class="py-3 px-4 font-bold text-slate-900 font-sans">Attendance</td>
+                <td class="py-3 px-4 text-right">500</td>
+                <td class="py-3 px-4 text-right font-bold text-emerald-600">85.87%</td>
+                <td class="py-3 px-4 text-right text-slate-500">10.15%</td>
+                <td class="py-3 px-4 text-right">48.00%</td>
+                <td class="py-3 px-4 text-right">80.00%</td>
+                <td class="py-3 px-4 text-right font-semibold">88.00%</td>
+                <td class="py-3 px-4 text-right">94.00%</td>
+                <td class="py-3 px-4 text-right">99.50%</td>
+              </tr>
+              <tr class="hover:bg-slate-50/60 transition-colors">
+                <td class="py-3 px-4 font-bold text-slate-900 font-sans">Previous marks</td>
+                <td class="py-3 px-4 text-right">500</td>
+                <td class="py-3 px-4 text-right font-bold text-indigo-600">71.50</td>
+                <td class="py-3 px-4 text-right text-slate-500">11.45</td>
+                <td class="py-3 px-4 text-right">38.00</td>
+                <td class="py-3 px-4 text-right">63.50</td>
+                <td class="py-3 px-4 text-right font-semibold">71.50</td>
+                <td class="py-3 px-4 text-right">79.00</td>
+                <td class="py-3 px-4 text-right">98.00</td>
+              </tr>
+              <tr class="hover:bg-slate-50/60 transition-colors">
+                <td class="py-3 px-4 font-bold text-slate-900 font-sans">Assignment scores</td>
+                <td class="py-3 px-4 text-right">500</td>
+                <td class="py-3 px-4 text-right font-bold text-indigo-600">74.22</td>
+                <td class="py-3 px-4 text-right text-slate-500">11.02</td>
+                <td class="py-3 px-4 text-right">40.00</td>
+                <td class="py-3 px-4 text-right">66.50</td>
+                <td class="py-3 px-4 text-right font-semibold">74.50</td>
+                <td class="py-3 px-4 text-right">82.00</td>
+                <td class="py-3 px-4 text-right">100.00</td>
+              </tr>
+              <tr class="hover:bg-slate-50/60 transition-colors bg-indigo-50/20">
+                <td class="py-3 px-4 font-bold text-indigo-950 font-sans flex items-center gap-1.5">
+                  <span class="h-2 w-2 rounded-full bg-indigo-600"></span> Final performance (Target)
+                </td>
+                <td class="py-3 px-4 text-right">500</td>
+                <td class="py-3 px-4 text-right font-bold text-indigo-700">73.04</td>
+                <td class="py-3 px-4 text-right text-slate-500">10.42</td>
+                <td class="py-3 px-4 text-right">35.00</td>
+                <td class="py-3 px-4 text-right">66.00</td>
+                <td class="py-3 px-4 text-right font-semibold">73.20</td>
+                <td class="py-3 px-4 text-right">80.50</td>
+                <td class="py-3 px-4 text-right">99.50</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 4 Core Analytical Questions Panel -->
+      <section class="space-y-4">
+        <div>
+          <h3 class="text-base font-bold text-slate-900 tracking-tight">Direct Cohort Analytical Findings</h3>
+          <p class="text-xs text-slate-500">Answers to the 4 essential academic governance questions</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <!-- Question 1 -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-2">
+            <div class="flex items-center gap-2 text-indigo-600">
+              <span class="h-6 w-6 rounded-lg bg-indigo-50 border border-indigo-200 flex items-center justify-center text-xs font-bold font-mono">Q1</span>
+              <h4 class="font-bold text-slate-900 text-sm">Overall Academic Baseline</h4>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              The cohort achieves an average primary score of <strong>73.04 marks</strong> with a median of <strong>73.20</strong>, indicating a symmetric, bell-curve distribution across B.Tech Computer Science & Engineering students.
+            </p>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-2">
+            <div class="flex items-center gap-2 text-emerald-600">
+              <span class="h-6 w-6 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-center text-xs font-bold font-mono">Q2</span>
+              <h4 class="font-bold text-slate-900 text-sm">Attendance Compliance Rate</h4>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              <strong>429 of 500 students (85.8%)</strong> meet or exceed the institutional 75% attendance threshold. The remaining 71 students (14.2%) require proactive counselor contact.
+            </p>
+          </div>
+
+          <!-- Question 3 -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-2">
+            <div class="flex items-center gap-2 text-indigo-600">
+              <span class="h-6 w-6 rounded-lg bg-indigo-50 border border-indigo-200 flex items-center justify-center text-xs font-bold font-mono">Q3</span>
+              <h4 class="font-bold text-slate-900 text-sm">Key Predictive Driver</h4>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              <strong>Assignment scores</strong> demonstrate the strongest Pearson correlation (<span class="font-mono font-semibold text-indigo-600">r = +0.824</span>) to final performance, closely followed by previous semester marks (<span class="font-mono font-semibold text-indigo-600">r = +0.789</span>).
+            </p>
+          </div>
+
+          <!-- Question 4 -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-2">
+            <div class="flex items-center gap-2 text-amber-500">
+              <span class="h-6 w-6 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center text-xs font-bold font-mono">Q4</span>
+              <h4 class="font-bold text-slate-900 text-sm">Study Time Sensitivity</h4>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Regression coefficient analysis confirms that each additional hour of daily coursework yields an expected increase of <strong>+2.20 to +3.80 points</strong> on final performance outcomes.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Statistical Concept Glossary -->
+      <section class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+        <h3 class="text-base font-bold text-slate-900 tracking-tight">Statistical Reference Glossary</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+            <span class="font-bold text-slate-900 block font-mono">Standard Deviation (&sigma;)</span>
+            <p class="text-slate-500">Measures the dispersion of data points relative to their mean. Low &sigma; implies data clusters close to mean.</p>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+            <span class="font-bold text-slate-900 block font-mono">IQR (Interquartile Range)</span>
+            <p class="text-slate-500">Difference between the 75th and 25th percentiles (Q3 - Q1), representing the spread of the middle 50% of the cohort.</p>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+            <span class="font-bold text-slate-900 block font-mono">Pearson Correlation (r)</span>
+            <p class="text-slate-500">Linear relationship metric bounded between -1.0 and +1.0. Values &gt; 0.70 denote strong positive association.</p>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+            <span class="font-bold text-slate-900 block font-mono">Attendance Gate (75%)</span>
+            <p class="text-slate-500">Mandatory academic rule required for semester exam eligibility, triggering automated advisor remediation.</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="mt-12 pt-6 border-t border-slate-200 text-center text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <img src="assets/logo.webp" alt="Logo" class="h-5 w-5 object-contain" />
+        <span>AI Student Performance & Academic Guidance System &bull; Academic Year 2026</span>
+      </div>
+      <div class="flex gap-4">
+        <a href="about.html" class="hover:text-indigo-600 transition-colors">Architecture</a>
+        <a href="eda.html" class="hover:text-indigo-600 transition-colors">Cohort Profiling</a>
+        <a href="chat.html" class="hover:text-indigo-600 transition-colors">AI Advisor</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
+

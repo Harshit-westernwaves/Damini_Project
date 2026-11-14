@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome | AI Student Performance & Academic Guidance System</title>
+  <!-- Tailwind CSS CDN with configuration -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            indigo: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+              950: '#1e1b4b',
+            },
+            emerald: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              300: '#6ee7b7',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+            },
+            amber: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              200: '#fde68a',
+              300: '#fcd34d',
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-full bg-slate-50 text-slate-800 antialiased font-sans">
+  <!-- Top App Container -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top-Left Header with Custom Project Logo directly above the tabs -->
+    <header class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-4">
+        <!-- Custom Project Logo -->
+        <a href="welcome.html" class="group flex items-center gap-3">
+          <div class="h-14 w-14 rounded-2xl bg-white border border-slate-200 shadow-sm p-1.5 flex items-center justify-center overflow-hidden group-hover:border-indigo-300 group-hover:shadow-md transition-all">
+            <img src="assets/logo.webp" alt="AI Student Performance System Logo" class="h-full w-full object-contain" />
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-xl md:text-2xl font-bold text-slate-900 tracking-tight">AI Student Performance & Academic Guidance</h1>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">v2.4 Pro</span>
+            </div>
+            <p class="text-sm text-slate-500 mt-0.5">An AI-powered student analytics platform for dataset preparation, exploratory profiling, and academic guidance.</p>
+          </div>
+        </a>
+      </div>
+      <div class="flex items-center gap-3 self-start md:self-auto">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+          <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Platform Online
+        </span>
+        <span class="text-xs text-slate-500 font-mono bg-white px-2.5 py-1 rounded-lg border border-slate-200 shadow-sm">Cohort 2026-CSE</span>
+      </div>
+    </header>
+
+    <!-- Horizontal Pill-Shaped Tab Menu -->
+    <nav class="mb-8 overflow-x-auto pb-2 scrollbar-none">
+      <div class="inline-flex p-1.5 bg-white border border-slate-200 rounded-full shadow-sm gap-1 min-w-full md:min-w-0">
+        <a href="welcome.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-semibold transition-all whitespace-nowrap bg-indigo-600 text-white shadow-sm">
+          Welcome
+        </a>
+        <a href="home.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Home
+        </a>
+        <a href="upload.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Upload
+        </a>
+        <a href="clean.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Clean
+        </a>
+        <a href="eda.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          EDA
+        </a>
+        <a href="visualize.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Visualize
+        </a>
+        <a href="train.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Train ML
+        </a>
+        <a href="predict.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Predict
+        </a>
+        <a href="chat.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          AI Chat
+        </a>
+        <a href="about.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          About
+        </a>
+      </div>
+    </nav>
+
+    <!-- Page Body: Welcome View -->
+    <main class="space-y-8">
+      
+      <!-- Hero / Platform Overview Card -->
+      <section class="bg-white border border-slate-200 rounded-2xl shadow-sm p-6 md:p-8 hover:shadow-md transition-shadow">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+          <div class="lg:col-span-2 space-y-4">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-600"></i>
+              Next-Gen Academic Analytics Engine
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">
+              Transforming Student Academic Trajectories with Predictive Intelligence
+            </h2>
+            <p class="text-slate-600 leading-relaxed text-sm md:text-base">
+              The AI Student Performance & Academic Guidance System provides an end-to-end framework for student record ingestion, statistical data cleaning, exploratory analysis, machine learning forecasting, and interactive AI advising. Designed for academic departments, faculty mentors, and counselors to detect at-risk patterns early and formulate targeted intervention strategies.
+            </p>
+            <div class="pt-2 flex flex-wrap gap-3">
+              <a href="home.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm shadow-sm transition-all">
+                <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                Launch Main Dashboard
+              </a>
+              <a href="upload.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium text-sm shadow-sm transition-all">
+                <i data-lucide="upload-cloud" class="w-4 h-4 text-emerald-600"></i>
+                Ingest Student Dataset
+              </a>
+              <a href="chat.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 text-emerald-700 font-medium text-sm transition-all">
+                <i data-lucide="bot" class="w-4 h-4 text-emerald-600"></i>
+                Query AI Advisor
+              </a>
+            </div>
+          </div>
+
+          <!-- Quick Stats / Active Status Side Panel -->
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+              <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Session Ingestion</span>
+              <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-100 text-emerald-800">Ready</span>
+            </div>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs text-slate-600">Active Cohort File</span>
+                <span class="text-xs font-semibold text-slate-900 font-mono">2_cleaned_balanced_cohort.csv</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-xs text-slate-600">Cohort Size</span>
+                <span class="text-xs font-bold text-indigo-600">500 Students</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-xs text-slate-600">Schema Specification</span>
+                <span class="text-xs font-medium text-slate-700">6 Canonical Features</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-xs text-slate-600">Active ML Model</span>
+                <span class="text-xs font-semibold text-emerald-600">Linear Regression (R² 0.856)</span>
+              </div>
+            </div>
+            <div class="pt-2">
+              <div class="w-full bg-slate-200 rounded-full h-1.5 overflow-hidden">
+                <div class="bg-indigo-600 h-1.5 rounded-full" style="width: 100%"></div>
+              </div>
+              <p class="text-[11px] text-slate-400 mt-1 text-center">Calibrated for B.Tech Computer Science & Engineering</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4 Pillars of AI Intelligence -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 tracking-tight">Core AI Intelligence Pillars</h3>
+            <p class="text-xs text-slate-500">Integrated modules driving high-accuracy academic intervention and advising</p>
+          </div>
+          <span class="text-xs font-semibold text-indigo-600">4 Core Capabilities</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <!-- Pillar 1 -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-indigo-200 transition-all space-y-3">
+            <div class="h-10 w-10 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600">
+              <i data-lucide="database" class="w-5 h-5"></i>
+            </div>
+            <h4 class="font-bold text-slate-900 text-sm">1. Data Analysis</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Automated detection and resolution of missing values, duplicate records, five-number summary statistics, and multi-factor Pearson correlations.
+            </p>
+            <a href="clean.html" class="inline-flex items-center text-xs font-semibold text-indigo-600 hover:text-indigo-800">
+              Explore Data Prep &rarr;
+            </a>
+          </div>
+
+          <!-- Pillar 2 -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-indigo-200 transition-all space-y-3">
+            <div class="h-10 w-10 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600">
+              <i data-lucide="cpu" class="w-5 h-5"></i>
+            </div>
+            <h4 class="font-bold text-slate-900 text-sm">2. Machine Learning</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Supervised Linear Regression, Logistic Regression, and Random Forest pipelines with configurable train/test splitting and standardized scaling.
+            </p>
+            <a href="train.html" class="inline-flex items-center text-xs font-semibold text-indigo-600 hover:text-indigo-800">
+              Configure Models &rarr;
+            </a>
+          </div>
+
+          <!-- Pillar 3 -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-emerald-200 transition-all space-y-3">
+            <div class="h-10 w-10 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600">
+              <i data-lucide="trending-up" class="w-5 h-5"></i>
+            </div>
+            <h4 class="font-bold text-slate-900 text-sm">3. Performance Forecasting</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Individual student final score predictions derived from daily Study hrs, Attendance %, Previous marks, and Assignment scores with confidence bounds.
+            </p>
+            <a href="predict.html" class="inline-flex items-center text-xs font-semibold text-emerald-600 hover:text-emerald-800">
+              Run Predictions &rarr;
+            </a>
+          </div>
+
+          <!-- Pillar 4 -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-indigo-200 transition-all space-y-3">
+            <div class="h-10 w-10 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600">
+              <i data-lucide="bot" class="w-5 h-5"></i>
+            </div>
+            <h4 class="font-bold text-slate-900 text-sm">4. Groq AI Advisor</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Conversational academic advisor backed by hosted Groq Llama-3.3-70B models, paired with an offline dataset-aware heuristic fallback engine.
+            </p>
+            <a href="chat.html" class="inline-flex items-center text-xs font-semibold text-indigo-600 hover:text-indigo-800">
+              Start Advisory Chat &rarr;
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Platform Highlights -->
+      <section class="space-y-4">
+        <div>
+          <h3 class="text-lg font-bold text-slate-900 tracking-tight">Platform Highlights & Quality Assurance</h3>
+          <p class="text-xs text-slate-500">Robust design principles engineered for faculty and student success</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-2">
+            <div class="flex items-center gap-2 text-indigo-600">
+              <i data-lucide="shield-check" class="w-5 h-5"></i>
+              <h4 class="font-semibold text-slate-900 text-sm">Zero Data Drift</h4>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Every dataset strictly adheres to the standard 6-column specification: Student ID, Study hrs, Attendance, Previous marks, Assignment scores, and Final performance.
+            </p>
+          </div>
+
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-2">
+            <div class="flex items-center gap-2 text-emerald-600">
+              <i data-lucide="bell-ring" class="w-5 h-5"></i>
+              <h4 class="font-semibold text-slate-900 text-sm">Attendance Gate Alerts</h4>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Automatic flag triggers for students falling below the mandatory 75% attendance threshold, generating actionable recovery plans with prioritized study blocks.
+            </p>
+          </div>
+
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-2">
+            <div class="flex items-center gap-2 text-amber-500">
+              <i data-lucide="sliders" class="w-5 h-5"></i>
+              <h4 class="font-semibold text-slate-900 text-sm">Transparent Explainability</h4>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Coefficients and feature weights are exposed for every trained regression model, giving mentors explicit justification for suggested remedial actions.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Technology Stack -->
+      <section class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+        <h4 class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">Production Technology Stack</h4>
+        <div class="flex flex-wrap gap-2.5">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-700">
+            <i data-lucide="code-2" class="w-3.5 h-3.5 text-indigo-600"></i>
+            Tailwind CSS
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-700">
+            <i data-lucide="binary" class="w-3.5 h-3.5 text-indigo-600"></i>
+            Scikit-Learn ML
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-700">
+            <i data-lucide="cpu" class="w-3.5 h-3.5 text-emerald-600"></i>
+            Groq Llama-3.3-70B
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-700">
+            <i data-lucide="bar-chart-3" class="w-3.5 h-3.5 text-indigo-600"></i>
+            Chart.js Visuals
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-700">
+            <i data-lucide="table" class="w-3.5 h-3.5 text-indigo-600"></i>
+            Pandas Analytics
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-700">
+            <i data-lucide="layers" class="w-3.5 h-3.5 text-amber-500"></i>
+            Streamlit Engine
+          </span>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="mt-12 pt-6 border-t border-slate-200 text-center text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <img src="assets/logo.webp" alt="Logo" class="h-5 w-5 object-contain" />
+        <span>AI Student Performance & Academic Guidance System &bull; Academic Year 2026</span>
+      </div>
+      <div class="flex gap-4">
+        <a href="about.html" class="hover:text-indigo-600 transition-colors">Architecture</a>
+        <a href="eda.html" class="hover:text-indigo-600 transition-colors">Cohort Profiling</a>
+        <a href="chat.html" class="hover:text-indigo-600 transition-colors">AI Advisor</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>
+

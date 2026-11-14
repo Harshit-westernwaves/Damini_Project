@@ -3,10 +3,12 @@ pages/3_Data_Cleaning.py - Structured Data Cleaning Pipeline
 AI Student Performance & Academic Guidance System
 """
 
+import os
 import numpy as np
 import pandas as pd
 import streamlit as st
 from utils import (
+    DATASETS_DIR,
     apply_custom_css,
     drop_missing_rows,
     generate_sample_student_dataset,
@@ -40,7 +42,7 @@ render_header(
     title="Data Cleaning",
     subtitle="Detect and resolve missing values, remove duplicate records, inspect dataset structure, and export cleaned data.",
     badge_text="Module 03",
-    badge_variant="teal",
+    badge_variant="amber",
 )
 
 # ---------------------------------------------------------
@@ -49,12 +51,17 @@ render_header(
 if st.session_state.get("raw_df") is None:
     with st.container(border=True):
         st.markdown("**No dataset loaded in session state**")
-        st.caption("Upload a CSV dataset or generate the sample dataset before running data cleaning.")
-        c1, c2, _ = st.columns([1.4, 1.4, 2.5])
+        st.caption("Upload a CSV dataset or load the raw demo dataset before running data cleaning.")
+        c1, c2, _ = st.columns([1.6, 1.4, 2.3])
         with c1:
-            if st.button("Generate Sample Dataset", type="primary", width="stretch"):
-                sample_df = generate_sample_student_dataset(n_samples=200, inject_imperfections=True)
-                set_session_dataset(sample_df, "sample_student_data_200.csv", mark_cleaned=False)
+            if st.button("Load Raw Dirty Dataset (Demo)", type="primary", width="stretch"):
+                dirty_path = os.path.join(DATASETS_DIR, "1_raw_dirty_student_data.csv")
+                if os.path.exists(dirty_path):
+                    sample_df = pd.read_csv(dirty_path)
+                    set_session_dataset(sample_df, "1_raw_dirty_student_data.csv", mark_cleaned=False)
+                else:
+                    sample_df = generate_sample_student_dataset(n_samples=200, inject_imperfections=True)
+                    set_session_dataset(sample_df, "sample_student_data_200.csv", mark_cleaned=False)
                 st.rerun()
         with c2:
             if st.button("Open Upload Dataset", width="stretch"):

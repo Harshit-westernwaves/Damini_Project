@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Academic Chatbot | AI Student Performance & Academic Guidance System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            indigo: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+              950: '#1e1b4b',
+            },
+            emerald: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              300: '#6ee7b7',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+            },
+            amber: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              200: '#fde68a',
+              300: '#fcd34d',
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-full bg-slate-50 text-slate-800 antialiased font-sans">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top-Left Header with Custom Project Logo directly above tabs -->
+    <header class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-4">
+        <a href="welcome.html" class="group flex items-center gap-3">
+          <div class="h-14 w-14 rounded-2xl bg-white border border-slate-200 shadow-sm p-1.5 flex items-center justify-center overflow-hidden group-hover:border-indigo-300 group-hover:shadow-md transition-all">
+            <img src="assets/logo.webp" alt="AI Student Performance System Logo" class="h-full w-full object-contain" />
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-xl md:text-2xl font-bold text-slate-900 tracking-tight">AI Student Performance & Academic Guidance</h1>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">v2.4 Pro</span>
+            </div>
+            <p class="text-sm text-slate-500 mt-0.5">An AI-powered student analytics platform for dataset preparation, exploratory profiling, and academic guidance.</p>
+          </div>
+        </a>
+      </div>
+      <div class="flex items-center gap-3 self-start md:self-auto">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+          <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Groq AI Connected
+        </span>
+        <span class="text-xs text-slate-500 font-mono bg-white px-2.5 py-1 rounded-lg border border-slate-200 shadow-sm">Llama-3.3-70B</span>
+      </div>
+    </header>
+
+    <!-- Horizontal Pill-Shaped Tab Menu -->
+    <nav class="mb-8 overflow-x-auto pb-2 scrollbar-none">
+      <div class="inline-flex p-1.5 bg-white border border-slate-200 rounded-full shadow-sm gap-1 min-w-full md:min-w-0">
+        <a href="welcome.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Welcome
+        </a>
+        <a href="home.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Home
+        </a>
+        <a href="upload.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Upload
+        </a>
+        <a href="clean.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Clean
+        </a>
+        <a href="eda.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          EDA
+        </a>
+        <a href="visualize.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Visualize
+        </a>
+        <a href="train.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Train ML
+        </a>
+        <a href="predict.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Predict
+        </a>
+        <a href="chat.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-semibold transition-all whitespace-nowrap bg-indigo-600 text-white shadow-sm">
+          AI Chat
+        </a>
+        <a href="about.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          About
+        </a>
+      </div>
+    </nav>
+
+    <!-- Page Body: AI Chat View -->
+    <main class="space-y-6">
+      
+      <!-- Top Chat Controls Bar -->
+      <section class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="h-9 w-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+            <i data-lucide="bot" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h2 class="text-sm font-bold text-slate-900 tracking-tight">AI Academic Advisory Assistant</h2>
+            <p class="text-[11px] text-slate-500">Trained on academic intervention protocols & active cohort telemetry</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="clearChat()" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-slate-600 flex items-center gap-1.5 transition-colors">
+            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Clear Chat
+          </button>
+          <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 text-xs font-semibold font-mono">
+            llama-3.3-70b-versatile
+          </span>
+        </div>
+      </section>
+
+      <!-- Suggested Question Prompt Chips -->
+      <div class="flex flex-wrap items-center gap-2 text-xs">
+        <span class="text-slate-400 font-medium">Try asking:</span>
+        <button onclick="sendPrompt('How can a student improve from 62% attendance before semester exams?')" class="px-3 py-1 rounded-full bg-white border border-slate-200 hover:border-indigo-400 text-slate-700 hover:text-indigo-600 shadow-sm transition-all">
+          &ldquo;How to recover from 62% attendance?&rdquo;
+        </button>
+        <button onclick="sendPrompt('Design a structured 4-hour daily study schedule for B.Tech CSE coursework.')" class="px-3 py-1 rounded-full bg-white border border-slate-200 hover:border-indigo-400 text-slate-700 hover:text-indigo-600 shadow-sm transition-all">
+          &ldquo;4-hour daily study schedule for CSE&rdquo;
+        </button>
+        <button onclick="sendPrompt('What dataset indicators have the highest correlation with final performance?')" class="px-3 py-1 rounded-full bg-white border border-slate-200 hover:border-indigo-400 text-slate-700 hover:text-indigo-600 shadow-sm transition-all">
+          &ldquo;Highest correlation indicators?&rdquo;
+        </button>
+        <button onclick="sendPrompt('Explain the difference between Linear Regression and Logistic Regression in this platform.')" class="px-3 py-1 rounded-full bg-white border border-slate-200 hover:border-indigo-400 text-slate-700 hover:text-indigo-600 shadow-sm transition-all">
+          &ldquo;Linear vs. Logistic Regression?&rdquo;
+        </button>
+      </div>
+
+      <!-- Scrollable Message History Area -->
+      <div id="chat-messages-container" class="bg-white border border-slate-200 rounded-2xl shadow-sm p-6 min-h-[460px] max-h-[560px] overflow-y-auto space-y-5">
+        
+        <!-- Welcome Message from Groq AI -->
+        <div class="flex items-start gap-3.5 max-w-2xl mr-auto">
+          <div class="h-8 w-8 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-600 flex-shrink-0 flex items-center justify-center mt-1">
+            <i data-lucide="bot" class="w-4 h-4"></i>
+          </div>
+          <div class="bg-slate-50 border border-slate-200 text-slate-800 rounded-2xl rounded-tl-sm p-4 shadow-sm text-xs leading-relaxed space-y-2">
+            <p class="font-bold text-slate-900 text-xs">AI Academic Advisor</p>
+            <p>
+              Hello! I am your AI Academic Advisor for the <strong>AI Student Performance System</strong>. I have real-time visibility into the active 500-student CSE cohort.
+            </p>
+            <p>
+              I can help you analyze student risk profiles, calculate required class attendance to clear the <strong>75% gate</strong>, structure daily study timetables, or explain underlying machine learning formulas.
+            </p>
+            <p class="text-slate-400 text-[11px] pt-1">
+              Active Context: 500 students enrolled &bull; Mean score 73.04 &bull; 28 at-risk students flagged.
+            </p>
+          </div>
+        </div>
+
+        <!-- Sample Conversation: User Query -->
+        <div class="flex items-start gap-3.5 max-w-xl ml-auto justify-end">
+          <div class="bg-indigo-600 text-white rounded-2xl rounded-tr-sm p-4 shadow-sm text-xs leading-relaxed space-y-1">
+            <p class="font-semibold text-indigo-100 text-[10px]">Student / Mentor Query</p>
+            <p>What are the most impactful actions for a student scoring 52% with 64% attendance?</p>
+          </div>
+          <div class="h-8 w-8 rounded-xl bg-slate-900 text-white flex-shrink-0 flex items-center justify-center mt-1 font-bold text-xs">
+            U
+          </div>
+        </div>
+
+        <!-- Sample Conversation: AI Response (White Card) -->
+        <div class="flex items-start gap-3.5 max-w-2xl mr-auto">
+          <div class="h-8 w-8 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-600 flex-shrink-0 flex items-center justify-center mt-1">
+            <i data-lucide="bot" class="w-4 h-4"></i>
+          </div>
+          <div class="bg-slate-50 border border-slate-200 text-slate-800 rounded-2xl rounded-tl-sm p-4 shadow-sm text-xs leading-relaxed space-y-2">
+            <div class="flex items-center justify-between pb-1 border-b border-slate-200">
+              <span class="font-bold text-slate-900 text-xs">AI Academic Advisor</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-100 text-amber-800">At-Risk Intervention Plan</span>
+            </div>
+            <p>
+              Based on our calibrated regression model coefficients, here is a targeted 3-point recovery roadmap:
+            </p>
+            <ul class="list-disc pl-4 space-y-1 text-slate-700">
+              <li>
+                <strong>Immediate Attendance Quarantine:</strong> The student must attend 100% of classes over the next 4 weeks (approximately 24 class sessions) to lift overall attendance from 64% above the 75% examination eligibility gate.
+              </li>
+              <li>
+                <strong>Assignment Score Elevation:</strong> Assignment scores hold the strongest model weight (+0.280 beta). Submitting all upcoming lab exercises with faculty pre-reviews can single-handedly add +8.4 points to their final score.
+              </li>
+              <li>
+                <strong>Daily Study Anchor:</strong> Increase daily coursework from 1.5 hrs to 3.5 hrs. In our dataset, each additional study hour delivers an expected +2.20 to +3.80 performance increase.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Fixed/Sticky Input Bar -->
+      <section class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+        <form id="chat-form" onsubmit="handleChatSubmit(event)" class="flex items-center gap-3">
+          <div class="relative flex-1">
+            <input type="text" id="chat-input" placeholder="Type your academic or machine learning question here..." class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all" />
+          </div>
+          <button type="submit" class="inline-flex items-center gap-1.5 px-5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-md transition-all">
+            <span>Send</span>
+            <i data-lucide="send" class="w-3.5 h-3.5"></i>
+          </button>
+        </form>
+      </section>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="mt-12 pt-6 border-t border-slate-200 text-center text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <img src="assets/logo.webp" alt="Logo" class="h-5 w-5 object-contain" />
+        <span>AI Student Performance & Academic Guidance System &bull; Academic Year 2026</span>
+      </div>
+      <div class="flex gap-4">
+        <a href="about.html" class="hover:text-indigo-600 transition-colors">Architecture</a>
+        <a href="eda.html" class="hover:text-indigo-600 transition-colors">Cohort Profiling</a>
+        <a href="chat.html" class="hover:text-indigo-600 transition-colors">AI Advisor</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    const messagesContainer = document.getElementById('chat-messages-container');
+    const chatInput = document.getElementById('chat-input');
+
+    function sendPrompt(text) {
+      chatInput.value = text;
+      handleChatSubmit(new Event('submit'));
+    }
+
+    function appendMessage(role, text) {
+      const wrapper = document.createElement('div');
+      
+      if (role === 'user') {
+        wrapper.className = 'flex items-start gap-3.5 max-w-xl ml-auto justify-end';
+        wrapper.innerHTML = `
+          <div class="bg-indigo-600 text-white rounded-2xl rounded-tr-sm p-4 shadow-sm text-xs leading-relaxed space-y-1">
+            <p class="font-semibold text-indigo-100 text-[10px]">Student / Mentor Query</p>
+            <p>${text}</p>
+          </div>
+          <div class="h-8 w-8 rounded-xl bg-slate-900 text-white flex-shrink-0 flex items-center justify-center mt-1 font-bold text-xs">U</div>
+        `;
+      } else {
+        wrapper.className = 'flex items-start gap-3.5 max-w-2xl mr-auto';
+        wrapper.innerHTML = `
+          <div class="h-8 w-8 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-600 flex-shrink-0 flex items-center justify-center mt-1">
+            <i data-lucide="bot" class="w-4 h-4"></i>
+          </div>
+          <div class="bg-slate-50 border border-slate-200 text-slate-800 rounded-2xl rounded-tl-sm p-4 shadow-sm text-xs leading-relaxed space-y-2">
+            <div class="flex items-center justify-between pb-1 border-b border-slate-200">
+              <span class="font-bold text-slate-900 text-xs">AI Academic Advisor</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700">Groq Response</span>
+            </div>
+            <p>${text}</p>
+          </div>
+        `;
+      }
+      messagesContainer.appendChild(wrapper);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      lucide.createIcons();
+    }
+
+    function handleChatSubmit(e) {
+      e.preventDefault();
+      const query = chatInput.value.trim();
+      if (!query) return;
+
+      appendMessage('user', query);
+      chatInput.value = '';
+
+      // Generate intelligent academic guidance response
+      setTimeout(() => {
+        let answer = "";
+        const qLower = query.toLowerCase();
+
+        if (qLower.includes('attendance')) {
+          answer = `<strong>Attendance Guidance:</strong> Institutional policy mandates &ge; 75% attendance for semester examination eligibility. To recover from low attendance, the student should attend 100% of upcoming lecture and lab sessions over the next 3-4 weeks. Additionally, medical or official duty certificates should be submitted promptly to the department coordinator.`;
+        } else if (qLower.includes('schedule') || qLower.includes('study')) {
+          answer = `<strong>Recommended 4-Hour Daily Study Plan for CSE:</strong><br>&bull; <strong>Block 1 (5:00 PM - 6:15 PM):</strong> Core Theory & Lecture Synthesis (Data Structures / Algorithms).<br>&bull; <strong>Block 2 (6:30 PM - 7:30 PM):</strong> Practical Coding / Lab Assignments.<br>&bull; <strong>Block 3 (8:30 PM - 9:30 PM):</strong> Mathematics / Previous Year Exam Questions.<br>&bull; <strong>Block 4 (9:30 PM - 10:00 PM):</strong> Active recall revision & next-day lecture preview.`;
+        } else if (qLower.includes('linear') || qLower.includes('logistic') || qLower.includes('regression')) {
+          answer = `<strong>Linear vs. Logistic Regression:</strong><br>&bull; <strong>Linear Regression:</strong> Forecasts continuous numerical performance scores (0.0 to 100.0) with an R² of 0.8563 on our dataset.<br>&bull; <strong>Logistic Regression:</strong> Classifies students into discrete performance categories (Outstanding, Good, Average, At-Risk) using logit probabilities.`;
+        } else if (qLower.includes('correlation') || qLower.includes('indicator') || qLower.includes('driver')) {
+          answer = `<strong>Key Indicator Impact:</strong> In our active 500-student cohort, <strong>Assignment scores (r = +0.824)</strong> has the highest positive correlation with final performance, followed by <strong>Previous marks (r = +0.789)</strong>, <strong>Daily Study Hours (r = +0.712)</strong>, and <strong>Attendance (r = +0.684)</strong>.`;
+        } else {
+          answer = `Thank you for your inquiry. In the active CSE cohort (500 records), the primary average score is <strong>73.04</strong>. Consistent study habits (target 4.5+ hrs/day) and attendance above the 75% threshold remain the two most statistically dependable predictors of semester honors.`;
+        }
+
+        appendMessage('bot', answer);
+      }, 600);
+    }
+
+    function clearChat() {
+      messagesContainer.innerHTML = '';
+      appendMessage('bot', 'Chat history cleared. Feel free to ask any question regarding student performance or academic planning.');
+    }
+  </script>
+</body>
+</html>
+

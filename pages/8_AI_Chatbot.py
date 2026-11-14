@@ -37,7 +37,7 @@ render_header(
     title="AI Academic Chatbot",
     subtitle="Ask questions across study planning, attendance improvement, ML concepts, and general educational guidance.",
     badge_text="Module 08",
-    badge_variant="teal",
+    badge_variant="indigo",
 )
 
 active_df, _ = get_active_df()
@@ -84,7 +84,7 @@ with st.sidebar:
 
     is_online = bool((st.session_state.get("groq_api_key") or "").strip())
     mode_badge = (
-        get_badge_html("Groq API Active", "teal")
+        get_badge_html("Groq API Active", "emerald")
         if is_online
         else get_badge_html("Local Fallback Active", "amber")
     )

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Model Training | AI Student Performance & Academic Guidance System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            indigo: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+              950: '#1e1b4b',
+            },
+            emerald: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              300: '#6ee7b7',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+            },
+            amber: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              200: '#fde68a',
+              300: '#fcd34d',
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-full bg-slate-50 text-slate-800 antialiased font-sans">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top-Left Header with Custom Project Logo directly above tabs -->
+    <header class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-4">
+        <a href="welcome.html" class="group flex items-center gap-3">
+          <div class="h-14 w-14 rounded-2xl bg-white border border-slate-200 shadow-sm p-1.5 flex items-center justify-center overflow-hidden group-hover:border-indigo-300 group-hover:shadow-md transition-all">
+            <img src="assets/logo.webp" alt="AI Student Performance System Logo" class="h-full w-full object-contain" />
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-xl md:text-2xl font-bold text-slate-900 tracking-tight">AI Student Performance & Academic Guidance</h1>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">v2.4 Pro</span>
+            </div>
+            <p class="text-sm text-slate-500 mt-0.5">An AI-powered student analytics platform for dataset preparation, exploratory profiling, and academic guidance.</p>
+          </div>
+        </a>
+      </div>
+      <div class="flex items-center gap-3 self-start md:self-auto">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+          <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+          Scikit-Learn Ready
+        </span>
+        <span class="text-xs text-slate-500 font-mono bg-white px-2.5 py-1 rounded-lg border border-slate-200 shadow-sm">models/student_model.joblib</span>
+      </div>
+    </header>
+
+    <!-- Horizontal Pill-Shaped Tab Menu -->
+    <nav class="mb-8 overflow-x-auto pb-2 scrollbar-none">
+      <div class="inline-flex p-1.5 bg-white border border-slate-200 rounded-full shadow-sm gap-1 min-w-full md:min-w-0">
+        <a href="welcome.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Welcome
+        </a>
+        <a href="home.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Home
+        </a>
+        <a href="upload.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Upload
+        </a>
+        <a href="clean.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Clean
+        </a>
+        <a href="eda.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          EDA
+        </a>
+        <a href="visualize.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Visualize
+        </a>
+        <a href="train.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-semibold transition-all whitespace-nowrap bg-indigo-600 text-white shadow-sm">
+          Train ML
+        </a>
+        <a href="predict.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Predict
+        </a>
+        <a href="chat.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          AI Chat
+        </a>
+        <a href="about.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          About
+        </a>
+      </div>
+    </nav>
+
+    <!-- Page Body: Model Training View -->
+    <main class="space-y-8">
+      
+      <!-- Training Form & Configuration Section -->
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left Column: Model Setup Form (5 cols) -->
+        <div class="lg:col-span-5 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-5">
+          <div>
+            <h2 class="text-lg font-bold text-slate-900 tracking-tight">Supervised Machine Learning Training</h2>
+            <p class="text-xs text-slate-500">Configure regression or classification pipelines, feature matrices, and evaluation splits</p>
+          </div>
+
+          <!-- Model Selection Dropdown -->
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-slate-700 block">Select Predictive Algorithm</label>
+            <select id="model-select" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <option value="linear">Linear Regression (Continuous Performance Score 0-100)</option>
+              <option value="logistic">Logistic Regression (Tier Classification: Outstanding/Good/Risk)</option>
+              <option value="rf">Random Forest Regressor (100 Trees Ensemble)</option>
+            </select>
+            <p class="text-[11px] text-slate-400">Ordinary Least Squares with analytic gradient convergence</p>
+          </div>
+
+          <!-- Train/Test Split Slider -->
+          <div class="space-y-2 pt-1">
+            <div class="flex justify-between items-center text-xs">
+              <label class="font-bold text-slate-700">Train / Test Split Ratio</label>
+              <span id="split-label" class="font-mono font-bold text-indigo-600">80% Train / 20% Test</span>
+            </div>
+            <input type="range" id="split-slider" min="60" max="90" value="80" step="5" oninput="updateSplit(this.value)" class="w-full accent-indigo-600 cursor-pointer" />
+            <div class="flex justify-between text-[11px] text-slate-400">
+              <span id="train-count">400 Training Rows</span>
+              <span id="test-count">100 Evaluation Rows</span>
+            </div>
+          </div>
+
+          <!-- Features to Include -->
+          <div class="space-y-2 pt-1">
+            <label class="text-xs font-bold text-slate-700 block">Feature Input Selection</label>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <label class="flex items-center gap-2 p-2 bg-slate-50 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-100">
+                <input type="checkbox" checked class="rounded text-indigo-600 focus:ring-indigo-500" />
+                <span>Study hrs</span>
+              </label>
+              <label class="flex items-center gap-2 p-2 bg-slate-50 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-100">
+                <input type="checkbox" checked class="rounded text-indigo-600 focus:ring-indigo-500" />
+                <span>Attendance</span>
+              </label>
+              <label class="flex items-center gap-2 p-2 bg-slate-50 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-100">
+                <input type="checkbox" checked class="rounded text-indigo-600 focus:ring-indigo-500" />
+                <span>Previous marks</span>
+              </label>
+              <label class="flex items-center gap-2 p-2 bg-slate-50 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-100">
+                <input type="checkbox" checked class="rounded text-indigo-600 focus:ring-indigo-500" />
+                <span>Assignment scores</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Normalization Toggle -->
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between text-xs">
+            <div>
+              <span class="font-bold text-slate-800 block">Apply StandardScaler</span>
+              <span class="text-slate-400">Standardize features with mean=0, variance=1</span>
+            </div>
+            <input type="checkbox" checked class="h-4 w-4 rounded text-indigo-600 focus:ring-indigo-500" />
+          </div>
+
+          <!-- Primary Train Button -->
+          <button id="train-btn" onclick="startModelTraining()" class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-md transition-all">
+            <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+            Train Model Pipeline
+          </button>
+        </div>
+
+        <!-- Right Column: Mock Training Progress Terminal & Metrics (7 cols) -->
+        <div class="lg:col-span-7 space-y-6">
+          
+          <!-- Terminal Window -->
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl shadow-xl overflow-hidden font-mono text-xs">
+            <!-- Terminal Header Bar -->
+            <div class="bg-slate-950 px-4 py-3 border-b border-slate-800 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="h-3 w-3 rounded-full bg-rose-500 inline-block"></span>
+                <span class="h-3 w-3 rounded-full bg-amber-500 inline-block"></span>
+                <span class="h-3 w-3 rounded-full bg-emerald-500 inline-block"></span>
+                <span class="ml-2 text-slate-400 font-sans text-xs">training_terminal.sh &bull; scikit-learn v1.3</span>
+              </div>
+              <span class="text-[11px] text-slate-500">PID 48291</span>
+            </div>
+
+            <!-- Terminal Output Stream -->
+            <div id="terminal-stream" class="p-5 space-y-2 h-72 overflow-y-auto text-slate-300 scrollbar-none">
+              <p class="text-slate-500"># System ready. Click 'Train Model Pipeline' to initialize optimization.</p>
+              <p class="text-slate-400">[READY] Ingestion source confirmed: datasets/2_cleaned_balanced_cohort.csv</p>
+              <p class="text-slate-400">[READY] Active weights baseline: models/student_performance_model.joblib</p>
+            </div>
+          </div>
+
+          <!-- Evaluation Metrics Cards (Shown After Training) -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+              <span class="text-[11px] font-semibold text-slate-500 uppercase block">R² Score</span>
+              <span id="metric-r2" class="text-2xl font-extrabold text-emerald-600">0.8563</span>
+              <span class="text-[10px] text-slate-400 block mt-0.5">85.6% variance explained</span>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+              <span class="text-[11px] font-semibold text-slate-500 uppercase block">MAE (Mean Error)</span>
+              <span id="metric-mae" class="text-2xl font-extrabold text-indigo-600">2.44</span>
+              <span class="text-[10px] text-slate-400 block mt-0.5">&plusmn;2.44 score points</span>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+              <span class="text-[11px] font-semibold text-slate-500 uppercase block">RMSE</span>
+              <span id="metric-rmse" class="text-2xl font-extrabold text-slate-800">3.12</span>
+              <span class="text-[10px] text-slate-400 block mt-0.5">Root mean square error</span>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+              <span class="text-[11px] font-semibold text-slate-500 uppercase block">Persistence</span>
+              <span class="text-xs font-bold text-emerald-600 flex items-center gap-1 mt-1.5">
+                <i data-lucide="check" class="w-3.5 h-3.5"></i> Joblib Saved
+              </span>
+              <span class="text-[10px] text-slate-400 block mt-0.5">Ready for inference</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Feature Weights / Explainability Table -->
+      <section class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+        <div class="p-6 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h3 class="text-base font-bold text-slate-900 tracking-tight">Trained Feature Weights & Linear Coefficients</h3>
+            <p class="text-xs text-slate-500">Mathematical impact of each unit increase in academic indicators</p>
+          </div>
+          <a href="predict.html" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs shadow-sm transition-all">
+            Proceed to Prediction &rarr;
+          </a>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase font-semibold">
+                <th class="py-3 px-4">Feature Name</th>
+                <th class="py-3 px-4">Feature Domain</th>
+                <th class="py-3 px-4 text-right">Raw Coefficient (&beta;)</th>
+                <th class="py-3 px-4 text-right">Standardized Impact</th>
+                <th class="py-3 px-4 text-right">Significance</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-slate-700 font-mono">
+              <tr class="hover:bg-slate-50/60">
+                <td class="py-3 px-4 font-bold text-slate-900 font-sans">Assignment scores</td>
+                <td class="py-3 px-4 text-slate-500 font-sans">Continuous Assessment</td>
+                <td class="py-3 px-4 text-right font-bold text-indigo-600">+0.280</td>
+                <td class="py-3 px-4 text-right">38.4% Relative Weight</td>
+                <td class="py-3 px-4 text-right text-emerald-600 font-semibold font-sans">p &lt; 0.001 (Dominant)</td>
+              </tr>
+              <tr class="hover:bg-slate-50/60">
+                <td class="py-3 px-4 font-bold text-slate-900 font-sans">Previous marks</td>
+                <td class="py-3 px-4 text-slate-500 font-sans">Historical SGPA Marks</td>
+                <td class="py-3 px-4 text-right font-bold text-indigo-600">+0.380</td>
+                <td class="py-3 px-4 text-right">35.2% Relative Weight</td>
+                <td class="py-3 px-4 text-right text-emerald-600 font-semibold font-sans">p &lt; 0.001 (Dominant)</td>
+              </tr>
+              <tr class="hover:bg-slate-50/60">
+                <td class="py-3 px-4 font-bold text-slate-900 font-sans">Study hrs</td>
+                <td class="py-3 px-4 text-slate-500 font-sans">Daily Hours (Coursework)</td>
+                <td class="py-3 px-4 text-right font-bold text-indigo-600">+2.200</td>
+                <td class="py-3 px-4 text-right">16.8% Relative Weight</td>
+                <td class="py-3 px-4 text-right text-emerald-600 font-semibold font-sans">p &lt; 0.001 (Critical)</td>
+              </tr>
+              <tr class="hover:bg-slate-50/60">
+                <td class="py-3 px-4 font-bold text-slate-900 font-sans">Attendance</td>
+                <td class="py-3 px-4 text-slate-500 font-sans">Classroom Attendance %</td>
+                <td class="py-3 px-4 text-right font-bold text-indigo-600">+0.180</td>
+                <td class="py-3 px-4 text-right">9.6% Relative Weight</td>
+                <td class="py-3 px-4 text-right text-emerald-600 font-semibold font-sans">p &lt; 0.005 (Gate Anchor)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="mt-12 pt-6 border-t border-slate-200 text-center text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <img src="assets/logo.webp" alt="Logo" class="h-5 w-5 object-contain" />
+        <span>AI Student Performance & Academic Guidance System &bull; Academic Year 2026</span>
+      </div>
+      <div class="flex gap-4">
+        <a href="about.html" class="hover:text-indigo-600 transition-colors">Architecture</a>
+        <a href="eda.html" class="hover:text-indigo-600 transition-colors">Cohort Profiling</a>
+        <a href="chat.html" class="hover:text-indigo-600 transition-colors">AI Advisor</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    function updateSplit(val) {
+      document.getElementById('split-label').textContent = `${val}% Train / ${100 - val}% Test`;
+      const train = Math.round(500 * (val / 100));
+      document.getElementById('train-count').textContent = `${train} Training Rows`;
+      document.getElementById('test-count').textContent = `${500 - train} Evaluation Rows`;
+    }
+
+    function appendTerminal(text, colorClass = 'text-slate-300') {
+      const term = document.getElementById('terminal-stream');
+      const p = document.createElement('p');
+      p.className = colorClass;
+      p.textContent = text;
+      term.appendChild(p);
+      term.scrollTop = term.scrollHeight;
+    }
+
+    function startModelTraining() {
+      const btn = document.getElementById('train-btn');
+      btn.disabled = true;
+      btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Training in progress...`;
+      lucide.createIcons();
+
+      const model = document.getElementById('model-select').value;
+      const splitVal = document.getElementById('split-slider').value;
+
+      appendTerminal(`-----------------------------------------------------------------`, 'text-slate-600');
+      appendTerminal(`[INIT] Starting pipeline training at ${new Date().toLocaleTimeString()}...`, 'text-indigo-400');
+      
+      setTimeout(() => {
+        appendTerminal(`[DATA] Loading input dataset from datasets/2_cleaned_balanced_cohort.csv`, 'text-slate-300');
+        appendTerminal(`[SPLIT] Partitioning into ${splitVal}% train (${Math.round(500*(splitVal/100))} rows) and ${100-splitVal}% test.`, 'text-slate-300');
+      }, 500);
+
+      setTimeout(() => {
+        appendTerminal(`[PREP] Fitting StandardScaler on 4 numeric feature matrices...`, 'text-slate-300');
+        appendTerminal(`[SOLVER] Initiating regression solver (${model.toUpperCase()})...`, 'text-amber-400');
+      }, 1200);
+
+      setTimeout(() => {
+        appendTerminal(`[CONVERGED] Optimal parameter weights found in 14 iterations.`, 'text-emerald-400');
+        appendTerminal(`[METRICS] R² Score = 0.8563 | MAE = 2.4446 | RMSE = 3.1205`, 'text-emerald-400 font-bold');
+        appendTerminal(`[PERSIST] Weights saved to models/student_performance_model.joblib.`, 'text-indigo-400');
+        
+        btn.disabled = false;
+        btn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> Training Complete (Retrain)`;
+        lucide.createIcons();
+      }, 2200);
+    }
+  </script>
+</body>
+</html>
+

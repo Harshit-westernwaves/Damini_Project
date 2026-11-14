@@ -77,7 +77,7 @@ st.markdown("#### 3. Module-by-Module Features")
 module_docs = [
     ("app.py", "Welcome Section", "Project introduction, AI Intelligence overview, platform highlights, 4-step workflow, and technology stack."),
     ("pages/1_Home.py", "Main Dashboard", "Central workspace summary and organized navigation buttons to all analysis, ML, and prediction modules."),
-    ("pages/2_Upload_Dataset.py", "Upload Dataset", "CSV upload, one-click 6-column sample generator, row/column counts, column names, and tabular preview."),
+    ("pages/2_Upload_Dataset.py", "Upload Dataset", "Pre-loaded datasets loader (datasets/ folder), CSV upload, one-click sample generator, schema metrics, and preview."),
     ("pages/3_Data_Cleaning.py", "Data Cleaning", "Null count/percentage table, drop/mean/median/mode handling, duplicate removal, updated shape/dtypes, and CSV export."),
     ("pages/4_EDA.py", "Exploratory Data Analysis", "Data overview, statistical summary + term glossary, distributions, correlation table, and 4-question cohort panel."),
     ("pages/5_Data_Visualization.py", "Data Visualization", "Matplotlib and Seaborn charts driven by numeric/categorical dropdowns with computed visual insights."),

@@ -3,11 +3,13 @@ pages/4_EDA.py - Exploratory Data Analysis (EDA)
 AI Student Performance & Academic Guidance System
 """
 
+import os
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import streamlit as st
 from utils import (
+    DEFAULT_DATASET_PATH,
     apply_custom_css,
     compute_eda_questions,
     generate_sample_student_dataset,
@@ -40,7 +42,7 @@ render_header(
     title="Exploratory Data Analysis",
     subtitle="Examine dataset structure, statistical metrics, feature distributions, correlations, and core cohort questions.",
     badge_text="Module 04",
-    badge_variant="teal",
+    badge_variant="indigo",
 )
 
 df, is_cleaned = get_active_df()
@@ -48,12 +50,16 @@ df, is_cleaned = get_active_df()
 if df is None:
     with st.container(border=True):
         st.markdown("**No active dataset loaded in session state**")
-        st.caption("Upload a dataset or generate the sample dataset before running Exploratory Data Analysis.")
-        c1, c2, _ = st.columns([1.4, 1.4, 2.5])
+        st.caption("Upload a dataset or load the cleaned balanced cohort before running Exploratory Data Analysis.")
+        c1, c2, _ = st.columns([1.5, 1.4, 2.4])
         with c1:
-            if st.button("Generate Sample Dataset", type="primary", width="stretch"):
-                sample_df = generate_sample_student_dataset(n_samples=200, inject_imperfections=True)
-                set_session_dataset(sample_df, "sample_student_data_200.csv", mark_cleaned=False)
+            if st.button("Load Cleaned Cohort", type="primary", width="stretch"):
+                if os.path.exists(DEFAULT_DATASET_PATH):
+                    sample_df = pd.read_csv(DEFAULT_DATASET_PATH)
+                    set_session_dataset(sample_df, os.path.basename(DEFAULT_DATASET_PATH), mark_cleaned=True)
+                else:
+                    sample_df = generate_sample_student_dataset(n_samples=200, inject_imperfections=False)
+                    set_session_dataset(sample_df, "sample_student_data_200.csv", mark_cleaned=True)
                 st.rerun()
         with c2:
             if st.button("Open Upload Dataset", width="stretch"):

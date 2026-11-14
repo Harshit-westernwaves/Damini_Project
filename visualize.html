@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Visualization | AI Student Performance & Academic Guidance System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Chart.js CDN for Interactive Visualizations -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            indigo: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+              950: '#1e1b4b',
+            },
+            emerald: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              300: '#6ee7b7',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+            },
+            amber: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              200: '#fde68a',
+              300: '#fcd34d',
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-full bg-slate-50 text-slate-800 antialiased font-sans">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top-Left Header with Custom Project Logo directly above tabs -->
+    <header class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-4">
+        <a href="welcome.html" class="group flex items-center gap-3">
+          <div class="h-14 w-14 rounded-2xl bg-white border border-slate-200 shadow-sm p-1.5 flex items-center justify-center overflow-hidden group-hover:border-indigo-300 group-hover:shadow-md transition-all">
+            <img src="assets/logo.webp" alt="AI Student Performance System Logo" class="h-full w-full object-contain" />
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-xl md:text-2xl font-bold text-slate-900 tracking-tight">AI Student Performance & Academic Guidance</h1>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">v2.4 Pro</span>
+            </div>
+            <p class="text-sm text-slate-500 mt-0.5">An AI-powered student analytics platform for dataset preparation, exploratory profiling, and academic guidance.</p>
+          </div>
+        </a>
+      </div>
+      <div class="flex items-center gap-3 self-start md:self-auto">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+          <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+          Chart.js Engine Active
+        </span>
+        <span class="text-xs text-slate-500 font-mono bg-white px-2.5 py-1 rounded-lg border border-slate-200 shadow-sm">Interactive Visuals</span>
+      </div>
+    </header>
+
+    <!-- Horizontal Pill-Shaped Tab Menu -->
+    <nav class="mb-8 overflow-x-auto pb-2 scrollbar-none">
+      <div class="inline-flex p-1.5 bg-white border border-slate-200 rounded-full shadow-sm gap-1 min-w-full md:min-w-0">
+        <a href="welcome.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Welcome
+        </a>
+        <a href="home.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Home
+        </a>
+        <a href="upload.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Upload
+        </a>
+        <a href="clean.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Clean
+        </a>
+        <a href="eda.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          EDA
+        </a>
+        <a href="visualize.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-semibold transition-all whitespace-nowrap bg-indigo-600 text-white shadow-sm">
+          Visualize
+        </a>
+        <a href="train.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Train ML
+        </a>
+        <a href="predict.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Predict
+        </a>
+        <a href="chat.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          AI Chat
+        </a>
+        <a href="about.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          About
+        </a>
+      </div>
+    </nav>
+
+    <!-- Page Body: Data Visualization View -->
+    <main class="space-y-8">
+      
+      <!-- Visualization Controls & Filter Bar -->
+      <section class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-xl font-bold text-slate-900 tracking-tight">Interactive Academic Visual Analytics</h2>
+            <p class="text-xs text-slate-500">Exploring multi-feature distributions, scatter correlations, and attendance sensitivities</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            <div>
+              <label class="text-[11px] font-semibold text-slate-500 block mb-1">Select Cohort Filter</label>
+              <select onchange="updateCohort(this.value)" class="text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <option value="balanced">Cleaned Balanced Cohort (500 Rows)</option>
+                <option value="highrisk">High-Risk Cohort (300 Rows)</option>
+                <option value="university">University Scale Batch (1,200 Rows)</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-[11px] font-semibold text-slate-500 block mb-1">Color Palette</label>
+              <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-semibold bg-white text-slate-700">
+                <span class="h-2.5 w-2.5 rounded-full bg-indigo-600"></span> Indigo Action
+                <span class="h-2.5 w-2.5 rounded-full bg-emerald-500 ml-1"></span> Emerald Data
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Charts Grid 1: Scatter Plot & Histogram -->
+      <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        
+        <!-- Chart 1: Attendance vs Grades Scatter Plot -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="text-base font-bold text-slate-900 tracking-tight">Attendance vs. Final Performance</h3>
+              <p class="text-xs text-slate-500">Scatter distribution showing 75% attendance threshold gate</p>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">
+              r = +0.712
+            </span>
+          </div>
+
+          <div class="relative h-72 w-full">
+            <canvas id="scatterChart"></canvas>
+          </div>
+
+          <div class="flex items-center justify-between text-[11px] text-slate-500 pt-2 border-t border-slate-100">
+            <span class="flex items-center gap-1.5">
+              <span class="h-2 w-2 rounded-full bg-indigo-600"></span> Student Data Points
+            </span>
+            <span class="flex items-center gap-1.5">
+              <span class="h-2 w-2 rounded-full bg-emerald-500"></span> Linear Trendline
+            </span>
+            <span class="flex items-center gap-1.5 text-amber-600 font-semibold">
+              <span class="h-2 w-2 rounded-full bg-amber-500"></span> 75% Attendance Gate
+            </span>
+          </div>
+        </div>
+
+        <!-- Chart 2: Grade Distribution Histogram & Density Curve -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="text-base font-bold text-slate-900 tracking-tight">Final Performance Distribution</h3>
+              <p class="text-xs text-slate-500">Frequency histogram across score buckets (30 to 100)</p>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+              Mean: 73.04
+            </span>
+          </div>
+
+          <div class="relative h-72 w-full">
+            <canvas id="histogramChart"></canvas>
+          </div>
+
+          <div class="flex items-center justify-between text-[11px] text-slate-500 pt-2 border-t border-slate-100">
+            <span class="flex items-center gap-1.5">
+              <span class="h-2 w-2 rounded-full bg-indigo-500"></span> Score Frequencies
+            </span>
+            <span class="flex items-center gap-1.5">
+              <span class="h-2 w-2 rounded-full bg-emerald-500"></span> Gaussian Density Fit
+            </span>
+            <span class="text-slate-400">Normal distribution (&sigma; = 10.42)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Charts Grid 2: Study Hours vs Scores & Correlation Heatmap -->
+      <section class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Chart 3: Study Hours vs. Performance Bar -->
+        <div class="lg:col-span-2 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="text-base font-bold text-slate-900 tracking-tight">Study Hours vs. Mean Performance Outcome</h3>
+              <p class="text-xs text-slate-500">Binned daily study intervals demonstrating incremental score gains</p>
+            </div>
+            <span class="text-xs text-slate-500 font-semibold">+3.80 pts / hr</span>
+          </div>
+
+          <div class="relative h-64 w-full">
+            <canvas id="studyHoursChart"></canvas>
+          </div>
+
+          <p class="text-xs text-slate-500">
+            Data confirms students studying <strong>&gt; 5.0 hours/day</strong> consistently maintain primary averages &gt; 80.0.
+          </p>
+        </div>
+
+        <!-- Analytical Findings & Insights Callout Card -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+          <div class="flex items-center gap-2 text-indigo-600">
+            <i data-lucide="lightbulb" class="w-5 h-5"></i>
+            <h3 class="text-base font-bold text-slate-900 tracking-tight">Computed Visual Insights</h3>
+          </div>
+          <p class="text-xs text-slate-500">Automated takeaway analysis generated by the visual profiling engine:</p>
+
+          <div class="space-y-3 text-xs">
+            <div class="p-3 bg-indigo-50/50 border border-indigo-100 rounded-xl space-y-1">
+              <span class="font-bold text-indigo-900 flex items-center gap-1">
+                <i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600"></i>
+                Bimodal Risk Clustering
+              </span>
+              <p class="text-indigo-950/80">Students with attendance &lt; 70% exhibit high variance and average scores 22 points lower than peers.</p>
+            </div>
+
+            <div class="p-3 bg-emerald-50/50 border border-emerald-100 rounded-xl space-y-1">
+              <span class="font-bold text-emerald-900 flex items-center gap-1">
+                <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i>
+                Assignment Correlation Dominance
+              </span>
+              <p class="text-emerald-950/80">Assignment scores demonstrate the tightest regression fit to final exams (R² = 0.68 univariate).</p>
+            </div>
+
+            <div class="p-3 bg-amber-50/50 border border-amber-100 rounded-xl space-y-1">
+              <span class="font-bold text-amber-900 flex items-center gap-1">
+                <i data-lucide="alert-circle" class="w-3.5 h-3.5 text-amber-600"></i>
+                Targeted Intervention Window
+              </span>
+              <p class="text-amber-950/80">Increasing attendance from 65% to 75% moves 88% of borderline students from At-Risk to Good tier.</p>
+            </div>
+          </div>
+
+          <a href="train.html" class="w-full inline-flex items-center justify-center gap-2 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-sm transition-all">
+            Proceed to Model Training &rarr;
+          </a>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="mt-12 pt-6 border-t border-slate-200 text-center text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <img src="assets/logo.webp" alt="Logo" class="h-5 w-5 object-contain" />
+        <span>AI Student Performance & Academic Guidance System &bull; Academic Year 2026</span>
+      </div>
+      <div class="flex gap-4">
+        <a href="about.html" class="hover:text-indigo-600 transition-colors">Architecture</a>
+        <a href="eda.html" class="hover:text-indigo-600 transition-colors">Cohort Profiling</a>
+        <a href="chat.html" class="hover:text-indigo-600 transition-colors">AI Advisor</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // Chart 1: Scatter Plot (Attendance vs. Final Performance)
+    const scatterCtx = document.getElementById('scatterChart').getContext('2d');
+    
+    // Generate realistic scatter data (Attendance vs Final Performance)
+    const scatterData = [];
+    for (let i = 0; i < 60; i++) {
+      const att = Math.min(99.5, Math.max(50, 60 + Math.random() * 38));
+      const score = Math.min(99.5, Math.max(35, 0.45 * att + 30 + (Math.random() * 14 - 7)));
+      scatterData.push({ x: parseFloat(att.toFixed(1)), y: parseFloat(score.toFixed(1)) });
+    }
+
+    const scatterChart = new Chart(scatterCtx, {
+      type: 'scatter',
+      data: {
+        datasets: [{
+          label: 'Student Record',
+          data: scatterData,
+          backgroundColor: 'rgba(79, 70, 229, 0.65)',
+          borderColor: '#4f46e5',
+          borderWidth: 1,
+          pointRadius: 4,
+          pointHoverRadius: 6,
+        },
+        {
+          label: 'Linear Fit Trendline',
+          data: [{ x: 50, y: 52 }, { x: 99, y: 88 }],
+          type: 'line',
+          borderColor: '#10b981',
+          borderWidth: 2.5,
+          fill: false,
+          pointRadius: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            title: { display: true, text: 'Attendance (%)', font: { size: 11, weight: 'bold' } },
+            min: 45, max: 100
+          },
+          y: {
+            title: { display: true, text: 'Final Performance (0-100)', font: { size: 11, weight: 'bold' } },
+            min: 30, max: 100
+          }
+        },
+        plugins: {
+          legend: { display: false }
+        }
+      }
+    });
+
+    // Chart 2: Histogram (Final Performance Distribution)
+    const histCtx = document.getElementById('histogramChart').getContext('2d');
+    const histChart = new Chart(histCtx, {
+      type: 'bar',
+      data: {
+        labels: ['30-40', '41-50', '51-60', '61-70', '71-80', '81-90', '91-100'],
+        datasets: [{
+          label: 'Student Count',
+          data: [12, 28, 65, 142, 168, 62, 23],
+          backgroundColor: 'rgba(79, 70, 229, 0.8)',
+          borderRadius: 6,
+          hoverBackgroundColor: '#4f46e5',
+        },
+        {
+          label: 'Gaussian Density Fit',
+          data: [10, 24, 70, 140, 165, 70, 21],
+          type: 'line',
+          borderColor: '#10b981',
+          borderWidth: 2.5,
+          tension: 0.4,
+          pointRadius: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: { title: { display: true, text: 'Performance Score Buckets', font: { size: 11, weight: 'bold' } } },
+          y: { title: { display: true, text: 'Number of Students', font: { size: 11, weight: 'bold' } } }
+        },
+        plugins: { legend: { display: false } }
+      }
+    });
+
+    // Chart 3: Study Hours Bar Chart
+    const studyCtx = document.getElementById('studyHoursChart').getContext('2d');
+    const studyChart = new Chart(studyCtx, {
+      type: 'bar',
+      data: {
+        labels: ['1.0 - 2.0 hrs', '2.1 - 3.0 hrs', '3.1 - 4.0 hrs', '4.1 - 5.0 hrs', '5.1 - 6.0 hrs', '6.1 - 7.0 hrs', '7.1+ hrs'],
+        datasets: [{
+          label: 'Mean Performance',
+          data: [51.2, 58.4, 68.1, 74.5, 82.3, 87.9, 93.4],
+          backgroundColor: [
+            'rgba(245, 158, 11, 0.75)',
+            'rgba(245, 158, 11, 0.75)',
+            'rgba(79, 70, 229, 0.75)',
+            'rgba(79, 70, 229, 0.85)',
+            'rgba(16, 185, 129, 0.8)',
+            'rgba(16, 185, 129, 0.85)',
+            'rgba(16, 185, 129, 0.95)',
+          ],
+          borderRadius: 8
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: { title: { display: true, text: 'Daily Study Hours Range', font: { size: 11, weight: 'bold' } } },
+          y: { title: { display: true, text: 'Mean Final Score (0-100)', font: { size: 11, weight: 'bold' } }, min: 40, max: 100 }
+        },
+        plugins: { legend: { display: false } }
+      }
+    });
+
+    function updateCohort(cohortType) {
+      if (cohortType === 'highrisk') {
+        studyChart.data.datasets[0].data = [42.1, 48.0, 52.3, 56.1, 62.0, 65.2, 68.0];
+        studyChart.update();
+      } else {
+        studyChart.data.datasets[0].data = [51.2, 58.4, 68.1, 74.5, 82.3, 87.9, 93.4];
+        studyChart.update();
+      }
+    }
+  </script>
+</body>
+</html>
+

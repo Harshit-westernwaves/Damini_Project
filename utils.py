@@ -4,6 +4,7 @@ machine learning, and Groq AI assistant helpers for the AI Student Performance
 & Academic Guidance System.
 """
 
+import base64
 import os
 import re
 from datetime import datetime
@@ -30,22 +31,41 @@ from sklearn.preprocessing import LabelEncoder, StandardScaler
 
 
 # ---------------------------------------------------------
-# Theme Palette Constants (Clean Daylight Developer Theme)
+# Theme Palette Constants (Focus & Flow - Academic Modern)
 # ---------------------------------------------------------
-COLOR_BG = "#FAFAFA"
-COLOR_SIDEBAR = "#F4F4F5"
-COLOR_CARD = "#FFFFFF"
-COLOR_BORDER = "#E4E4E7"
-COLOR_TEXT = "#18181B"
-COLOR_MUTED = "#71717A"
-COLOR_PRIMARY = "#0F766E"
-COLOR_PRIMARY_HOVER = "#115E59"
+COLOR_BG = "#F8FAFC"             # Slate-50 body background
+COLOR_SIDEBAR = "#FFFFFF"        # White clean sidebar
+COLOR_CARD = "#FFFFFF"           # White card panels
+COLOR_BORDER = "#E2E8F0"         # Slate-200 border
+COLOR_BORDER_HOVER = "#CBD5E1"   # Slate-300 hover border
+COLOR_TEXT = "#0F172A"           # Slate-900 primary text
+COLOR_MUTED = "#64748B"          # Slate-500 secondary text
+COLOR_PRIMARY = "#4F46E5"        # Indigo-600 action & focus
+COLOR_PRIMARY_HOVER = "#4338CA"  # Indigo-700
+COLOR_INDIGO = "#4F46E5"         # Indigo-600
+COLOR_EMERALD = "#10B981"        # Emerald-500 success & data
+COLOR_EMERALD_DARK = "#047857"   # Emerald-700
+COLOR_AMBER = "#F59E0B"          # Amber-500 alerts & warnings
+COLOR_AMBER_DARK = "#B45309"     # Amber-700
+COLOR_ROSE = "#EF4444"           # Rose-500 critical errors
+COLOR_SLATE = "#64748B"          # Slate-500
+COLOR_TEAL = "#4F46E5"           # Backward compatibility alias mapped to Indigo
 
-COLOR_TEAL = "#0F766E"
-COLOR_SLATE = "#64748B"
-COLOR_CORAL = "#DC2626"
-COLOR_AMBER = "#D97706"
-COLOR_EMERALD = "#059669"
+
+def get_logo_base64() -> str:
+    """Returns base64 encoded string of assets/logo.webp for fast, consistent rendering."""
+    for candidate in [
+        os.path.join(os.path.dirname(__file__), "assets", "logo.webp"),
+        os.path.join("assets", "logo.webp"),
+        "logo.webp",
+    ]:
+        if os.path.exists(candidate):
+            try:
+                with open(candidate, "rb") as f:
+                    return base64.b64encode(f.read()).decode("utf-8")
+            except Exception:
+                pass
+    return ""
 
 CANONICAL_COLUMNS = [
     "Student ID",
@@ -56,7 +76,22 @@ CANONICAL_COLUMNS = [
     "Final performance",
 ]
 
+DATASETS_DIR = "datasets"
+DEFAULT_DATASET_PATH = os.path.join(DATASETS_DIR, "2_cleaned_balanced_cohort.csv")
 DEFAULT_MODEL_PATH = os.path.join("models", "student_performance_model.joblib")
+
+
+def list_available_datasets(directory: str = DATASETS_DIR) -> list[str]:
+    """Returns sorted filenames of CSV datasets located in the datasets/ directory."""
+    if not os.path.exists(directory):
+        return []
+    return sorted([f for f in os.listdir(directory) if f.lower().endswith(".csv")])
+
+
+def load_dataset_from_dir(filename: str, directory: str = DATASETS_DIR) -> pd.DataFrame:
+    """Loads a CSV dataset from the datasets directory."""
+    path = os.path.join(directory, filename)
+    return pd.read_csv(path)
 
 NAV_ITEMS = [
     ("Welcome", "app.py"),
@@ -115,14 +150,14 @@ def init_session_state():
 
 
 # ---------------------------------------------------------
-# Clean Daylight CSS Injection (GitHub / Linear Style)
+# Clean Academic Focus & Flow CSS Injection
 # ---------------------------------------------------------
 def apply_custom_css():
-    """Applies flat daylight styling with crisp 1px borders and 6px radius."""
+    """Applies modern academic Focus & Flow styling with Indigo/Emerald/Amber palette."""
     st.markdown(
         f"""
         <style>
-            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
             html, body, [class*="css"] {{
                 font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -138,6 +173,13 @@ def apply_custom_css():
             header [data-testid="stDecoration"] {{ display: none; }}
             [data-testid="stToolbar"] {{ visibility: hidden; }}
 
+            /* Centered container aesthetics matching max-w-7xl */
+            .main .block-container {{
+                max-width: 1280px;
+                padding-top: 1.5rem;
+                padding-bottom: 3rem;
+            }}
+
             [data-testid="stSidebar"] {{
                 background-color: {COLOR_SIDEBAR} !important;
                 border-right: 1px solid {COLOR_BORDER} !important;
@@ -150,153 +192,211 @@ def apply_custom_css():
 
             h1, h2, h3, h4, h5, h6 {{
                 color: {COLOR_TEXT} !important;
-                font-weight: 600;
-                letter-spacing: -0.015em;
+                font-weight: 700;
+                letter-spacing: -0.02em;
             }}
 
-            /* Flat White Cards and Containers */
+            /* Modern White Cards with Slate Borders and Soft Hover */
             [data-testid="stVerticalBlockBorderWrapper"] {{
                 background-color: {COLOR_CARD} !important;
                 border: 1px solid {COLOR_BORDER} !important;
-                border-radius: 6px !important;
-                box-shadow: none !important;
+                border-radius: 12px !important;
+                box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04) !important;
+                transition: all 0.2s ease-in-out !important;
+            }}
+
+            [data-testid="stVerticalBlockBorderWrapper"]:hover {{
+                border-color: {COLOR_BORDER_HOVER} !important;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05) !important;
             }}
 
             .dev-card {{
                 background-color: {COLOR_CARD};
                 border: 1px solid {COLOR_BORDER};
-                border-radius: 6px;
-                padding: 1rem 1.25rem;
-                margin-bottom: 0.85rem;
-                box-shadow: none;
+                border-radius: 12px;
+                padding: 1.25rem 1.5rem;
+                margin-bottom: 1rem;
+                box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+                transition: all 0.2s ease-in-out;
+            }}
+
+            .dev-card:hover {{
+                border-color: {COLOR_BORDER_HOVER};
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
             }}
 
             .kpi-card {{
                 background-color: {COLOR_CARD};
                 border: 1px solid {COLOR_BORDER};
-                border-radius: 6px;
-                padding: 0.85rem 1rem;
-                box-shadow: none;
+                border-radius: 12px;
+                padding: 1rem 1.25rem;
+                box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
                 text-align: left;
+                transition: all 0.2s ease-in-out;
+            }}
+
+            .kpi-card:hover {{
+                border-color: {COLOR_BORDER_HOVER};
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
             }}
 
             .kpi-label {{
-                font-size: 0.74rem;
+                font-size: 0.72rem;
                 font-weight: 600;
                 color: {COLOR_MUTED};
                 text-transform: uppercase;
-                letter-spacing: 0.04em;
-                margin-bottom: 0.25rem;
+                letter-spacing: 0.05em;
+                margin-bottom: 0.35rem;
             }}
 
             .kpi-value {{
-                font-size: 1.45rem;
-                font-weight: 700;
+                font-size: 1.5rem;
+                font-weight: 800;
                 color: {COLOR_TEXT};
                 line-height: 1.2;
-                letter-spacing: -0.02em;
+                letter-spacing: -0.025em;
             }}
 
             .kpi-subtext {{
                 font-size: 0.78rem;
                 color: {COLOR_MUTED};
-                margin-top: 0.25rem;
+                margin-top: 0.35rem;
             }}
 
             [data-testid="stMetric"] {{
                 background-color: {COLOR_CARD} !important;
                 border: 1px solid {COLOR_BORDER} !important;
-                border-radius: 6px !important;
-                padding: 0.75rem 0.95rem !important;
-                box-shadow: none !important;
+                border-radius: 12px !important;
+                padding: 0.85rem 1.1rem !important;
+                box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04) !important;
+                transition: all 0.2s ease-in-out !important;
             }}
 
+            [data-testid="stMetric"]:hover {{
+                border-color: {COLOR_BORDER_HOVER} !important;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08) !important;
+            }}
+
+            /* Modern Pill-Shaped Status Badges */
             .status-badge {{
-                display: inline-block;
-                padding: 0.15rem 0.5rem;
-                border-radius: 4px;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.35rem;
+                padding: 0.2rem 0.65rem;
+                border-radius: 9999px;
                 font-size: 0.72rem;
-                font-weight: 500;
-                font-family: 'JetBrains Mono', monospace;
-                letter-spacing: 0.02em;
+                font-weight: 600;
+                letter-spacing: 0.01em;
                 white-space: nowrap;
             }}
 
-            .badge-emerald, .badge-teal {{
-                background-color: #F0FDFA;
-                color: #0F766E;
-                border: 1px solid #99F6E4;
+            .badge-indigo, .badge-teal {{
+                background-color: #EEF2FF;
+                color: #4338CA;
+                border: 1px solid #C7D2FE;
+            }}
+
+            .badge-emerald {{
+                background-color: #ECFDF5;
+                color: #047857;
+                border: 1px solid #A7F3D0;
             }}
 
             .badge-amber {{
                 background-color: #FFFBEB;
-                color: #92400E;
+                color: #B45309;
                 border: 1px solid #FDE68A;
             }}
 
             .badge-rose {{
                 background-color: #FEF2F2;
-                color: #991B1B;
+                color: #B91C1C;
                 border: 1px solid #FECACA;
             }}
 
             .badge-slate {{
-                background-color: #F4F4F5;
-                color: #3F3F46;
-                border: 1px solid #E4E4E7;
+                background-color: #F8FAFC;
+                color: #475569;
+                border: 1px solid #E2E8F0;
             }}
 
-            /* Buttons (Flat, crisp border, Deep Teal primary) */
+            /* Horizontal Pill-Shaped Buttons */
             .stButton > button, .stDownloadButton > button {{
                 background-color: #FFFFFF !important;
-                color: {COLOR_TEXT} !important;
+                color: #475569 !important;
                 font-weight: 500 !important;
-                font-size: 0.84rem !important;
-                border-radius: 6px !important;
+                font-size: 0.82rem !important;
+                border-radius: 9999px !important;
                 border: 1px solid {COLOR_BORDER} !important;
-                padding: 0.4rem 0.8rem !important;
-                box-shadow: none !important;
+                padding: 0.45rem 0.95rem !important;
+                box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04) !important;
+                transition: all 0.15s ease-in-out !important;
             }}
 
             .stButton > button:hover, .stDownloadButton > button:hover {{
-                border-color: #A1A1AA !important;
-                background-color: #F4F4F5 !important;
+                border-color: {COLOR_BORDER_HOVER} !important;
+                background-color: #F1F5F9 !important;
+                color: {COLOR_TEXT} !important;
             }}
 
             .stButton > button[kind="primary"] {{
                 background-color: {COLOR_PRIMARY} !important;
                 color: #FFFFFF !important;
+                font-weight: 600 !important;
                 border: 1px solid {COLOR_PRIMARY} !important;
+                box-shadow: 0 1px 3px 0 rgba(79, 70, 229, 0.3) !important;
             }}
 
             .stButton > button[kind="primary"]:hover {{
                 background-color: {COLOR_PRIMARY_HOVER} !important;
                 border-color: {COLOR_PRIMARY_HOVER} !important;
+                box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.4) !important;
+            }}
+
+            /* Chat Bubbles (User: Indigo, Assistant: Clean White/Slate) */
+            [data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) {{
+                background-color: #EEF2FF !important;
+                border: 1px solid #C7D2FE !important;
+                border-radius: 12px !important;
+                padding: 0.85rem !important;
+            }}
+
+            [data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarAssistant"]) {{
+                background-color: #FFFFFF !important;
+                border: 1px solid {COLOR_BORDER} !important;
+                border-radius: 12px !important;
+                padding: 0.85rem !important;
             }}
 
             /* Form Controls & Tables */
-            .stTextInput input, .stSelectbox select, .stNumberInput input {{
+            .stTextInput input, .stSelectbox select, .stNumberInput input, .stTextArea textarea {{
                 background-color: #FFFFFF !important;
                 color: {COLOR_TEXT} !important;
                 border: 1px solid {COLOR_BORDER} !important;
-                border-radius: 6px !important;
-                font-size: 0.85rem !important;
+                border-radius: 8px !important;
+                font-size: 0.86rem !important;
+            }}
+
+            .stTextInput input:focus, .stSelectbox select:focus, .stNumberInput input:focus {{
+                border-color: {COLOR_PRIMARY} !important;
+                box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15) !important;
             }}
 
             [data-testid="stDataFrame"], [data-testid="stTable"] {{
                 border: 1px solid {COLOR_BORDER} !important;
-                border-radius: 6px !important;
+                border-radius: 10px !important;
                 background-color: #FFFFFF !important;
+                overflow: hidden !important;
             }}
 
             code {{
                 font-family: 'JetBrains Mono', monospace !important;
-                background-color: #F4F4F5 !important;
+                background-color: #F1F5F9 !important;
                 color: {COLOR_TEXT} !important;
-                padding: 0.1rem 0.3rem !important;
+                padding: 0.15rem 0.35rem !important;
                 border-radius: 4px !important;
                 border: 1px solid {COLOR_BORDER} !important;
-                font-size: 0.84em !important;
+                font-size: 0.82em !important;
             }}
         </style>
         """,
@@ -307,15 +407,60 @@ def apply_custom_css():
 # ---------------------------------------------------------
 # Shared Navigation, Header, Sidebar & Footer Components
 # ---------------------------------------------------------
-def get_badge_html(text: str, variant: str = "slate") -> str:
-    """Returns HTML markup for a flat status badge."""
-    valid_variants = {"emerald", "teal", "amber", "rose", "slate"}
-    v = variant.lower() if variant.lower() in valid_variants else "slate"
+def get_badge_html(text: str, variant: str = "indigo") -> str:
+    """Returns HTML markup for a modern status badge."""
+    valid_variants = {"indigo", "emerald", "teal", "amber", "rose", "slate"}
+    v = variant.lower() if variant.lower() in valid_variants else "indigo"
+    if v == "teal":
+        v = "indigo"
     return f'<span class="status-badge badge-{v}">{text}</span>'
 
 
+def render_brand_header():
+    """Renders the top branding header with the custom project logo directly above the navigation tabs."""
+    logo_b64 = get_logo_base64()
+    logo_img_tag = (
+        f'<img src="data:image/webp;base64,{logo_b64}" alt="AI Student Performance System Logo" style="height: 100%; width: 100%; object-fit: contain;" />'
+        if logo_b64
+        else '<span style="font-size: 1.6rem;">🎓</span>'
+    )
+    st.markdown(
+        f"""
+        <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid {COLOR_BORDER}; padding-bottom: 1rem; margin-bottom: 0.85rem; flex-wrap: wrap; gap: 0.85rem;">
+            <div style="display: flex; align-items: center; gap: 0.85rem;">
+                <div style="height: 52px; width: 52px; border-radius: 14px; background: #FFFFFF; border: 1px solid {COLOR_BORDER}; padding: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                    {logo_img_tag}
+                </div>
+                <div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                        <span style="font-size: 1.25rem; font-weight: 700; color: {COLOR_TEXT}; letter-spacing: -0.02em;">
+                            AI Student Performance &amp; Academic Guidance
+                        </span>
+                        <span class="status-badge badge-indigo">v2.4 Pro</span>
+                    </div>
+                    <div style="font-size: 0.82rem; color: {COLOR_MUTED}; margin-top: 2px;">
+                        An AI-powered student analytics platform for dataset preparation, exploratory profiling, and academic guidance.
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                <span class="status-badge badge-emerald">
+                    <span style="height: 6px; width: 6px; border-radius: 9999px; background-color: #10B981; display: inline-block;"></span>
+                    Platform Online
+                </span>
+                <span style="font-size: 0.74rem; color: {COLOR_MUTED}; font-family: 'JetBrains Mono', monospace; background: #FFFFFF; padding: 3px 8px; border-radius: 6px; border: 1px solid {COLOR_BORDER}; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+                    Cohort 2026-CSE
+                </span>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def render_top_navbar(active_page: str = "app.py"):
-    """Renders the shared horizontal navigation button bar at the top of every page."""
+    """Renders the custom project logo header and horizontal pill navigation tab bar."""
+    render_brand_header()
     cols = st.columns(len(NAV_ITEMS))
     for idx, (label, target_path) in enumerate(NAV_ITEMS):
         with cols[idx]:
@@ -329,7 +474,7 @@ def render_top_navbar(active_page: str = "app.py"):
                 if active_page != target_path:
                     st.switch_page(target_path)
     st.markdown(
-        f"<div style='border-bottom: 1px solid {COLOR_BORDER}; margin: 0.35rem 0 1rem 0;'></div>",
+        f"<div style='border-bottom: 1px solid {COLOR_BORDER}; margin: 0.4rem 0 1.25rem 0;'></div>",
         unsafe_allow_html=True,
     )
 
@@ -338,20 +483,20 @@ def render_header(
     title: str,
     subtitle: str = None,
     badge_text: str = None,
-    badge_variant: str = "slate",
+    badge_variant: str = "indigo",
 ):
     """Renders a clean page header banner with hairline bottom border."""
     badge_markup = f"<div>{get_badge_html(badge_text, badge_variant)}</div>" if badge_text else ""
     sub_markup = (
-        f'<div style="font-size: 0.86rem; color: {COLOR_MUTED}; margin-top: 0.25rem;">{subtitle}</div>'
+        f'<div style="font-size: 0.88rem; color: {COLOR_MUTED}; margin-top: 0.25rem;">{subtitle}</div>'
         if subtitle
         else ""
     )
     st.markdown(
         f"""
-        <div style="border-bottom: 1px solid {COLOR_BORDER}; padding-bottom: 0.8rem; margin-bottom: 1.2rem; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem;">
+        <div style="border-bottom: 1px solid {COLOR_BORDER}; padding-bottom: 0.75rem; margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem;">
             <div>
-                <h2 style="margin: 0; font-size: 1.35rem; font-weight: 600; color: {COLOR_TEXT}; letter-spacing: -0.015em;">{title}</h2>
+                <h2 style="margin: 0; font-size: 1.35rem; font-weight: 700; color: {COLOR_TEXT}; letter-spacing: -0.015em;">{title}</h2>
                 {sub_markup}
             </div>
             {badge_markup}
@@ -365,7 +510,7 @@ def render_dataset_status_badge() -> str:
     """Returns a status badge HTML string reflecting active dataset state."""
     if st.session_state.get("cleaned_df") is not None:
         count = len(st.session_state["cleaned_df"])
-        return get_badge_html(f"cleaned_df: {count} rows", "teal")
+        return get_badge_html(f"cleaned_df: {count} rows", "emerald")
     if st.session_state.get("raw_df") is not None:
         count = len(st.session_state["raw_df"])
         return get_badge_html(f"raw_df: {count} rows", "amber")
@@ -376,7 +521,7 @@ def render_sidebar_status():
     """Renders persistent workspace status inside the sidebar."""
     model_type = st.session_state.get("model_type")
     model_badge = (
-        get_badge_html(f"Model: {model_type}", "teal")
+        get_badge_html(f"Model: {model_type}", "indigo")
         if model_type
         else get_badge_html("Model: Not trained", "slate")
     )
@@ -385,8 +530,8 @@ def render_sidebar_status():
     with st.sidebar:
         st.markdown(
             f"""
-            <div style="background-color: {COLOR_CARD}; border: 1px solid {COLOR_BORDER}; border-radius: 6px; padding: 0.75rem 0.85rem; margin-bottom: 1rem;">
-                <div style="font-size: 0.7rem; text-transform: uppercase; color: {COLOR_MUTED}; font-weight: 600; letter-spacing: 0.04em; margin-bottom: 0.4rem;">
+            <div style="background-color: {COLOR_CARD}; border: 1px solid {COLOR_BORDER}; border-radius: 10px; padding: 0.85rem; margin-bottom: 1rem; box-shadow: 0 1px 2px rgba(0,0,0,0.03);">
+                <div style="font-size: 0.7rem; text-transform: uppercase; color: {COLOR_MUTED}; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.45rem;">
                     Workspace Status
                 </div>
                 <div style="margin-bottom: 0.45rem;">
@@ -395,8 +540,8 @@ def render_sidebar_status():
                 <div style="margin-bottom: 0.45rem;">
                     {model_badge}
                 </div>
-                <div style="font-size: 0.75rem; color: {COLOR_MUTED}; line-height: 1.4;">
-                    File: {dataset_name}
+                <div style="font-size: 0.76rem; color: {COLOR_MUTED}; line-height: 1.4;">
+                    File: <span style="font-weight: 600; color: {COLOR_TEXT};">{dataset_name}</span>
                 </div>
             </div>
             """,
@@ -406,11 +551,20 @@ def render_sidebar_status():
 
 def render_footer():
     """Renders a consistent footer at the bottom of every page."""
+    logo_b64 = get_logo_base64()
+    logo_img = (
+        f'<img src="data:image/webp;base64,{logo_b64}" style="height: 18px; width: 18px; object-fit: contain;" />'
+        if logo_b64
+        else ""
+    )
     st.markdown("<div style='height: 1.5rem;'></div>", unsafe_allow_html=True)
     st.markdown(
         f"""
-        <div style="border-top: 1px solid {COLOR_BORDER}; padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; color: {COLOR_MUTED}; font-size: 0.76rem;">
-            <div>AI Student Performance &amp; Academic Guidance System</div>
+        <div style="border-top: 1px solid {COLOR_BORDER}; padding-top: 0.85rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; color: {COLOR_MUTED}; font-size: 0.76rem;">
+            <div style="display: flex; align-items: center; gap: 0.4rem;">
+                {logo_img}
+                <span>AI Student Performance &amp; Academic Guidance System &bull; Academic Year 2026</span>
+            </div>
             <div>Python | Streamlit | Pandas | Scikit-learn | Matplotlib | Seaborn | Groq AI</div>
         </div>
         """,
@@ -760,7 +914,7 @@ def render_feature_chart(
                 corr,
                 annot=True,
                 fmt=".2f",
-                cmap=sns.diverging_palette(10, 175, as_cmap=True),
+                cmap=sns.diverging_palette(20, 250, as_cmap=True),
                 center=0,
                 vmin=-1,
                 vmax=1,

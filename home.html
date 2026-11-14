@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Dashboard | AI Student Performance & Academic Guidance System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            indigo: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+              950: '#1e1b4b',
+            },
+            emerald: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              300: '#6ee7b7',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+            },
+            amber: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              200: '#fde68a',
+              300: '#fcd34d',
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-full bg-slate-50 text-slate-800 antialiased font-sans">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top-Left Header with Custom Project Logo directly above tabs -->
+    <header class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-4">
+        <a href="welcome.html" class="group flex items-center gap-3">
+          <div class="h-14 w-14 rounded-2xl bg-white border border-slate-200 shadow-sm p-1.5 flex items-center justify-center overflow-hidden group-hover:border-indigo-300 group-hover:shadow-md transition-all">
+            <img src="assets/logo.webp" alt="AI Student Performance System Logo" class="h-full w-full object-contain" />
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-xl md:text-2xl font-bold text-slate-900 tracking-tight">AI Student Performance & Academic Guidance</h1>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">v2.4 Pro</span>
+            </div>
+            <p class="text-sm text-slate-500 mt-0.5">An AI-powered student analytics platform for dataset preparation, exploratory profiling, and academic guidance.</p>
+          </div>
+        </a>
+      </div>
+      <div class="flex items-center gap-3 self-start md:self-auto">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+          <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Cohort Active
+        </span>
+        <span class="text-xs text-slate-500 font-mono bg-white px-2.5 py-1 rounded-lg border border-slate-200 shadow-sm">500 Records</span>
+      </div>
+    </header>
+
+    <!-- Horizontal Pill-Shaped Tab Menu -->
+    <nav class="mb-8 overflow-x-auto pb-2 scrollbar-none">
+      <div class="inline-flex p-1.5 bg-white border border-slate-200 rounded-full shadow-sm gap-1 min-w-full md:min-w-0">
+        <a href="welcome.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Welcome
+        </a>
+        <a href="home.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-semibold transition-all whitespace-nowrap bg-indigo-600 text-white shadow-sm">
+          Home
+        </a>
+        <a href="upload.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Upload
+        </a>
+        <a href="clean.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Clean
+        </a>
+        <a href="eda.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          EDA
+        </a>
+        <a href="visualize.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Visualize
+        </a>
+        <a href="train.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Train ML
+        </a>
+        <a href="predict.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Predict
+        </a>
+        <a href="chat.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          AI Chat
+        </a>
+        <a href="about.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          About
+        </a>
+      </div>
+    </nav>
+
+    <!-- Page Body: Home Dashboard View -->
+    <main class="space-y-8">
+      
+      <!-- Top Level Student KPIs Grid -->
+      <section>
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-xl font-bold text-slate-900 tracking-tight">Cohort Performance Dashboard</h2>
+            <p class="text-xs text-slate-500">Live analytical telemetry computed across active student enrollment</p>
+          </div>
+          <span class="text-xs text-slate-400">Synchronized with datasets/2_cleaned_balanced_cohort.csv</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <!-- KPI 1: Total Students -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Students</span>
+              <div class="h-8 w-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                <i data-lucide="users" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-2">
+              <span class="text-3xl font-extrabold text-slate-900 tracking-tight">500</span>
+              <span class="text-xs font-semibold text-emerald-600 flex items-center">
+                <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i> 100% active
+              </span>
+            </div>
+            <p class="text-xs text-slate-500">Full cohort enrolled in CSE Sem 5</p>
+          </div>
+
+          <!-- KPI 2: Average Attendance -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Average Attendance</span>
+              <div class="h-8 w-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                <i data-lucide="calendar-check" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-2">
+              <span class="text-3xl font-extrabold text-slate-900 tracking-tight">85.9%</span>
+              <span class="text-xs font-semibold text-emerald-600 flex items-center">
+                <i data-lucide="check" class="w-3.5 h-3.5"></i> Above 75% Gate
+              </span>
+            </div>
+            <p class="text-xs text-slate-500">429 students (85.8%) meet eligibility</p>
+          </div>
+
+          <!-- KPI 3: Current At-Risk Count -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Current At-Risk</span>
+              <div class="h-8 w-8 rounded-lg bg-amber-50 text-amber-500 flex items-center justify-center">
+                <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-2">
+              <span class="text-3xl font-extrabold text-amber-600 tracking-tight">28</span>
+              <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+                Action Required
+              </span>
+            </div>
+            <p class="text-xs text-slate-500">Low attendance (&lt;75%) or study hrs &lt;3.0</p>
+          </div>
+
+          <!-- KPI 4: Mean Performance -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Mean Performance</span>
+              <div class="h-8 w-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                <i data-lucide="award" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-2">
+              <span class="text-3xl font-extrabold text-slate-900 tracking-tight">73.04</span>
+              <span class="text-xs font-semibold text-indigo-600">Scale: 0-100</span>
+            </div>
+            <p class="text-xs text-slate-500">Median score: 73.2 | Std Dev: 10.4</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cohort Tier Breakdown & Academic Indicators -->
+      <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Performance Tiers Breakdown -->
+        <div class="lg:col-span-2 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-5">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="text-base font-bold text-slate-900 tracking-tight">Cohort Performance Tier Distribution</h3>
+              <p class="text-xs text-slate-500">Categorical classification based on final performance thresholds</p>
+            </div>
+            <a href="visualize.html" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800">View Charts &rarr;</a>
+          </div>
+
+          <div class="space-y-4">
+            <!-- Tier 1: Outstanding -->
+            <div>
+              <div class="flex justify-between text-xs font-medium mb-1">
+                <span class="text-slate-700 flex items-center gap-1.5">
+                  <span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
+                  Outstanding (&ge; 85.0)
+                </span>
+                <span class="text-slate-900 font-bold">94 Students (18.8%)</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+                <div class="bg-emerald-500 h-2.5 rounded-full" style="width: 18.8%"></div>
+              </div>
+            </div>
+
+            <!-- Tier 2: Good -->
+            <div>
+              <div class="flex justify-between text-xs font-medium mb-1">
+                <span class="text-slate-700 flex items-center gap-1.5">
+                  <span class="h-2.5 w-2.5 rounded-full bg-indigo-600"></span>
+                  Good (70.0 - 84.9)
+                </span>
+                <span class="text-slate-900 font-bold">238 Students (47.6%)</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+                <div class="bg-indigo-600 h-2.5 rounded-full" style="width: 47.6%"></div>
+              </div>
+            </div>
+
+            <!-- Tier 3: Average -->
+            <div>
+              <div class="flex justify-between text-xs font-medium mb-1">
+                <span class="text-slate-700 flex items-center gap-1.5">
+                  <span class="h-2.5 w-2.5 rounded-full bg-slate-400"></span>
+                  Average (55.0 - 69.9)
+                </span>
+                <span class="text-slate-900 font-bold">140 Students (28.0%)</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+                <div class="bg-slate-400 h-2.5 rounded-full" style="width: 28.0%"></div>
+              </div>
+            </div>
+
+            <!-- Tier 4: At-Risk -->
+            <div>
+              <div class="flex justify-between text-xs font-medium mb-1">
+                <span class="text-slate-700 flex items-center gap-1.5">
+                  <span class="h-2.5 w-2.5 rounded-full bg-amber-500"></span>
+                  At-Risk (&lt; 55.0)
+                </span>
+                <span class="text-amber-600 font-bold">28 Students (5.6%)</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+                <div class="bg-amber-500 h-2.5 rounded-full" style="width: 5.6%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between text-xs text-slate-600">
+            <span>High-performing majority: <strong>66.4%</strong> of cohort holds &ge; 70.0 scores.</span>
+            <a href="predict.html" class="font-semibold text-indigo-600 hover:text-indigo-800">Forecast Next Term &rarr;</a>
+          </div>
+        </div>
+
+        <!-- Academic Indicator Summary Card -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+          <h3 class="text-base font-bold text-slate-900 tracking-tight">Core Metric Averages</h3>
+          <p class="text-xs text-slate-500">Benchmark metrics for active cohort preparation</p>
+
+          <div class="divide-y divide-slate-100 space-y-3">
+            <div class="pt-2 flex items-center justify-between">
+              <div>
+                <p class="text-xs text-slate-500">Daily Study Hours</p>
+                <p class="text-base font-bold text-slate-900">4.91 hrs/day</p>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-indigo-50 text-indigo-700">Norm: 4.5+</span>
+            </div>
+
+            <div class="pt-3 flex items-center justify-between">
+              <div>
+                <p class="text-xs text-slate-500">Previous Marks</p>
+                <p class="text-base font-bold text-slate-900">71.50 / 100</p>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700">Healthy</span>
+            </div>
+
+            <div class="pt-3 flex items-center justify-between">
+              <div>
+                <p class="text-xs text-slate-500">Assignment Scores</p>
+                <p class="text-base font-bold text-slate-900">74.22 / 100</p>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-indigo-50 text-indigo-700">Top Factor</span>
+            </div>
+
+            <div class="pt-3 flex items-center justify-between">
+              <div>
+                <p class="text-xs text-slate-500">Correlation (r) to Final</p>
+                <p class="text-base font-bold text-emerald-600">+0.824 (Strong)</p>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-100 text-slate-700">Pearson</span>
+            </div>
+          </div>
+
+          <a href="eda.html" class="w-full inline-flex items-center justify-center gap-2 py-2 rounded-xl bg-slate-50 border border-slate-200 hover:bg-slate-100 text-xs font-semibold text-slate-700 transition-all">
+            <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+            Detailed Cohort Profiling
+          </a>
+        </div>
+      </section>
+
+      <!-- Active Academic Intervention Alerts Table -->
+      <section class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+        <div class="p-6 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h3 class="text-base font-bold text-slate-900 tracking-tight">Recent Academic Intervention Alerts</h3>
+            <p class="text-xs text-slate-500">Students flagged by rule-based and predictive models for immediate mentoring</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+              <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
+              28 Critical Students
+            </span>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="bg-slate-50/80 border-b border-slate-200 text-slate-500 uppercase font-semibold">
+                <th class="py-3 px-4">Student ID</th>
+                <th class="py-3 px-4">Study hrs</th>
+                <th class="py-3 px-4">Attendance</th>
+                <th class="py-3 px-4">Prev Marks</th>
+                <th class="py-3 px-4">Assignment</th>
+                <th class="py-3 px-4">Predicted Final</th>
+                <th class="py-3 px-4">Risk Level</th>
+                <th class="py-3 px-4 text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-slate-700">
+              <tr class="hover:bg-slate-50/60 transition-colors">
+                <td class="py-3 px-4 font-mono font-bold text-slate-900">STU014</td>
+                <td class="py-3 px-4 font-medium text-amber-600">1.8 hrs</td>
+                <td class="py-3 px-4 font-medium text-amber-600">58.4%</td>
+                <td class="py-3 px-4">48.2</td>
+                <td class="py-3 px-4">42.0</td>
+                <td class="py-3 px-4 font-bold text-amber-600">41.8</td>
+                <td class="py-3 px-4">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">Critical Risk</span>
+                </td>
+                <td class="py-3 px-4 text-right">
+                  <a href="predict.html" class="text-indigo-600 hover:text-indigo-800 font-semibold">Advise &rarr;</a>
+                </td>
+              </tr>
+              <tr class="hover:bg-slate-50/60 transition-colors">
+                <td class="py-3 px-4 font-mono font-bold text-slate-900">STU047</td>
+                <td class="py-3 px-4 font-medium text-amber-600">2.1 hrs</td>
+                <td class="py-3 px-4 font-medium text-amber-600">62.1%</td>
+                <td class="py-3 px-4">52.0</td>
+                <td class="py-3 px-4">49.5</td>
+                <td class="py-3 px-4 font-bold text-amber-600">48.2</td>
+                <td class="py-3 px-4">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">Attendance Gate</span>
+                </td>
+                <td class="py-3 px-4 text-right">
+                  <a href="predict.html" class="text-indigo-600 hover:text-indigo-800 font-semibold">Advise &rarr;</a>
+                </td>
+              </tr>
+              <tr class="hover:bg-slate-50/60 transition-colors">
+                <td class="py-3 px-4 font-mono font-bold text-slate-900">STU108</td>
+                <td class="py-3 px-4 font-medium text-amber-600">2.0 hrs</td>
+                <td class="py-3 px-4 font-medium text-amber-600">64.5%</td>
+                <td class="py-3 px-4">54.8</td>
+                <td class="py-3 px-4">51.2</td>
+                <td class="py-3 px-4 font-bold text-amber-600">50.6</td>
+                <td class="py-3 px-4">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">Study Gap</span>
+                </td>
+                <td class="py-3 px-4 text-right">
+                  <a href="predict.html" class="text-indigo-600 hover:text-indigo-800 font-semibold">Advise &rarr;</a>
+                </td>
+              </tr>
+              <tr class="hover:bg-slate-50/60 transition-colors">
+                <td class="py-3 px-4 font-mono font-bold text-slate-900">STU233</td>
+                <td class="py-3 px-4">3.4 hrs</td>
+                <td class="py-3 px-4 font-medium text-amber-600">68.0%</td>
+                <td class="py-3 px-4">58.0</td>
+                <td class="py-3 px-4">55.0</td>
+                <td class="py-3 px-4 font-bold text-slate-700">54.2</td>
+                <td class="py-3 px-4">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">Attendance Gate</span>
+                </td>
+                <td class="py-3 px-4 text-right">
+                  <a href="predict.html" class="text-indigo-600 hover:text-indigo-800 font-semibold">Advise &rarr;</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Quick Action Shortcuts -->
+      <section class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <a href="upload.html" class="bg-white border border-slate-200 hover:border-indigo-300 rounded-xl p-4 shadow-sm hover:shadow transition-all text-center group">
+          <i data-lucide="upload" class="w-5 h-5 mx-auto text-indigo-600 mb-1.5 group-hover:scale-110 transition-transform"></i>
+          <span class="text-xs font-bold text-slate-900 block">Ingest New CSV</span>
+          <span class="text-[11px] text-slate-500">4 Preloaded Datasets</span>
+        </a>
+        <a href="clean.html" class="bg-white border border-slate-200 hover:border-indigo-300 rounded-xl p-4 shadow-sm hover:shadow transition-all text-center group">
+          <i data-lucide="sparkle" class="w-5 h-5 mx-auto text-indigo-600 mb-1.5 group-hover:scale-110 transition-transform"></i>
+          <span class="text-xs font-bold text-slate-900 block">Clean Staging</span>
+          <span class="text-[11px] text-slate-500">Impute & Deduplicate</span>
+        </a>
+        <a href="train.html" class="bg-white border border-slate-200 hover:border-emerald-300 rounded-xl p-4 shadow-sm hover:shadow transition-all text-center group">
+          <i data-lucide="activity" class="w-5 h-5 mx-auto text-emerald-600 mb-1.5 group-hover:scale-110 transition-transform"></i>
+          <span class="text-xs font-bold text-slate-900 block">Retrain Model</span>
+          <span class="text-[11px] text-slate-500">Linear / Random Forest</span>
+        </a>
+        <a href="chat.html" class="bg-white border border-slate-200 hover:border-indigo-300 rounded-xl p-4 shadow-sm hover:shadow transition-all text-center group">
+          <i data-lucide="message-square" class="w-5 h-5 mx-auto text-indigo-600 mb-1.5 group-hover:scale-110 transition-transform"></i>
+          <span class="text-xs font-bold text-slate-900 block">Advisory Chat</span>
+          <span class="text-[11px] text-slate-500">Groq Llama-3 AI</span>
+        </a>
+      </section>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="mt-12 pt-6 border-t border-slate-200 text-center text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <img src="assets/logo.webp" alt="Logo" class="h-5 w-5 object-contain" />
+        <span>AI Student Performance & Academic Guidance System &bull; Academic Year 2026</span>
+      </div>
+      <div class="flex gap-4">
+        <a href="about.html" class="hover:text-indigo-600 transition-colors">Architecture</a>
+        <a href="eda.html" class="hover:text-indigo-600 transition-colors">Cohort Profiling</a>
+        <a href="chat.html" class="hover:text-indigo-600 transition-colors">AI Advisor</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
+

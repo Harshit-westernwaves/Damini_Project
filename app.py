@@ -3,8 +3,11 @@ app.py - Welcome Section and entry point for the
 AI Student Performance & Academic Guidance System.
 """
 
+import os
+import pandas as pd
 import streamlit as st
 from utils import (
+    DEFAULT_DATASET_PATH,
     apply_custom_css,
     compute_eda_questions,
     generate_sample_student_dataset,
@@ -41,7 +44,7 @@ render_header(
         "performance forecasting, and academic guidance."
     ),
     badge_text="Welcome",
-    badge_variant="teal",
+    badge_variant="indigo",
 )
 
 active_df, is_cleaned = get_active_df()
@@ -68,10 +71,16 @@ with st.container(border=True):
         if st.button("Open Main Dashboard", type="primary", width="stretch"):
             st.switch_page("pages/1_Home.py")
         if active_df is None:
-            if st.button("Load Sample Dataset (200 Rows)", width="stretch"):
-                sample_df = generate_sample_student_dataset(n_samples=200, inject_imperfections=True)
-                set_session_dataset(sample_df, "sample_student_data_200.csv", mark_cleaned=False)
+            if st.button("Load Default Dataset (datasets/)", type="primary", width="stretch"):
+                if os.path.exists(DEFAULT_DATASET_PATH):
+                    sample_df = pd.read_csv(DEFAULT_DATASET_PATH)
+                    set_session_dataset(sample_df, os.path.basename(DEFAULT_DATASET_PATH), mark_cleaned=True)
+                else:
+                    sample_df = generate_sample_student_dataset(n_samples=200, inject_imperfections=False)
+                    set_session_dataset(sample_df, "sample_student_data_200.csv", mark_cleaned=True)
                 st.rerun()
+            if st.button("Open Upload Dataset", width="stretch"):
+                st.switch_page("pages/2_Upload_Dataset.py")
         else:
             if st.button("Open Upload Dataset", width="stretch"):
                 st.switch_page("pages/2_Upload_Dataset.py")

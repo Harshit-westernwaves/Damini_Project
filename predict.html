@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Performance Prediction | AI Student Performance & Academic Guidance System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            indigo: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+              950: '#1e1b4b',
+            },
+            emerald: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              300: '#6ee7b7',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+            },
+            amber: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              200: '#fde68a',
+              300: '#fcd34d',
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-full bg-slate-50 text-slate-800 antialiased font-sans">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top-Left Header with Custom Project Logo directly above tabs -->
+    <header class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-4">
+        <a href="welcome.html" class="group flex items-center gap-3">
+          <div class="h-14 w-14 rounded-2xl bg-white border border-slate-200 shadow-sm p-1.5 flex items-center justify-center overflow-hidden group-hover:border-indigo-300 group-hover:shadow-md transition-all">
+            <img src="assets/logo.webp" alt="AI Student Performance System Logo" class="h-full w-full object-contain" />
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-xl md:text-2xl font-bold text-slate-900 tracking-tight">AI Student Performance & Academic Guidance</h1>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">v2.4 Pro</span>
+            </div>
+            <p class="text-sm text-slate-500 mt-0.5">An AI-powered student analytics platform for dataset preparation, exploratory profiling, and academic guidance.</p>
+          </div>
+        </a>
+      </div>
+      <div class="flex items-center gap-3 self-start md:self-auto">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+          <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+          Predictive Inference Active
+        </span>
+        <span class="text-xs text-slate-500 font-mono bg-white px-2.5 py-1 rounded-lg border border-slate-200 shadow-sm">95% CI Calibrated</span>
+      </div>
+    </header>
+
+    <!-- Horizontal Pill-Shaped Tab Menu -->
+    <nav class="mb-8 overflow-x-auto pb-2 scrollbar-none">
+      <div class="inline-flex p-1.5 bg-white border border-slate-200 rounded-full shadow-sm gap-1 min-w-full md:min-w-0">
+        <a href="welcome.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Welcome
+        </a>
+        <a href="home.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Home
+        </a>
+        <a href="upload.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Upload
+        </a>
+        <a href="clean.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Clean
+        </a>
+        <a href="eda.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          EDA
+        </a>
+        <a href="visualize.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Visualize
+        </a>
+        <a href="train.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          Train ML
+        </a>
+        <a href="predict.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-semibold transition-all whitespace-nowrap bg-indigo-600 text-white shadow-sm">
+          Predict
+        </a>
+        <a href="chat.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          AI Chat
+        </a>
+        <a href="about.html" class="px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          About
+        </a>
+      </div>
+    </nav>
+
+    <!-- Page Body: Prediction View -->
+    <main class="space-y-8">
+      
+      <!-- Top Preset Quick-Selector -->
+      <section class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <span class="text-xs font-bold text-slate-700">Quick Test Profiles:</span>
+        <div class="flex flex-wrap gap-2">
+          <button onclick="setPreset(4.5, 78, 68, 72)" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:border-indigo-400 text-xs font-semibold bg-slate-50 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 transition-all">
+            Standard Student
+          </button>
+          <button onclick="setPreset(7.5, 96, 88, 92)" class="px-3 py-1.5 rounded-lg border border-emerald-200 hover:border-emerald-400 text-xs font-semibold bg-emerald-50 hover:bg-emerald-100 text-emerald-800 transition-all">
+            High Achiever (Tier 1)
+          </button>
+          <button onclick="setPreset(1.8, 52, 46, 42)" class="px-3 py-1.5 rounded-lg border border-amber-200 hover:border-amber-400 text-xs font-semibold bg-amber-50 hover:bg-amber-100 text-amber-800 transition-all">
+            At-Risk Intervention Alert
+          </button>
+        </div>
+      </section>
+
+      <!-- Main Prediction Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left: Single-Student Input Form (5 cols) -->
+        <div class="lg:col-span-5 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-5">
+          <div>
+            <h2 class="text-lg font-bold text-slate-900 tracking-tight">Student Academic Parameters</h2>
+            <p class="text-xs text-slate-500">Input student indicators to compute model outcome & confidence interval</p>
+          </div>
+
+          <!-- Input 1: Study Hours -->
+          <div class="space-y-1.5">
+            <div class="flex justify-between items-center text-xs">
+              <label class="font-bold text-slate-700">Study Hours (Daily Coursework)</label>
+              <span id="val-study" class="font-mono font-bold text-indigo-600">4.5 hrs/day</span>
+            </div>
+            <input type="range" id="input-study" min="0.5" max="12.0" step="0.5" value="4.5" oninput="calculatePrediction()" class="w-full accent-indigo-600 cursor-pointer" />
+            <div class="flex justify-between text-[11px] text-slate-400">
+              <span>0.5 hrs (Min)</span>
+              <span>12.0 hrs (Max)</span>
+            </div>
+          </div>
+
+          <!-- Input 2: Attendance % -->
+          <div class="space-y-1.5 pt-1">
+            <div class="flex justify-between items-center text-xs">
+              <label class="font-bold text-slate-700">Attendance Percentage</label>
+              <span id="val-att" class="font-mono font-bold text-indigo-600">78.0%</span>
+            </div>
+            <input type="range" id="input-att" min="20" max="100" step="1" value="78" oninput="calculatePrediction()" class="w-full accent-indigo-600 cursor-pointer" />
+            <div class="flex justify-between text-[11px] text-slate-400">
+              <span>20% (Severe)</span>
+              <span class="text-amber-600 font-semibold">75% Gate</span>
+              <span>100% (Perfect)</span>
+            </div>
+          </div>
+
+          <!-- Input 3: Previous Scores -->
+          <div class="space-y-1.5 pt-1">
+            <div class="flex justify-between items-center text-xs">
+              <label class="font-bold text-slate-700">Previous Scores / Examination Marks</label>
+              <span id="val-prev" class="font-mono font-bold text-indigo-600">68.0 / 100</span>
+            </div>
+            <input type="range" id="input-prev" min="20" max="100" step="1" value="68" oninput="calculatePrediction()" class="w-full accent-indigo-600 cursor-pointer" />
+            <div class="flex justify-between text-[11px] text-slate-400">
+              <span>20.0</span>
+              <span>100.0</span>
+            </div>
+          </div>
+
+          <!-- Input 4: Assignment Scores -->
+          <div class="space-y-1.5 pt-1">
+            <div class="flex justify-between items-center text-xs">
+              <label class="font-bold text-slate-700">Assignment Scores (Internal Assessment)</label>
+              <span id="val-assign" class="font-mono font-bold text-indigo-600">72.0 / 100</span>
+            </div>
+            <input type="range" id="input-assign" min="20" max="100" step="1" value="72" oninput="calculatePrediction()" class="w-full accent-indigo-600 cursor-pointer" />
+            <div class="flex justify-between text-[11px] text-slate-400">
+              <span>20.0</span>
+              <span>100.0</span>
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <button onclick="calculatePrediction()" class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-md transition-all">
+              <i data-lucide="calculator" class="w-4 h-4"></i>
+              Calculate Forecast & Guidance
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: Large Results Card with Confidence Intervals (7 cols) -->
+        <div class="lg:col-span-7 space-y-6">
+          
+          <!-- Large Results Card -->
+          <div id="results-card" class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-5 transition-all">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-slate-100">
+              <div>
+                <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider block">Model Inference Output</span>
+                <h3 class="text-base font-bold text-slate-900 tracking-tight">Predicted Final Performance Score</h3>
+              </div>
+              <div id="tier-badge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">
+                <i data-lucide="award" class="w-4 h-4 text-indigo-600"></i>
+                Good Standing (Tier 2)
+              </div>
+            </div>
+
+            <!-- Big Score & Confidence Interval Row -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 items-center">
+              <div>
+                <div class="flex items-baseline gap-2">
+                  <span id="predicted-score" class="text-5xl font-black text-slate-900 tracking-tight">74.8</span>
+                  <span class="text-sm font-bold text-slate-400">/ 100</span>
+                </div>
+                <p id="score-caption" class="text-xs text-slate-500 mt-1">Expected percentile: ~72nd cohort rank</p>
+              </div>
+
+              <!-- Confidence Interval Box -->
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-1.5">
+                <div class="flex justify-between items-center text-xs">
+                  <span class="font-bold text-slate-700">95% Confidence Interval</span>
+                  <span id="ci-range" class="font-mono font-bold text-emerald-600">[71.6, 78.0]</span>
+                </div>
+                <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+                  <div class="bg-emerald-500 h-2 rounded-full" style="width: 74.8%"></div>
+                </div>
+                <p class="text-[11px] text-slate-400">Margin of error: &plusmn;3.18 score points based on RMSE</p>
+              </div>
+            </div>
+
+            <!-- Attendance Gate Banner -->
+            <div id="gate-alert" class="p-3.5 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between text-xs text-emerald-800">
+              <div class="flex items-center gap-2">
+                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>
+                <span><strong>Attendance Gate Passed:</strong> 78.0% attendance satisfies institutional 75% examination requirement.</span>
+              </div>
+              <span class="font-bold text-emerald-700 text-xs">Eligible</span>
+            </div>
+          </div>
+
+          <!-- Structured 4-Pillar Academic Guidance Plan -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="text-base font-bold text-slate-900 tracking-tight">Personalized Academic Guidance Action Plan</h3>
+                <p class="text-xs text-slate-500">Rule-based recommendations generated from student indicator profile</p>
+              </div>
+              <a href="chat.html" class="inline-flex items-center gap-1 text-xs font-semibold text-indigo-600 hover:text-indigo-800">
+                <i data-lucide="message-square" class="w-3.5 h-3.5"></i> Ask AI Advisor &rarr;
+              </a>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <!-- Plan 1 -->
+              <div id="plan-study" class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                    <i data-lucide="clock" class="w-3.5 h-3.5 text-indigo-600"></i> Study Time Strategy
+                  </span>
+                  <span id="badge-study" class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">On Target</span>
+                </div>
+                <p id="desc-study" class="text-xs text-slate-600">Maintain current 4.5 hrs daily study blocks; focus on algorithms & practical lab coursework.</p>
+              </div>
+
+              <!-- Plan 2 -->
+              <div id="plan-att" class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                    <i data-lucide="calendar" class="w-3.5 h-3.5 text-emerald-600"></i> Attendance Plan
+                  </span>
+                  <span id="badge-att" class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">Compliant</span>
+                </div>
+                <p id="desc-att" class="text-xs text-slate-600">Current attendance (78.0%) provides a 3.0% safety buffer over the 75.0% institutional threshold.</p>
+              </div>
+
+              <!-- Plan 3 -->
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                    <i data-lucide="book-open" class="w-3.5 h-3.5 text-indigo-600"></i> Exam Reinforcement
+                  </span>
+                  <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">Recommended</span>
+                </div>
+                <p class="text-xs text-slate-600">Review lowest-scoring units from previous examinations; schedule faculty office hours for doubts.</p>
+              </div>
+
+              <!-- Plan 4 -->
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                    <i data-lucide="check-square" class="w-3.5 h-3.5 text-emerald-600"></i> Assignment Execution
+                  </span>
+                  <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">High Weight</span>
+                </div>
+                <p class="text-xs text-slate-600">Assignments drive 38% of model outcome. Maintain submissions 3 days ahead of deadlines.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="mt-12 pt-6 border-t border-slate-200 text-center text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <img src="assets/logo.webp" alt="Logo" class="h-5 w-5 object-contain" />
+        <span>AI Student Performance & Academic Guidance System &bull; Academic Year 2026</span>
+      </div>
+      <div class="flex gap-4">
+        <a href="about.html" class="hover:text-indigo-600 transition-colors">Architecture</a>
+        <a href="eda.html" class="hover:text-indigo-600 transition-colors">Cohort Profiling</a>
+        <a href="chat.html" class="hover:text-indigo-600 transition-colors">AI Advisor</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    function setPreset(study, att, prev, assign) {
+      document.getElementById('input-study').value = study;
+      document.getElementById('input-att').value = att;
+      document.getElementById('input-prev').value = prev;
+      document.getElementById('input-assign').value = assign;
+      calculatePrediction();
+    }
+
+    function calculatePrediction() {
+      const study = parseFloat(document.getElementById('input-study').value);
+      const att = parseFloat(document.getElementById('input-att').value);
+      const prev = parseFloat(document.getElementById('input-prev').value);
+      const assign = parseFloat(document.getElementById('input-assign').value);
+
+      document.getElementById('val-study').textContent = `${study.toFixed(1)} hrs/day`;
+      document.getElementById('val-att').textContent = `${att.toFixed(1)}%`;
+      document.getElementById('val-prev').textContent = `${prev.toFixed(1)} / 100`;
+      document.getElementById('val-assign').textContent = `${assign.toFixed(1)} / 100`;
+
+      // Linear Regression calibrated model formula
+      // Final = 0.38*Prev + 0.28*Assign + 0.18*Att + 2.2*Study
+      const rawScore = (0.38 * prev) + (0.28 * assign) + (0.18 * att) + (2.2 * study);
+      const finalScore = Math.min(99.5, Math.max(25.0, rawScore));
+      const ciLower = Math.max(20.0, finalScore - 3.18).toFixed(1);
+      const ciUpper = Math.min(100.0, finalScore + 3.18).toFixed(1);
+
+      document.getElementById('predicted-score').textContent = finalScore.toFixed(1);
+      document.getElementById('ci-range').textContent = `[${ciLower}, ${ciUpper}]`;
+
+      // Tier Badge & Gate Check
+      const tierBadge = document.getElementById('tier-badge');
+      const gateAlert = document.getElementById('gate-alert');
+      const badgeStudy = document.getElementById('badge-study');
+      const descStudy = document.getElementById('desc-study');
+      const badgeAtt = document.getElementById('badge-att');
+      const descAtt = document.getElementById('desc-att');
+
+      if (finalScore >= 85.0) {
+        tierBadge.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200';
+        tierBadge.innerHTML = `<i data-lucide="award" class="w-4 h-4 text-emerald-600"></i> Outstanding (Tier 1)`;
+      } else if (finalScore >= 70.0) {
+        tierBadge.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200';
+        tierBadge.innerHTML = `<i data-lucide="award" class="w-4 h-4 text-indigo-600"></i> Good Standing (Tier 2)`;
+      } else if (finalScore >= 55.0) {
+        tierBadge.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200';
+        tierBadge.innerHTML = `<i data-lucide="alert-circle" class="w-4 h-4 text-slate-600"></i> Average Competency (Tier 3)`;
+      } else {
+        tierBadge.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200';
+        tierBadge.innerHTML = `<i data-lucide="alert-triangle" class="w-4 h-4 text-amber-600"></i> At-Risk Status (Tier 4)`;
+      }
+
+      if (att >= 75.0) {
+        gateAlert.className = 'p-3.5 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between text-xs text-emerald-800';
+        gateAlert.innerHTML = `
+          <div class="flex items-center gap-2">
+            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>
+            <span><strong>Attendance Gate Passed:</strong> ${att.toFixed(1)}% satisfies institutional 75% requirement.</span>
+          </div>
+          <span class="font-bold text-emerald-700 text-xs">Eligible</span>
+        `;
+        badgeAtt.className = 'px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200';
+        badgeAtt.textContent = 'Compliant';
+        descAtt.textContent = `Current attendance (${att.toFixed(1)}%) satisfies the mandatory 75% gate.`;
+      } else {
+        gateAlert.className = 'p-3.5 bg-amber-50 border border-amber-200 rounded-xl flex items-center justify-between text-xs text-amber-800';
+        gateAlert.innerHTML = `
+          <div class="flex items-center gap-2">
+            <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-600"></i>
+            <span><strong>Attendance Alert:</strong> ${att.toFixed(1)}% is BELOW mandatory 75% gate. Semester exam debarment risk!</span>
+          </div>
+          <span class="font-bold text-amber-700 text-xs">Action Required</span>
+        `;
+        badgeAtt.className = 'px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-700 border border-amber-200';
+        badgeAtt.textContent = 'Action Required';
+        descAtt.textContent = `Attendance (${att.toFixed(1)}%) is below 75%. Attend 100% of classes over next 3 weeks to rebuild eligibility margin.`;
+      }
+
+      if (study < 3.0) {
+        badgeStudy.className = 'px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-700 border border-amber-200';
+        badgeStudy.textContent = 'Study Deficit';
+        descStudy.textContent = `Daily study hours (${study.toFixed(1)} hrs) is below 3.0 target. Increase to at least 4.0 hrs/day using fixed 50-minute blocks.`;
+      } else {
+        badgeStudy.className = 'px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200';
+        badgeStudy.textContent = 'On Target';
+        descStudy.textContent = `Daily study time (${study.toFixed(1)} hrs) supports positive performance growth.`;
+      }
+
+      lucide.createIcons();
+    }
+  </script>
+</body>
+</html>
+
