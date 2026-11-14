@@ -51,6 +51,18 @@
       }
     }
   </script>
+    <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+<link rel="stylesheet" href="assets/app.css">
 </head>
 <body class="min-h-full bg-slate-50 text-slate-800 antialiased font-sans">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -71,12 +83,23 @@
           </div>
         </a>
       </div>
-      <div class="flex items-center gap-3 self-start md:self-auto">
+      <div class="flex flex-wrap items-center gap-2.5 self-start md:self-auto">
         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
           <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
           Ingestion Ready
         </span>
         <span class="text-xs text-slate-500 font-mono bg-white px-2.5 py-1 rounded-lg border border-slate-200 shadow-sm">CSV Parser</span>
+      
+        <button id="theme-toggle" type="button" aria-label="Toggle Dark Mode" class="theme-toggle-btn inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all">
+          <span class="theme-icon-moon inline-flex items-center gap-1.5">
+            <i data-lucide="moon" class="w-4 h-4"></i>
+            <span>Dark</span>
+          </span>
+          <span class="theme-icon-sun inline-flex items-center gap-1.5">
+            <i data-lucide="sun" class="w-4 h-4 text-amber-400"></i>
+            <span>Light</span>
+          </span>
+        </button>
       </div>
     </header>
 
@@ -451,6 +474,11 @@
       document.getElementById('preview-subtitle').textContent = `Showing preview from ${name} (${rows} total rows)`;
     }
   </script>
+  <script src="assets/app.js"></script>
+  <script>
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+  </script>
 </body>
 </html>
-
