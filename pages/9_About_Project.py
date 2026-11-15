@@ -119,6 +119,39 @@ with arch_c3:
         )
 
 # ---------------------------------------------------------
+# 5. Project Creator
+# ---------------------------------------------------------
+st.markdown("#### 5. Project Creator")
+with st.container(border=True):
+    c_hdr_l, c_hdr_r = st.columns([3, 1])
+    with c_hdr_l:
+        st.caption("Designer, data engineer, and machine learning developer behind the platform")
+    with c_hdr_r:
+        st.markdown(
+            "<div style='text-align: right;'><span style='font-size: 0.75rem; color: #4F46E5; "
+            "font-weight: 600; background: #EEF2FF; padding: 2px 8px; border-radius: 9999px; "
+            "border: 1px solid #C7D2FE;'>Project Creator</span></div>",
+            unsafe_allow_html=True,
+        )
+
+    c_avatar, c_details = st.columns([0.8, 5.2])
+    with c_avatar:
+        st.markdown(
+            """
+            <div style="height: 56px; width: 56px; border-radius: 50%; background-color: #4F46E5; color: white; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; font-weight: bold; margin: 0.25rem auto;">
+                D
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    with c_details:
+        st.markdown("**Damini** &nbsp;&bull;&nbsp; <span style='font-size: 0.8rem; color: #4F46E5; font-weight: 600;'>Project Lead & Data Scientist</span>", unsafe_allow_html=True)
+        st.write(
+            "Conceptualized the academic early-warning architecture, calibrated the student dataset models, "
+            "implemented the Scikit-learn training pipelines, Groq LLM API integration, and built the full-stack application interface."
+        )
+
+# ---------------------------------------------------------
 # Live Session State Diagnostic View
 # ---------------------------------------------------------
 active_df, is_cleaned = get_active_df()

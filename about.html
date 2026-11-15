@@ -71,8 +71,8 @@
     <header class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-200 pb-6">
       <div class="flex items-center gap-4">
         <a href="welcome.html" class="group flex items-center gap-3">
-          <div class="h-14 w-14 rounded-2xl bg-white border border-slate-200 shadow-sm p-1.5 flex items-center justify-center overflow-hidden group-hover:border-indigo-300 group-hover:shadow-md transition-all">
-            <img src="assets/logo.webp" alt="AI Student Performance System Logo" class="h-full w-full object-contain" />
+          <div class="h-14 w-14 rounded-full bg-white border border-slate-200 shadow-sm p-1.5 flex items-center justify-center overflow-hidden group-hover:border-indigo-300 group-hover:shadow-md transition-all">
+            <img src="assets/logo.webp" alt="AI Student Performance System Logo" class="h-full w-full object-contain rounded-full" />
           </div>
           <div>
             <div class="flex items-center gap-2">
@@ -287,63 +287,36 @@
       </section>
 
       <!-- 5. Creator & Developer Team Section -->
-      <section class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-5">
-        <div class="flex items-center justify-between">
+      <section class="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm space-y-5">
+        <div class="flex items-center justify-between flex-wrap gap-2">
           <div>
             <h3 class="text-base font-bold text-slate-900 tracking-tight">5. Creator & Engineering Team</h3>
-            <p class="text-xs text-slate-500">Designers, data engineers, and machine learning researchers behind the platform</p>
+            <p class="text-xs text-slate-500">Designer, data engineer, and machine learning developer behind the platform</p>
           </div>
-          <span class="text-xs font-semibold text-indigo-600">Project Contributors</span>
+          <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">Project Creator</span>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <!-- Profile 1: Damini -->
-          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
-            <div class="flex items-center gap-3">
-              <div class="h-10 w-10 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shadow-sm">
+        <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+              <div class="h-14 w-14 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-xl shadow-md flex-shrink-0">
                 D
               </div>
               <div>
-                <h4 class="font-bold text-slate-900 text-sm">Damini</h4>
-                <p class="text-[11px] text-indigo-600 font-semibold">Project Lead & Data Scientist</p>
+                <div class="flex items-center gap-2">
+                  <h4 class="font-bold text-slate-900 text-base">Damini</h4>
+                  <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-indigo-100 text-indigo-800">Lead</span>
+                </div>
+                <p class="text-xs text-indigo-600 font-semibold mt-0.5">Project Lead & Data Scientist</p>
               </div>
             </div>
-            <p class="text-xs text-slate-600 leading-relaxed">
-              Conceptualized the academic early-warning architecture, calibrated the multi-cohort student dataset models, and formulated the 4-pillar academic intervention rubric.
-            </p>
-          </div>
-
-          <!-- Profile 2: Harshit -->
-          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
-            <div class="flex items-center gap-3">
-              <div class="h-10 w-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm shadow-sm">
-                H
-              </div>
-              <div>
-                <h4 class="font-bold text-slate-900 text-sm">Harshit Sharma</h4>
-                <p class="text-[11px] text-emerald-600 font-semibold">Senior Full-Stack & ML Engineer</p>
-              </div>
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] font-mono text-slate-500 bg-white px-3 py-1 rounded-lg border border-slate-200 shadow-sm">B.Tech CSE Capstone 2026</span>
             </div>
-            <p class="text-xs text-slate-600 leading-relaxed">
-              Implemented the Scikit-learn training pipelines, Streamlit application architecture, Groq LLM API integration, and mathematical confidence interval calculators.
-            </p>
           </div>
-
-          <!-- Profile 3: Antigravity AI -->
-          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
-            <div class="flex items-center gap-3">
-              <div class="h-10 w-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm shadow-sm">
-                <i data-lucide="sparkles" class="w-4 h-4 text-indigo-400"></i>
-              </div>
-              <div>
-                <h4 class="font-bold text-slate-900 text-sm">Antigravity AI</h4>
-                <p class="text-[11px] text-slate-500 font-semibold">Autonomous Lead Architect</p>
-              </div>
-            </div>
-            <p class="text-xs text-slate-600 leading-relaxed">
-              Google DeepMind agentic AI orchestrating the multi-agent UI workflow, Tailwind component standardization, headless verification, and test execution.
-            </p>
-          </div>
+          <p class="text-xs sm:text-sm text-slate-700 leading-relaxed pt-2 border-t border-slate-200/80">
+            Conceptualized the academic early-warning architecture, calibrated the student dataset models, implemented the Scikit-learn training pipelines, Groq LLM API integration, and built the full-stack application interface.
+          </p>
         </div>
       </section>
 
@@ -352,7 +325,7 @@
     <!-- Global Footer -->
     <footer class="mt-12 pt-6 border-t border-slate-200 text-center text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div class="flex items-center gap-2">
-        <img src="assets/logo.webp" alt="Logo" class="h-5 w-5 object-contain" />
+        <img src="assets/logo.webp" alt="Logo" class="h-5 w-5 rounded-full object-contain bg-white" />
         <span>AI Student Performance & Academic Guidance System &bull; Academic Year 2026</span>
       </div>
       <div class="flex gap-4">

@@ -120,10 +120,17 @@ The platform standardizes student records around six core columns (while also re
   2. Attendance and academic improvement
   3. Understanding ML concepts (Linear/Logistic Regression, R2, MAE, Accuracy, Precision, Recall, F1-score)
   4. General educational guidance
-- Includes quick-topic prompts, `Clear Chat`, and real-time `Download Chat` (`.md` transcript export).
+- Includes quick-topic prompts, `Clear Chat`, and real-time `Download Chat` (`.txt` transcript export).
 
 ### 9. About Project (`9_About_Project.py`)
-- Documents project purpose, core objectives, module-by-module inventory, 3-layer working architecture, and live session-state diagnostics.
+- Documents project purpose, core objectives, module-by-module inventory, 3-layer working architecture, project creator profile, and live session-state diagnostics.
+
+---
+
+## Project Creator
+
+**Damini** - Project Lead & Data Scientist
+> Conceptualized the academic early-warning architecture, calibrated the student dataset models, implemented the Scikit-learn training pipelines, Groq LLM API integration, and built the full-stack application interface.
 
 ---
 

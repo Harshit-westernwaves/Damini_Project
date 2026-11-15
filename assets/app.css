@@ -150,10 +150,25 @@ header {
 }
 
 header a > div:first-child {
-  border-radius: 1rem !important;
-  background-color: var(--bg-card) !important;
+  border-radius: 9999px !important;
+  background-color: #FFFFFF !important;
   border: 1px solid var(--border-color) !important;
   box-shadow: var(--shadow-sm) !important;
+  overflow: hidden !important;
+  aspect-ratio: 1 / 1;
+}
+
+[data-theme="dark"] header a > div:first-child {
+  background-color: #FFFFFF !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+}
+
+header img,
+header a > div:first-child img,
+footer img {
+  border-radius: 9999px !important;
+  object-fit: contain !important;
 }
 
 nav {
@@ -222,8 +237,7 @@ main section[class*="bg-"] {
 [data-theme="dark"] main > div > section,
 [data-theme="dark"] main > div > div,
 [data-theme="dark"] main section,
-[data-theme="dark"] nav > div,
-[data-theme="dark"] header a > div:first-child {
+[data-theme="dark"] nav > div {
   background-color: var(--bg-card) !important;
   border-color: var(--border-color) !important;
   box-shadow: var(--shadow-card) !important;

@@ -3,13 +3,14 @@ pages/8_AI_Chatbot.py - Groq AI Academic Advisor & Local Fallback Chatbot
 AI Student Performance & Academic Guidance System
 """
 
+import os
 import streamlit as st
 from utils import (
     COLOR_BORDER,
     COLOR_CARD,
     COLOR_MUTED,
     apply_custom_css,
-    format_chat_history_export,
+    format_chat_history_export_txt,
     generate_chat_response,
     get_active_df,
     get_badge_html,
@@ -47,6 +48,11 @@ model_info = {
     "model_metrics": st.session_state.get("model_metrics", {}),
 }
 
+# Auto-detect GROQ_API_KEY from environment if not yet stored in session state
+env_api_key = os.environ.get("GROQ_API_KEY", "").strip()
+if not st.session_state.get("groq_api_key") and env_api_key:
+    st.session_state["groq_api_key"] = env_api_key
+
 
 def _reset_chat_history():
     """Resets session chat history and clears the active source indicator."""
@@ -54,13 +60,15 @@ def _reset_chat_history():
         {
             "role": "assistant",
             "content": (
-                "Chat history cleared. Ask a question about study planning, attendance, "
-                "machine learning concepts, or general educational guidance."
+                "Academic Advisor initialized! I have live visibility into the student cohort telemetry. "
+                "Ask me any question about study planning, attendance recovery, machine learning formulas, or cohort benchmarks."
             ),
         }
     ]
     st.session_state["last_chat_source"] = None
+    st.session_state["_last_fallback_text"] = None
     st.rerun()
+
 
 # ---------------------------------------------------------
 # Sidebar: Groq API Key & Chat Controls
@@ -71,7 +79,7 @@ with st.sidebar:
         "Groq API Key",
         type="password",
         value=st.session_state.get("groq_api_key", ""),
-        help="Provide a Groq API key to query hosted LLMs. Leave blank to use the local dataset/rule-based advisor.",
+        help="Provide a Groq API key (or set GROQ_API_KEY environment variable) to query hosted Llama-3.3-70B. Leave blank to use the smart dynamic fallback advisor.",
     )
     if api_key_input != st.session_state.get("groq_api_key"):
         st.session_state["groq_api_key"] = api_key_input
@@ -82,11 +90,11 @@ with st.sidebar:
         index=0,
     )
 
-    is_online = bool((st.session_state.get("groq_api_key") or "").strip())
+    is_online = bool((st.session_state.get("groq_api_key") or "").strip() or env_api_key)
     mode_badge = (
-        get_badge_html("Groq API Active", "emerald")
+        get_badge_html("Groq API Active (Llama-3.3-70B)", "emerald")
         if is_online
-        else get_badge_html("Local Fallback Active", "amber")
+        else get_badge_html("Smart Fallback Engine Active", "amber")
     )
 
     st.markdown(
@@ -101,28 +109,30 @@ with st.sidebar:
         unsafe_allow_html=True,
     )
 
-    # Chat Management Controls (Clear Chat & Download Chat)
-    transcript_md = format_chat_history_export(st.session_state["chat_history"])
+    # Sidebar Chat Controls
+    transcript_txt = format_chat_history_export_txt(st.session_state["chat_history"])
     st.download_button(
-        label="Download Chat",
-        data=transcript_md,
-        file_name="academic_advisor_chat.md",
-        mime="text/markdown",
+        label="Download Chat (.txt)",
+        data=transcript_txt,
+        file_name="academic_advisor_chat.txt",
+        mime="text/plain",
+        key="sidebar_download_chat",
         width="stretch",
     )
-    if st.button("Clear Chat", width="stretch"):
+    if st.button("Clear Chat", key="sidebar_clear_chat", width="stretch"):
         _reset_chat_history()
 
 # ---------------------------------------------------------
-# Supported 4 Guidance Areas + Quick Prompts
+# Supported Advisory Topics & Quick Prompts
 # ---------------------------------------------------------
 st.markdown("#### Supported Advisory Topics")
-topic_cols = st.columns(4)
+topic_cols = st.columns(5)
 quick_prompts = [
-    ("1. Study Planning", "Create a structured weekly study plan and learning strategy to improve exam performance."),
-    ("2. Attendance & Improvement", "How does attendance affect academic performance and how can a student recover above 75%?"),
-    ("3. ML Concepts", "Explain Linear Regression vs Logistic Regression and the evaluation metrics R2, MAE, and F1-score."),
-    ("4. Educational Guidance", "What general habits and dataset indicators matter most for strong academic outcomes?"),
+    ("1. Greetings & Advice", "Hello advisor! How can you help me navigate my academic goals this semester?"),
+    ("2. Attendance Recovery", "How does attendance impact final grades and how can a student recover above the 75% gate?"),
+    ("3. Study & Marks", "Provide a structured 4-hour daily study schedule and assignment improvement strategy."),
+    ("4. ML Concepts", "Explain Linear vs Logistic Regression formulas, R2, MAE, and feature beta weights."),
+    ("5. Cohort Analytics", "How many students are in the dataset, what is the class average, and who is the topper?"),
 ]
 
 selected_quick_prompt = None
@@ -136,15 +146,15 @@ for idx, (col, (title, prompt_text)) in enumerate(zip(topic_cols, quick_prompts)
 # ---------------------------------------------------------
 # Conversational Interface & Chat History Controls
 # ---------------------------------------------------------
-c_hdr1, c_hdr2, c_hdr3 = st.columns([2.2, 0.9, 0.9])
+c_hdr1, c_hdr2, c_hdr3 = st.columns([2.0, 1.0, 1.0])
 with c_hdr1:
     st.markdown("#### Conversation")
 with c_hdr2:
     st.download_button(
-        label="Download Chat",
-        data=format_chat_history_export(st.session_state["chat_history"]),
-        file_name="academic_advisor_chat.md",
-        mime="text/markdown",
+        label="Download Chat (.txt)",
+        data=format_chat_history_export_txt(st.session_state["chat_history"]),
+        file_name="academic_advisor_chat.txt",
+        mime="text/plain",
         key="main_download_chat",
         width="stretch",
     )
@@ -160,20 +170,21 @@ for idx, msg in enumerate(st.session_state["chat_history"]):
         if idx == last_idx and msg["role"] == "assistant" and last_source:
             st.caption(f"Source: {last_source}")
 
-typed_prompt = st.chat_input("Ask about study planning, attendance improvement, ML concepts, or guidance...")
+typed_prompt = st.chat_input("Ask about study schedules, attendance recovery, ML formulas, or cohort stats...")
 active_prompt = selected_quick_prompt or typed_prompt
 
 if active_prompt:
     # 1. Accept user question & append to session state
     st.session_state["chat_history"].append({"role": "user", "content": active_prompt})
 
-    # 2. Generate AI response (Groq API or local fallback)
+    # 2. Generate AI response (Groq API or smart dynamic fallback)
     reply_text, source_mode = generate_chat_response(
         prompt=active_prompt,
         df=active_df,
         model_info=model_info,
         api_key=st.session_state.get("groq_api_key", ""),
         groq_model=groq_model_choice,
+        history=st.session_state["chat_history"][:-1],
     )
 
     # 3. Persist response & source, then rerun so Download Chat reflects the latest turn immediately
