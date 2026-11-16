@@ -207,47 +207,35 @@
           <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
             <div class="flex items-center justify-between">
               <div>
-                <h3 class="text-base font-bold text-slate-900 tracking-tight">2. Or Select a Pre-Generated Dataset from <code class="text-indigo-600">datasets/</code></h3>
+                <h3 class="text-base font-bold text-slate-900 tracking-tight">2. Or Select a Pre-Generated Dataset from <code class="text-indigo-600 font-mono">datasets/</code></h3>
                 <p class="text-xs text-slate-500">Fast-switch between generated test cohorts directly from disk</p>
               </div>
               <span class="text-xs font-semibold text-indigo-600">4 Distinct Cohorts</span>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" id="upload-fast-load-grid">
               <!-- Dataset 1 -->
-              <button onclick="loadSampleDataset('1_raw_dirty_student_data.csv', 500, '5% Nulls, 15 Duplicates', 'Demonstrates live cleaning in 3_Data_Cleaning.py')" class="text-left p-3.5 rounded-xl border border-slate-200 hover:border-amber-400 hover:bg-amber-50/30 transition-all group">
-                <div class="flex items-center justify-between mb-1">
-                  <span class="font-bold text-xs text-slate-900 group-hover:text-amber-700 font-mono">1_raw_dirty_student_data.csv</span>
-                  <span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-amber-100 text-amber-800">Dirty Demo</span>
-                </div>
-                <p class="text-xs text-slate-500">500 rows with 150 missing cells (5.0%) and 15 duplicates.</p>
+              <button id="upload-btn-fast-1" onclick="loadSampleDataset('1_raw_dirty_student_data.csv')" class="p-3 text-left rounded-xl border border-slate-200 bg-white hover:border-amber-400 hover:bg-amber-50/20 transition-all shadow-sm">
+                <span class="font-mono font-bold text-slate-900 block truncate text-xs" style="color:#0f172a !important;">1_raw_dirty.csv</span>
+                <span class="text-slate-500 text-[11px] block truncate mt-0.5" style="color:#64748b !important;">500 Rows &bull; 5% Missing, 15 Dups</span>
               </button>
 
-              <!-- Dataset 2 -->
-              <button onclick="loadSampleDataset('2_cleaned_balanced_cohort.csv', 500, 'Cleaned & Balanced', 'Ready for EDA & Machine Learning models')" class="text-left p-3.5 rounded-xl border border-indigo-200 bg-indigo-50/40 hover:bg-indigo-50 transition-all group">
-                <div class="flex items-center justify-between mb-1">
-                  <span class="font-bold text-xs text-indigo-900 font-mono">2_cleaned_balanced_cohort.csv</span>
-                  <span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 text-emerald-800">Active Default</span>
-                </div>
-                <p class="text-xs text-slate-600">500 clean rows, zero nulls, realistic academic distributions.</p>
+              <!-- Dataset 2 (Active Default) -->
+              <button id="upload-btn-fast-2" onclick="loadSampleDataset('2_cleaned_balanced_cohort.csv')" class="p-3 text-left rounded-xl border border-indigo-600 bg-indigo-600 text-white shadow-md transition-all ring-2 ring-indigo-500/20">
+                <span class="font-mono font-bold text-white block truncate text-xs" style="color:#ffffff !important;">2_cleaned_balanced.csv</span>
+                <span class="text-indigo-100 text-[11px] font-medium block truncate mt-0.5" style="color:#e0e7ff !important;">500 Rows &bull; Active Clean Cohort</span>
               </button>
 
               <!-- Dataset 3 -->
-              <button onclick="loadSampleDataset('3_high_risk_cohort_data.csv', 300, 'High Risk Cohort', 'Tests low attendance gate & intervention alerts')" class="text-left p-3.5 rounded-xl border border-slate-200 hover:border-amber-400 hover:bg-amber-50/30 transition-all group">
-                <div class="flex items-center justify-between mb-1">
-                  <span class="font-bold text-xs text-slate-900 group-hover:text-amber-700 font-mono">3_high_risk_cohort_data.csv</span>
-                  <span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-amber-100 text-amber-800">Intervention</span>
-                </div>
-                <p class="text-xs text-slate-500">300 rows skewed low in attendance (&lt;75%) and study hours.</p>
+              <button id="upload-btn-fast-3" onclick="loadSampleDataset('3_high_risk_cohort_data.csv')" class="p-3 text-left rounded-xl border border-slate-200 bg-white hover:border-amber-400 hover:bg-amber-50/20 transition-all shadow-sm">
+                <span class="font-mono font-bold text-slate-900 block truncate text-xs" style="color:#0f172a !important;">3_high_risk.csv</span>
+                <span class="text-slate-500 text-[11px] block truncate mt-0.5" style="color:#64748b !important;">300 Rows &bull; Attendance &lt; 75% Gate</span>
               </button>
 
               <!-- Dataset 4 -->
-              <button onclick="loadSampleDataset('4_large_university_batch.csv', 1200, 'University Batch', 'Tests training scalability & cross-validation metrics')" class="text-left p-3.5 rounded-xl border border-slate-200 hover:border-indigo-400 hover:bg-indigo-50/30 transition-all group">
-                <div class="flex items-center justify-between mb-1">
-                  <span class="font-bold text-xs text-slate-900 group-hover:text-indigo-700 font-mono">4_large_university_batch.csv</span>
-                  <span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-indigo-100 text-indigo-800">1,200 Rows</span>
-                </div>
-                <p class="text-xs text-slate-500">1,200 records representing university cohort diversity.</p>
+              <button id="upload-btn-fast-4" onclick="loadSampleDataset('4_large_university_batch.csv')" class="p-3 text-left rounded-xl border border-slate-200 bg-white hover:border-emerald-400 hover:bg-emerald-50/20 transition-all shadow-sm">
+                <span class="font-mono font-bold text-slate-900 block truncate text-xs" style="color:#0f172a !important;">4_large_university_batch.csv</span>
+                <span class="text-emerald-600 text-[11px] font-medium block truncate mt-0.5" style="color:#059669 !important;">1,200 Rows &bull; Full University Batch</span>
               </button>
             </div>
           </div>
@@ -323,99 +311,125 @@
         </div>
       </div>
 
-      <!-- Preview of Active Staged Records -->
-      <section class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
-        <div class="p-6 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <!-- Dataset Information & Preview Section -->
+      <section id="dataset-info-section" class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
           <div>
-            <h3 class="text-base font-bold text-slate-900 tracking-tight">Active Ingested Dataset Preview</h3>
-            <p id="preview-subtitle" class="text-xs text-slate-500">Showing first 8 records from 2_cleaned_balanced_cohort.csv (500 total rows)</p>
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">
+                <i data-lucide="database" class="w-3.5 h-3.5 mr-1 text-indigo-600"></i> Active Ingested Cohort
+              </span>
+              <h3 id="info-dataset-name" class="text-base font-bold text-slate-900 tracking-tight font-mono">2_cleaned_balanced_cohort.csv</h3>
+            </div>
+            <p id="info-dataset-desc" class="text-xs text-slate-500 mt-1">Pre-calibrated academic dataset ready for exploration, cleaning, and model training</p>
           </div>
-          <div class="flex items-center gap-3">
-            <a href="clean.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs shadow-sm transition-all">
-              Proceed to Data Cleaning &rarr;
+          <div class="flex items-center gap-2">
+            <a href="clean.html" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs shadow-sm transition-all">
+              Proceed to Data Cleaning <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
             </a>
           </div>
         </div>
 
-        <div class="overflow-x-auto">
-          <table class="w-full text-left border-collapse text-xs font-mono">
-            <thead>
-              <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase font-semibold">
-                <th class="py-3 px-4 font-sans">Student ID</th>
-                <th class="py-3 px-4 font-sans">Study hrs</th>
-                <th class="py-3 px-4 font-sans">Attendance</th>
-                <th class="py-3 px-4 font-sans">Previous marks</th>
-                <th class="py-3 px-4 font-sans">Assignment scores</th>
-                <th class="py-3 px-4 font-sans">Final performance</th>
-              </tr>
-            </thead>
-            <tbody id="preview-tbody" class="divide-y divide-slate-100 text-slate-700">
-              <tr class="hover:bg-slate-50/60">
-                <td class="py-3 px-4 font-bold text-slate-900">STU001</td>
-                <td class="py-3 px-4">4.8</td>
-                <td class="py-3 px-4 text-emerald-600 font-semibold">88.4%</td>
-                <td class="py-3 px-4">74.5</td>
-                <td class="py-3 px-4">78.2</td>
-                <td class="py-3 px-4 font-bold text-indigo-600">76.4</td>
-              </tr>
-              <tr class="hover:bg-slate-50/60">
-                <td class="py-3 px-4 font-bold text-slate-900">STU002</td>
-                <td class="py-3 px-4">5.2</td>
-                <td class="py-3 px-4 text-emerald-600 font-semibold">92.1%</td>
-                <td class="py-3 px-4">81.0</td>
-                <td class="py-3 px-4">84.5</td>
-                <td class="py-3 px-4 font-bold text-indigo-600">82.1</td>
-              </tr>
-              <tr class="hover:bg-slate-50/60">
-                <td class="py-3 px-4 font-bold text-slate-900">STU003</td>
-                <td class="py-3 px-4">3.6</td>
-                <td class="py-3 px-4 text-amber-600 font-semibold">72.0%</td>
-                <td class="py-3 px-4">64.0</td>
-                <td class="py-3 px-4">67.5</td>
-                <td class="py-3 px-4 font-bold text-indigo-600">65.8</td>
-              </tr>
-              <tr class="hover:bg-slate-50/60">
-                <td class="py-3 px-4 font-bold text-slate-900">STU004</td>
-                <td class="py-3 px-4">6.5</td>
-                <td class="py-3 px-4 text-emerald-600 font-semibold">96.0%</td>
-                <td class="py-3 px-4">89.0</td>
-                <td class="py-3 px-4">92.0</td>
-                <td class="py-3 px-4 font-bold text-emerald-600">89.5</td>
-              </tr>
-              <tr class="hover:bg-slate-50/60">
-                <td class="py-3 px-4 font-bold text-slate-900">STU005</td>
-                <td class="py-3 px-4">4.2</td>
-                <td class="py-3 px-4 text-emerald-600 font-semibold">81.5%</td>
-                <td class="py-3 px-4">69.5</td>
-                <td class="py-3 px-4">73.0</td>
-                <td class="py-3 px-4 font-bold text-indigo-600">71.2</td>
-              </tr>
-              <tr class="hover:bg-slate-50/60">
-                <td class="py-3 px-4 font-bold text-slate-900">STU006</td>
-                <td class="py-3 px-4">2.2</td>
-                <td class="py-3 px-4 text-amber-600 font-semibold">61.0%</td>
-                <td class="py-3 px-4">51.0</td>
-                <td class="py-3 px-4">48.5</td>
-                <td class="py-3 px-4 font-bold text-amber-600">46.8</td>
-              </tr>
-              <tr class="hover:bg-slate-50/60">
-                <td class="py-3 px-4 font-bold text-slate-900">STU007</td>
-                <td class="py-3 px-4">5.8</td>
-                <td class="py-3 px-4 text-emerald-600 font-semibold">89.0%</td>
-                <td class="py-3 px-4">78.0</td>
-                <td class="py-3 px-4">81.5</td>
-                <td class="py-3 px-4 font-bold text-indigo-600">79.0</td>
-              </tr>
-              <tr class="hover:bg-slate-50/60">
-                <td class="py-3 px-4 font-bold text-slate-900">STU008</td>
-                <td class="py-3 px-4">4.5</td>
-                <td class="py-3 px-4 text-emerald-600 font-semibold">84.0%</td>
-                <td class="py-3 px-4">72.0</td>
-                <td class="py-3 px-4">75.0</td>
-                <td class="py-3 px-4 font-bold text-indigo-600">73.5</td>
-              </tr>
-            </tbody>
-          </table>
+        <!-- 1. Total Rows & 2. Total Columns (Metric Cards) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Metric 1: Total Number of Rows -->
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-slate-500">Total Number of Rows</span>
+              <div class="w-7 h-7 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center">
+                <i data-lucide="rows" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-2 pt-1">
+              <span id="info-rows" class="text-2xl font-extrabold text-slate-900 tracking-tight">500</span>
+              <span class="text-xs text-slate-400">student records</span>
+            </div>
+          </div>
+
+          <!-- Metric 2: Total Number of Columns -->
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-slate-500">Total Number of Columns</span>
+              <div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center">
+                <i data-lucide="columns" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-2 pt-1">
+              <span id="info-cols" class="text-2xl font-extrabold text-slate-900 tracking-tight">6</span>
+              <span class="text-xs text-slate-400">features</span>
+            </div>
+          </div>
+
+          <!-- Metric 3: Missing Cells -->
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-slate-500">Missing Values</span>
+              <div class="w-7 h-7 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center">
+                <i data-lucide="alert-circle" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-2 pt-1">
+              <span id="info-missing" class="text-2xl font-extrabold text-slate-900 tracking-tight">0 Cells</span>
+              <span id="info-missing-sub" class="text-xs text-emerald-600 font-semibold">Zero Nulls</span>
+            </div>
+          </div>
+
+          <!-- Metric 4: Duplicate Rows -->
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-slate-500">Duplicate Rows</span>
+              <div class="w-7 h-7 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center">
+                <i data-lucide="copy" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-2 pt-1">
+              <span id="info-duplicates" class="text-2xl font-extrabold text-slate-900 tracking-tight">0 Rows</span>
+              <span id="info-duplicates-sub" class="text-xs text-emerald-600 font-semibold">Unique IDs</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Column Names List (Pill Badges) -->
+        <div class="space-y-2">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+            <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+              <i data-lucide="tags" class="w-4 h-4 text-indigo-600"></i>
+              Column Names (6 Standard Dataset Features):
+            </span>
+            <span class="text-[11px] text-slate-400">Canonical schema validated for model training</span>
+          </div>
+          <div id="info-column-badges" class="flex flex-wrap gap-2 pt-1">
+            <!-- Badges injected dynamically -->
+          </div>
+        </div>
+
+        <!-- 4. Dataset Preview (Scrollable HTML Table of First 10 Rows) -->
+        <div class="space-y-3">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+                <i data-lucide="table" class="w-4 h-4 text-indigo-600"></i>
+                Dataset Preview (First 10 Ingested Records)
+              </h4>
+              <span id="preview-badge" class="px-2 py-0.5 rounded text-[10px] font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">
+                10 of 500 rows
+              </span>
+            </div>
+            <span class="text-[11px] text-slate-400 font-mono">Horizontal scroll enabled &bull; Real-time dataset preview</span>
+          </div>
+
+          <div class="border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+            <div class="overflow-x-auto max-h-[460px]">
+              <table class="w-full text-left border-collapse text-xs font-mono">
+                <thead id="preview-thead" class="bg-slate-50 border-b border-slate-200 text-slate-700 sticky top-0 uppercase font-semibold">
+                  <!-- Header injected dynamically -->
+                </thead>
+                <tbody id="preview-tbody" class="divide-y divide-slate-100 text-slate-700 bg-white">
+                  <!-- Rows injected dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -439,41 +453,762 @@
   <script>
     lucide.createIcons();
 
-    // Simulated file drag & drop interactivity
+    // =========================================================
+    // Dataset Ingestion & Interactive Preview Engine
+    // =========================================================
+    const PRELOADED_DATASETS = {
+  "1_raw_dirty_student_data.csv": {
+    "id": 1,
+    "btnId": "spa-btn-fast-1",
+    "name": "1_raw_dirty_student_data.csv",
+    "shortName": "1_raw_dirty.csv",
+    "sub": "500 Rows \u2022 5% Missing, 15 Dups",
+    "subColor": "text-amber-600",
+    "rows": 500,
+    "cols": 6,
+    "missing": "150 Cells (5.0%)",
+    "missingSub": "Requires Cleaning",
+    "duplicates": "15 Rows",
+    "duplicatesSub": "Duplicate Entries",
+    "desc": "500 student records with injected missing values and duplicates for data cleaning demonstrations.",
+    "columns": [
+      "Student ID",
+      "Study hrs",
+      "Attendance",
+      "Previous marks",
+      "Assignment scores",
+      "Final performance"
+    ],
+    "head10": [
+      {
+        "Student ID": "STU001",
+        "Study hrs": 5.2,
+        "Attendance": 79.9,
+        "Previous marks": 63.6,
+        "Assignment scores": 70.7,
+        "Final performance": 69.4
+      },
+      {
+        "Student ID": "STU002",
+        "Study hrs": 2.6,
+        "Attendance": 85.0,
+        "Previous marks": 62.5,
+        "Assignment scores": 66.9,
+        "Final performance": 65.8
+      },
+      {
+        "Student ID": "STU003",
+        "Study hrs": 6.0,
+        "Attendance": 79.2,
+        "Previous marks": 78.5,
+        "Assignment scores": 79.9,
+        "Final performance": 79.2
+      },
+      {
+        "Student ID": null,
+        "Study hrs": 6.4,
+        "Attendance": 94.9,
+        "Previous marks": 79.1,
+        "Assignment scores": 74.4,
+        "Final performance": 85.4
+      },
+      {
+        "Student ID": "STU005",
+        "Study hrs": 0.9,
+        "Attendance": 96.9,
+        "Previous marks": 61.5,
+        "Assignment scores": 41.8,
+        "Final performance": 53.4
+      },
+      {
+        "Student ID": "STU006",
+        "Study hrs": 2.1,
+        "Attendance": 77.4,
+        "Previous marks": 63.3,
+        "Assignment scores": 46.4,
+        "Final performance": 54.1
+      },
+      {
+        "Student ID": null,
+        "Study hrs": 4.8,
+        "Attendance": 89.2,
+        "Previous marks": 75.5,
+        "Assignment scores": 80.4,
+        "Final performance": 80.5
+      },
+      {
+        "Student ID": "STU008",
+        "Study hrs": 4.0,
+        "Attendance": 81.2,
+        "Previous marks": 57.7,
+        "Assignment scores": 57.9,
+        "Final performance": 57.4
+      },
+      {
+        "Student ID": "STU009",
+        "Study hrs": 4.6,
+        "Attendance": 65.8,
+        "Previous marks": 63.2,
+        "Assignment scores": 55.6,
+        "Final performance": 70.6
+      },
+      {
+        "Student ID": "STU010",
+        "Study hrs": 3.0,
+        "Attendance": 81.3,
+        "Previous marks": 69.7,
+        "Assignment scores": null,
+        "Final performance": 68.3
+      }
+    ]
+  },
+  "2_cleaned_balanced_cohort.csv": {
+    "id": 2,
+    "btnId": "spa-btn-fast-2",
+    "name": "2_cleaned_balanced_cohort.csv",
+    "shortName": "2_cleaned_balanced.csv",
+    "sub": "500 Rows \u2022 Active Clean Cohort",
+    "subColor": "text-emerald-600",
+    "rows": 500,
+    "cols": 6,
+    "missing": "0 Cells",
+    "missingSub": "Zero Nulls",
+    "duplicates": "0 Rows",
+    "duplicatesSub": "Unique IDs",
+    "desc": "500 clean, balanced student records with zero nulls and calibrated feature distributions.",
+    "columns": [
+      "Student ID",
+      "Study hrs",
+      "Attendance",
+      "Previous marks",
+      "Assignment scores",
+      "Final performance"
+    ],
+    "head10": [
+      {
+        "Student ID": "STU001",
+        "Study hrs": 5.3,
+        "Attendance": 75.9,
+        "Previous marks": 58.3,
+        "Assignment scores": 56.3,
+        "Final performance": 64.1
+      },
+      {
+        "Student ID": "STU002",
+        "Study hrs": 6.1,
+        "Attendance": 97.6,
+        "Previous marks": 77.6,
+        "Assignment scores": 78.8,
+        "Final performance": 88.7
+      },
+      {
+        "Student ID": "STU003",
+        "Study hrs": 3.9,
+        "Attendance": 89.4,
+        "Previous marks": 38.0,
+        "Assignment scores": 57.3,
+        "Final performance": 52.7
+      },
+      {
+        "Student ID": "STU004",
+        "Study hrs": 3.4,
+        "Attendance": 87.0,
+        "Previous marks": 97.0,
+        "Assignment scores": 84.2,
+        "Final performance": 83.1
+      },
+      {
+        "Student ID": "STU005",
+        "Study hrs": 1.5,
+        "Attendance": 90.8,
+        "Previous marks": 71.4,
+        "Assignment scores": 66.7,
+        "Final performance": 64.1
+      },
+      {
+        "Student ID": "STU006",
+        "Study hrs": 6.6,
+        "Attendance": 84.1,
+        "Previous marks": 65.5,
+        "Assignment scores": 70.6,
+        "Final performance": 75.6
+      },
+      {
+        "Student ID": "STU007",
+        "Study hrs": 4.9,
+        "Attendance": 93.5,
+        "Previous marks": 78.6,
+        "Assignment scores": 85.4,
+        "Final performance": 81.0
+      },
+      {
+        "Student ID": "STU008",
+        "Study hrs": 5.2,
+        "Attendance": 92.0,
+        "Previous marks": 69.5,
+        "Assignment scores": 71.3,
+        "Final performance": 75.4
+      },
+      {
+        "Student ID": "STU009",
+        "Study hrs": 3.6,
+        "Attendance": 76.9,
+        "Previous marks": 68.8,
+        "Assignment scores": 55.1,
+        "Final performance": 60.8
+      },
+      {
+        "Student ID": "STU010",
+        "Study hrs": 7.0,
+        "Attendance": 76.8,
+        "Previous marks": 71.2,
+        "Assignment scores": 70.0,
+        "Final performance": 75.4
+      }
+    ]
+  },
+  "3_high_risk_cohort_data.csv": {
+    "id": 3,
+    "btnId": "spa-btn-fast-3",
+    "name": "3_high_risk_cohort_data.csv",
+    "shortName": "3_high_risk.csv",
+    "sub": "300 Rows \u2022 Attendance < 75% Gate",
+    "subColor": "text-amber-600",
+    "rows": 300,
+    "cols": 6,
+    "missing": "0 Cells",
+    "missingSub": "Zero Nulls",
+    "duplicates": "0 Rows",
+    "duplicatesSub": "Unique IDs",
+    "desc": "300 records skewed towards low attendance (< 75%) and study hours to evaluate early intervention triggers.",
+    "columns": [
+      "Student ID",
+      "Study hrs",
+      "Attendance",
+      "Previous marks",
+      "Assignment scores",
+      "Final performance"
+    ],
+    "head10": [
+      {
+        "Student ID": "RISK001",
+        "Study hrs": 2.7,
+        "Attendance": 45.8,
+        "Previous marks": 56.4,
+        "Assignment scores": 37.4,
+        "Final performance": 46.4
+      },
+      {
+        "Student ID": "RISK002",
+        "Study hrs": 1.9,
+        "Attendance": 30.4,
+        "Previous marks": 61.0,
+        "Assignment scores": 35.0,
+        "Final performance": 41.3
+      },
+      {
+        "Student ID": "RISK003",
+        "Study hrs": 2.0,
+        "Attendance": 50.2,
+        "Previous marks": 43.1,
+        "Assignment scores": 36.2,
+        "Final performance": 39.0
+      },
+      {
+        "Student ID": "RISK004",
+        "Study hrs": 2.5,
+        "Attendance": 44.2,
+        "Previous marks": 63.2,
+        "Assignment scores": 50.6,
+        "Final performance": 51.8
+      },
+      {
+        "Student ID": "RISK005",
+        "Study hrs": 2.3,
+        "Attendance": 45.6,
+        "Previous marks": 38.0,
+        "Assignment scores": 35.6,
+        "Final performance": 33.8
+      },
+      {
+        "Student ID": "RISK006",
+        "Study hrs": 2.1,
+        "Attendance": 63.4,
+        "Previous marks": 35.4,
+        "Assignment scores": 26.8,
+        "Final performance": 27.5
+      },
+      {
+        "Student ID": "RISK007",
+        "Study hrs": 1.6,
+        "Attendance": 34.4,
+        "Previous marks": 51.3,
+        "Assignment scores": 34.9,
+        "Final performance": 30.7
+      },
+      {
+        "Student ID": "RISK008",
+        "Study hrs": 1.2,
+        "Attendance": 30.7,
+        "Previous marks": 37.4,
+        "Assignment scores": 29.5,
+        "Final performance": 28.0
+      },
+      {
+        "Student ID": "RISK009",
+        "Study hrs": 2.0,
+        "Attendance": 42.0,
+        "Previous marks": 60.3,
+        "Assignment scores": 44.2,
+        "Final performance": 39.9
+      },
+      {
+        "Student ID": "RISK010",
+        "Study hrs": 1.5,
+        "Attendance": 34.8,
+        "Previous marks": 29.5,
+        "Assignment scores": 22.9,
+        "Final performance": 22.4
+      }
+    ]
+  },
+  "4_large_university_batch.csv": {
+    "id": 4,
+    "btnId": "spa-btn-fast-4",
+    "name": "4_large_university_batch.csv",
+    "shortName": "4_large_university_batch.csv",
+    "sub": "1,200 Rows \u2022 Full University Batch",
+    "subColor": "text-emerald-600",
+    "rows": 1200,
+    "cols": 6,
+    "missing": "0 Cells",
+    "missingSub": "Zero Nulls",
+    "duplicates": "0 Rows",
+    "duplicatesSub": "Unique IDs",
+    "desc": "1,200 diverse university student records for ML scalability and cross-validation benchmarking.",
+    "columns": [
+      "Student ID",
+      "Study hrs",
+      "Attendance",
+      "Previous marks",
+      "Assignment scores",
+      "Final performance"
+    ],
+    "head10": [
+      {
+        "Student ID": "UNI0001",
+        "Study hrs": 5.8,
+        "Attendance": 96.1,
+        "Previous marks": 66.6,
+        "Assignment scores": 79.2,
+        "Final performance": 74.7
+      },
+      {
+        "Student ID": "UNI0002",
+        "Study hrs": 4.5,
+        "Attendance": 79.1,
+        "Previous marks": 77.8,
+        "Assignment scores": 70.6,
+        "Final performance": 75.9
+      },
+      {
+        "Student ID": "UNI0003",
+        "Study hrs": 5.9,
+        "Attendance": 84.3,
+        "Previous marks": 62.6,
+        "Assignment scores": 71.8,
+        "Final performance": 70.1
+      },
+      {
+        "Student ID": "UNI0004",
+        "Study hrs": 2.4,
+        "Attendance": 62.2,
+        "Previous marks": 50.5,
+        "Assignment scores": 49.2,
+        "Final performance": 47.1
+      },
+      {
+        "Student ID": "UNI0005",
+        "Study hrs": 5.5,
+        "Attendance": 82.2,
+        "Previous marks": 79.8,
+        "Assignment scores": 73.4,
+        "Final performance": 78.4
+      },
+      {
+        "Student ID": "UNI0006",
+        "Study hrs": 4.1,
+        "Attendance": 80.6,
+        "Previous marks": 76.6,
+        "Assignment scores": 68.5,
+        "Final performance": 73.0
+      },
+      {
+        "Student ID": "UNI0007",
+        "Study hrs": 7.6,
+        "Attendance": 75.1,
+        "Previous marks": 59.5,
+        "Assignment scores": 70.1,
+        "Final performance": 73.7
+      },
+      {
+        "Student ID": "UNI0008",
+        "Study hrs": 3.7,
+        "Attendance": 86.6,
+        "Previous marks": 70.8,
+        "Assignment scores": 59.6,
+        "Final performance": 68.8
+      },
+      {
+        "Student ID": "UNI0009",
+        "Study hrs": 3.3,
+        "Attendance": 94.1,
+        "Previous marks": 64.2,
+        "Assignment scores": 65.8,
+        "Final performance": 65.3
+      },
+      {
+        "Student ID": "UNI0010",
+        "Study hrs": 3.8,
+        "Attendance": 87.1,
+        "Previous marks": 85.2,
+        "Assignment scores": 65.4,
+        "Final performance": 73.3
+      }
+    ]
+  }
+};
+
+    let activeDataset = PRELOADED_DATASETS['2_cleaned_balanced_cohort.csv'];
+
     const dropZone = document.getElementById('drop-zone');
     const fileInput = document.getElementById('file-input');
     const progressBar = document.getElementById('upload-progress-bar');
     const progressPercent = document.getElementById('upload-percent');
     const filenameLabel = document.getElementById('upload-filename');
 
-    fileInput.addEventListener('change', function(e) {
-      if (this.files && this.files[0]) {
-        handleFileUpload(this.files[0].name);
-      }
-    });
+    function highlightFastLoadCard(activeId) {
+      const cardDefs = [
+        { id: 1, btnId: 'upload-btn-fast-1', name: '1_raw_dirty.csv', sub: '500 Rows • 5% Missing, 15 Dups', subColor: 'text-amber-600' },
+        { id: 2, btnId: 'upload-btn-fast-2', name: '2_cleaned_balanced.csv', sub: '500 Rows • Active Clean Cohort', subColor: 'text-emerald-600' },
+        { id: 3, btnId: 'upload-btn-fast-3', name: '3_high_risk.csv', sub: '300 Rows • Attendance < 75% Gate', subColor: 'text-amber-600' },
+        { id: 4, btnId: 'upload-btn-fast-4', name: '4_large_university_batch.csv', sub: '1,200 Rows • Full University Batch', subColor: 'text-emerald-600' }
+      ];
 
-    function handleFileUpload(name) {
-      filenameLabel.innerHTML = `<i data-lucide="file-spreadsheet" class="w-4 h-4 text-emerald-600"></i> ${name}`;
-      lucide.createIcons();
-      let width = 0;
-      progressBar.style.width = '0%';
-      progressPercent.textContent = '0%';
-      const interval = setInterval(() => {
-        width += 10;
-        progressBar.style.width = width + '%';
-        progressPercent.textContent = width + '%';
-        if (width >= 100) {
-          clearInterval(interval);
-          progressPercent.textContent = '100% Ingested';
+      cardDefs.forEach(c => {
+        const btn = document.getElementById(c.btnId);
+        if (!btn) return;
+        if (c.id === activeId) {
+          btn.className = 'p-3 text-left rounded-xl border border-indigo-600 bg-indigo-600 text-white shadow-md transition-all ring-2 ring-indigo-500/20';
+          btn.innerHTML = `
+            <span class="font-mono font-bold text-white block truncate text-xs" style="color:#ffffff !important;">${c.name}</span>
+            <span class="text-indigo-100 text-[11px] font-medium block truncate mt-0.5" style="color:#e0e7ff !important;">${c.sub}</span>
+          `;
+        } else {
+          btn.className = 'p-3 text-left rounded-xl border border-slate-200 bg-white hover:border-indigo-300 hover:bg-slate-50/70 transition-all shadow-sm';
+          btn.innerHTML = `
+            <span class="font-mono font-bold text-slate-900 block truncate text-xs" style="color:#0f172a !important;">${c.name}</span>
+            <span class="${c.subColor} text-[11px] font-medium block truncate mt-0.5">${c.sub}</span>
+          `;
         }
-      }, 50);
+      });
     }
 
-    function loadSampleDataset(name, rows, badge, desc) {
-      handleFileUpload(name);
-      document.getElementById('preview-subtitle').textContent = `Showing preview from ${name} (${rows} total rows)`;
+    function renderDatasetInfoAndPreview(ds) {
+      if (!ds) return;
+
+      const nameEl = document.getElementById('info-dataset-name');
+      if (nameEl) nameEl.textContent = ds.name;
+
+      const descEl = document.getElementById('info-dataset-desc');
+      if (descEl) descEl.textContent = ds.desc || ds.description || 'Student academic performance cohort records';
+
+      // 1. Total Number of Rows
+      const rowsEl = document.getElementById('info-rows');
+      if (rowsEl) rowsEl.textContent = Number(ds.rows).toLocaleString();
+
+      // 2. Total Number of Columns
+      const colsEl = document.getElementById('info-cols');
+      if (colsEl) colsEl.textContent = ds.cols || (ds.columns ? ds.columns.length : 6);
+
+      // Missing & Duplicates
+      const missingEl = document.getElementById('info-missing');
+      if (missingEl) missingEl.textContent = ds.missing || '0 Cells';
+
+      const missingSubEl = document.getElementById('info-missing-sub');
+      if (missingSubEl) {
+        missingSubEl.textContent = ds.missingSub || 'Zero Nulls';
+        missingSubEl.className = (ds.missing && String(ds.missing).startsWith('0')) ? 'text-xs text-emerald-600 font-semibold' : 'text-xs text-amber-600 font-semibold';
+      }
+
+      const dupEl = document.getElementById('info-duplicates');
+      if (dupEl) dupEl.textContent = ds.duplicates || '0 Rows';
+
+      const dupSubEl = document.getElementById('info-duplicates-sub');
+      if (dupSubEl) {
+        dupSubEl.textContent = ds.duplicatesSub || 'Unique IDs';
+        dupSubEl.className = (ds.duplicates && String(ds.duplicates).startsWith('0')) ? 'text-xs text-emerald-600 font-semibold' : 'text-xs text-amber-600 font-semibold';
+      }
+
+      // 3. Column Names List (Pill Badges)
+      const badgeContainer = document.getElementById('info-column-badges');
+      if (badgeContainer && ds.columns) {
+        badgeContainer.innerHTML = ds.columns.map(col => {
+          if (col === 'Student ID') {
+            return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-800 border border-slate-300 shadow-xs"><span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>${col}</span>`;
+          } else if (col === 'Attendance') {
+            return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-300 shadow-xs"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>${col} (&ge;75% Gate)</span>`;
+          } else if (col === 'Final performance') {
+            return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-purple-50 text-purple-700 border border-purple-300 shadow-xs"><span class="w-1.5 h-1.5 rounded-full bg-purple-600"></span>${col} (Target)</span>`;
+          } else {
+            return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200 shadow-xs"><span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span>${col}</span>`;
+          }
+        }).join('');
+      }
+
+      // 4. Tabular Dataset Preview (First 10 Rows)
+      const badgePreviewEl = document.getElementById('preview-badge');
+      const headCount = ds.head10 ? Math.min(10, ds.head10.length) : 0;
+      if (badgePreviewEl) {
+        badgePreviewEl.textContent = `${headCount} of ${Number(ds.rows).toLocaleString()} rows`;
+      }
+
+      const tableHead = document.getElementById('preview-thead');
+      if (tableHead && ds.columns) {
+        tableHead.innerHTML = `
+          <tr>
+            <th class="py-3 px-4 font-sans text-slate-700 font-bold bg-slate-100/80">#</th>
+            ${ds.columns.map(c => `<th class="py-3 px-4 font-sans text-slate-700 font-bold">${c}</th>`).join('')}
+          </tr>
+        `;
+      }
+
+      const tableBody = document.getElementById('preview-tbody');
+      if (tableBody && ds.head10 && ds.columns) {
+        tableBody.innerHTML = ds.head10.map((row, idx) => {
+          const cells = ds.columns.map(c => {
+            const val = row[c];
+            if (val === null || val === undefined || val === '' || (typeof val === 'number' && isNaN(val))) {
+              return `<td class="py-2.5 px-4"><span class="px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 text-[11px] font-bold">NaN</span></td>`;
+            }
+            if (c === 'Student ID') {
+              return `<td class="py-2.5 px-4 font-bold text-slate-900">${val}</td>`;
+            }
+            if (c === 'Attendance') {
+              const num = parseFloat(val);
+              const isLow = !isNaN(num) && num < 75;
+              const colorClass = isLow ? 'text-amber-600 font-semibold' : 'text-emerald-600 font-semibold';
+              return `<td class="py-2.5 px-4 ${colorClass}">${val}%</td>`;
+            }
+            if (c === 'Final performance') {
+              return `<td class="py-2.5 px-4 font-bold text-indigo-600">${val}</td>`;
+            }
+            return `<td class="py-2.5 px-4 text-slate-700">${val}</td>`;
+          }).join('');
+
+          return `<tr class="hover:bg-slate-50/70 transition-colors">
+            <td class="py-2.5 px-4 font-sans text-slate-400 font-medium">${idx + 1}</td>
+            ${cells}
+          </tr>`;
+        }).join('');
+      }
+
+      if (window.lucide) {
+        lucide.createIcons();
+      }
     }
-  </script>
+
+    function loadSampleDataset(name) {
+      let matchedKey = Object.keys(PRELOADED_DATASETS).find(k => k === name || k.includes(name) || name.includes(k));
+      if (!matchedKey) {
+        if (name.includes('1_') || name.includes('raw') || name.includes('dirty')) matchedKey = '1_raw_dirty_student_data.csv';
+        else if (name.includes('2_') || name.includes('cleaned') || name.includes('balanced')) matchedKey = '2_cleaned_balanced_cohort.csv';
+        else if (name.includes('3_') || name.includes('risk')) matchedKey = '3_high_risk_cohort_data.csv';
+        else if (name.includes('4_') || name.includes('batch') || name.includes('university')) matchedKey = '4_large_university_batch.csv';
+        else matchedKey = '2_cleaned_balanced_cohort.csv';
+      }
+
+      const ds = PRELOADED_DATASETS[matchedKey];
+      if (!ds) return;
+
+      activeDataset = ds;
+
+      if (filenameLabel) {
+        filenameLabel.innerHTML = `<i data-lucide="file-check" class="w-4 h-4 text-emerald-600"></i> ${ds.name} (Active File)`;
+      }
+      if (progressPercent) progressPercent.textContent = '100% Ingested';
+      if (progressBar) {
+        progressBar.style.width = '100%';
+        progressBar.className = 'bg-emerald-500 h-2.5 rounded-full transition-all duration-300';
+      }
+
+      highlightFastLoadCard(ds.id);
+      renderDatasetInfoAndPreview(ds);
+
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+    }
+
+    function parseCSVText(text) {
+      const lines = text.split(/\r?\n/).filter(line => line.trim().length > 0);
+      if (lines.length === 0) return { headers: [], rows: [], nullCount: 0, dupCount: 0 };
+
+      const parseLine = (line) => {
+        const row = [];
+        let inQuotes = false;
+        let curVal = '';
+        for (let i = 0; i < line.length; i++) {
+          const char = line[i];
+          if (char === '"') {
+            inQuotes = !inQuotes;
+          } else if (char === ',' && !inQuotes) {
+            row.push(curVal.trim());
+            curVal = '';
+          } else {
+            curVal += char;
+          }
+        }
+        row.push(curVal.trim());
+        return row;
+      };
+
+      const headers = parseLine(lines[0]);
+      const rows = [];
+      let nullCount = 0;
+      const seenIds = new Set();
+      let dupCount = 0;
+
+      for (let i = 1; i < lines.length; i++) {
+        const values = parseLine(lines[i]);
+        if (values.length > 1) {
+          const obj = {};
+          headers.forEach((h, idx) => {
+            const val = values[idx] !== undefined ? values[idx] : '';
+            if (val === '' || val.toLowerCase() === 'nan' || val.toLowerCase() === 'null') {
+              obj[h] = null;
+              nullCount++;
+            } else {
+              const num = parseFloat(val);
+              obj[h] = (!isNaN(num) && num.toString() === val) ? num : val;
+            }
+          });
+          const idVal = obj[headers[0]];
+          if (idVal) {
+            if (seenIds.has(idVal)) {
+              dupCount++;
+            } else {
+              seenIds.add(idVal);
+            }
+          }
+          rows.push(obj);
+        }
+      }
+
+      return { headers, rows, nullCount, dupCount };
+    }
+
+    function handleFileUpload(file) {
+      if (!file || !file.name.toLowerCase().endsWith('.csv')) {
+        alert('Please select a comma-separated values (.csv) file.');
+        return;
+      }
+
+      filenameLabel.innerHTML = `<i data-lucide="file-spreadsheet" class="w-4 h-4 text-emerald-600"></i> ${file.name} (Uploaded File)`;
+      if (window.lucide) lucide.createIcons();
+
+      progressBar.style.width = '35%';
+      progressPercent.textContent = '35% Reading...';
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        progressBar.style.width = '75%';
+        progressPercent.textContent = '75% Validating Schema...';
+
+        setTimeout(() => {
+          try {
+            const parsed = parseCSVText(e.target.result);
+            const totalRows = parsed.rows.length;
+            const totalCols = parsed.headers.length;
+            const head10 = parsed.rows.slice(0, 10);
+
+            const customDataset = {
+              id: 0,
+              name: file.name,
+              shortName: file.name,
+              sub: `${totalRows.toLocaleString()} Rows • Ingested CSV`,
+              rows: totalRows,
+              cols: totalCols,
+              missing: `${parsed.nullCount} Cells`,
+              missingSub: parsed.nullCount > 0 ? "Missing Values" : "Zero Nulls",
+              duplicates: `${parsed.dupCount} Rows`,
+              duplicatesSub: parsed.dupCount > 0 ? "Duplicate Entries" : "Unique IDs",
+              desc: `Custom student performance dataset ingested from local disk (${file.name}).`,
+              columns: parsed.headers,
+              head10: head10,
+              isCustom: true
+            };
+
+            activeDataset = customDataset;
+
+            progressBar.style.width = '100%';
+            progressPercent.textContent = '100% Ingested';
+
+            highlightFastLoadCard(0);
+            renderDatasetInfoAndPreview(customDataset);
+
+          } catch (err) {
+            console.error('CSV Parsing error:', err);
+            progressPercent.textContent = 'Parsing Failed';
+            progressBar.style.width = '100%';
+            progressBar.className = 'bg-rose-500 h-2.5 rounded-full';
+          }
+        }, 200);
+      };
+      reader.readAsText(file);
+    }
+
+    // Bind drop zone & file input events
+    if (fileInput) {
+      fileInput.addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+          handleFileUpload(this.files[0]);
+        }
+      });
+    }
+
+    if (dropZone) {
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropZone.addEventListener(eventName, function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          dropZone.classList.add('border-indigo-600', 'bg-indigo-100/50');
+        });
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          dropZone.classList.remove('border-indigo-600', 'bg-indigo-100/50');
+        });
+      });
+
+      dropZone.addEventListener('drop', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.remove('border-indigo-600', 'bg-indigo-100/50');
+        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+          handleFileUpload(e.dataTransfer.files[0]);
+        }
+      });
+    }
+
+    // Initialize with default cohort
+    window.addEventListener('DOMContentLoaded', () => {
+      loadSampleDataset('2_cleaned_balanced_cohort.csv');
+    });
+</script>
   <script src="assets/app.js"></script>
   <script>
     if (window.lucide) {
